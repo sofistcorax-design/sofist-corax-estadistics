@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sofist Corax">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sofist Corax Estadistics</title>
+<style>
+:root{color-scheme:light;--bg:#f6f4ee;--sf:#fff;--tx:#1d2330;--mu:#697082;--ac:#c2410c;--ac2:#0f766e;--bd:#e3dfd3;--bar:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#14171f;--sf:#1e232e;--tx:#ecebe6;--mu:#9aa1b2;--ac:#fb923c;--ac2:#2dd4bf;--bd:#313847;--bar:#f59e0b}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#14171f;--sf:#1e232e;--tx:#ecebe6;--mu:#9aa1b2;--ac:#fb923c;--ac2:#2dd4bf;--bd:#313847;--bar:#f59e0b}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:4px 0 2px}h2{font-size:16px;margin:0 0 8px}
+.sub{color:var(--mu);font-size:13px;margin:0 0 12px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+select,button,textarea,input{font:inherit;color:var(--tx);background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:8px 10px}
+button{cursor:pointer}button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px}
+.tabs button{white-space:nowrap}.tabs button.on{background:var(--ac2);color:#fff;border-color:var(--ac2)}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:5px 6px;text-align:center;border-bottom:1px solid var(--bd)}
+th{color:var(--mu);font-weight:600}
+.bar{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:13px}
+.bar b{width:34px;text-align:right;font-weight:600}
+.bar i{display:block;height:14px;background:var(--bar);border-radius:3px;min-width:2px}
+.bar span{color:var(--mu)}
+.ball{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--ac);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-right:3px}
+.fb{background:var(--mu)}
+.note{font-size:13px;color:var(--mu)}
+.warn{border-left:4px solid var(--ac);padding-left:10px}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi div{background:var(--bg);border-radius:8px;padding:8px;text-align:center}
+.kpi b{display:block;font-size:20px}
+textarea{width:100%;min-height:120px;font-family:ui-monospace,monospace;font-size:13px}
+.hide{display:none}
+
+/* Sofist Corax · identidad visual negro y oro */
+:root{color-scheme:dark;--bg:#08090c;--sf:#141519;--tx:#f3f1eb;--mu:#aaa7a0;--ac:#c9962e;--ac2:#e4b94f;--bd:#39332a;--bar:#d7a638}
+body{background:radial-gradient(ellipse at 50% -15%,#292116 0%,#08090c 48%);color:var(--tx)}
+main{max-width:980px;padding:18px}
+.card{background:linear-gradient(145deg,#191a1f,#101115);border:1px solid #514126;border-radius:15px;box-shadow:0 8px 26px #0008}
+h1{font-size:clamp(20px,3vw,27px);letter-spacing:.4px}
+h1 img{border:1px solid #b88a2d;box-shadow:0 0 18px #d6a33b35}
+.sub{color:#c6b78f}
+button,select,input,textarea{background:#1b1b1d;border-color:#66512b;color:#f5e8c5}
+button{transition:.18s ease}
+button:hover{border-color:#e5b84b;transform:translateY(-1px)}
+button.p{background:linear-gradient(135deg,#a87518,#edc65e);border-color:#e6bd55;color:#17120a;font-weight:800}
+.tabs button.on{background:linear-gradient(135deg,#8f651c,#d9ad48);border-color:#e4bc5b;color:#15110a}
+.categoryNav{display:flex;align-items:center;gap:12px}.categoryNav label{font-size:12px;letter-spacing:1px;color:#d5bd83;font-weight:800}.categoryNav select{flex:1;min-width:190px;padding:12px;border-radius:10px;background:#111216;font-weight:700}
+@media(max-width:520px){.categoryNav{align-items:stretch;flex-direction:column;gap:6px}}
+.kpi div{background:#0d0e11;border:1px solid #443821}
+.ball{background:linear-gradient(145deg,#f1cb69,#a8791e);color:#16110a}
+.fb{background:#777;color:#fff}
+.bar i{background:linear-gradient(90deg,#9a6b1c,#f0c65d)}
+th{color:#d5bd83}
+a{color:#efc45d}
+.note.warn,.warn{border-left-color:#d6a43e}
+#syncTop{white-space:nowrap}
+.syncrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0 16px}
+.syncrow button{padding:11px 16px}
+#syncStatus{font-size:12px;color:var(--mu)}
+.latestResults{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.latestBox{background:#101115;border:1px solid #6d5428;border-radius:10px;padding:7px 11px;min-width:128px}
+.latestBox small{display:block;color:#c6b78f;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.latestBox strong{font-size:21px;letter-spacing:3px;color:#f0c65d}
+.latestBox em{display:block;color:var(--mu);font-size:11px;font-style:normal}
+@media(max-width:520px){.syncrow{align-items:stretch}.latestResults{width:100%}.latestBox{flex:1;min-width:110px}}
+@media(max-width:520px){main{padding:12px}.kpi{grid-template-columns:repeat(3,minmax(0,1fr))}.kpi b{font-size:17px}}
+.catGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.catTile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:14px 6px;min-height:84px;border-radius:14px;background:linear-gradient(145deg,#1d1e23,#111216);border:1px solid #5a4727;color:#e9d6a3;font-weight:700;font-size:13px;text-align:center;line-height:1.15}
+.catTile svg{width:30px;height:30px;stroke:#e4b94f;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.catTile:hover{border-color:#e5b84b}
+.catTile.on{background:linear-gradient(135deg,#8f651c,#e0b54e);border-color:#f0c865;color:#15110a;box-shadow:0 0 16px #d6a33b40}
+.catTile.on svg{stroke:#15110a}
+@media(min-width:700px){.catGrid{grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}.catTile{min-height:92px;font-size:12px}}
+.dbCard select{width:100%}
+.catTile:last-child:nth-child(3n+1){grid-column:1/-1}
+@media(min-width:700px){.catGrid{grid-template-columns:repeat(10,minmax(0,1fr))!important}.catTile:last-child:nth-child(3n+1){grid-column:auto}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.chip{min-width:38px;padding:8px 10px;border-radius:9px;font-weight:700}
+.chip.on{background:linear-gradient(135deg,#8f651c,#e0b54e);border-color:#f0c865;color:#15110a}
+.seqgrp{margin:10px 0 4px;color:#d5bd83;font-weight:700;font-size:13px}
+details summary{padding:6px 0}
+</style></head><body><main>
+<h1 style="display:flex;align-items:center;gap:10px"><img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px">Sofist Corax Estadistics</h1>
+<p class="sub">Pick 3 Florida · últimos 2 dígitos</p>
+<p class="sub" id="status">Cargando datos…</p>
+<div class="syncrow">
+ <button class="p" id="syncTop" type="button">↻ ACTUALIZAR RESULTADOS</button>
+ <div class="latestResults" aria-label="Últimos resultados">
+  <div class="latestBox"><small>Último Midday</small><strong id="latestM">---</strong><em id="latestMDate">Sin datos</em></div>
+  <div class="latestBox"><small>Último Evening</small><strong id="latestE">---</strong><em id="latestEDate">Sin datos</em></div>
+ </div>
+ <span id="syncStatus" role="status" aria-live="polite">Actualiza los sorteos Midday y Evening desde el archivo de resultados.</span>
+</div>
+<div class="card warn note">Se analizan solo los dos últimos dígitos (00–99). Los sorteos son aleatorios e independientes: ninguna estadística del pasado predice el próximo resultado. Esta herramienta describe lo que ha pasado; no garantiza nada.</div>
+<div class="row">
+<select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select>
+<select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select>
+</div>
+<div class="card"><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
+<div id="view"></div>
+<script>
+const $=s=>document.querySelector(s);
+const SEED=`2025-11-18 E 2 6 8
+2025-11-19 E 1 3 7
+2025-11-20 E 3 1 4
+2025-11-21 E 3 1 1
+2025-11-22 E 2 3 7
+2025-11-23 E 1 9 6
+2025-11-24 E 5 5 5
+2025-11-25 E 1 4 1
+2025-11-26 E 5 5 7
+2025-11-27 E 0 0 6
+2025-11-28 E 6 1 8
+2025-11-29 E 3 0 9
+2025-11-30 E 5 8 4
+2025-12-01 E 6 2 8
+2025-12-02 E 4 3 6
+2025-12-03 E 0 0 2
+2025-12-04 E 3 4 1
+2025-12-05 E 4 8 0
+2025-12-06 E 8 4 0
+2025-12-07 E 6 6 7
+2025-12-08 E 2 8 4
+2025-12-09 E 4 3 4
+2025-12-10 E 2 0 0
+2025-12-11 E 1 4 1
+2025-12-12 E 9 1 2
+2025-12-13 E 1 1 4
+2025-12-14 E 8 1 1
+2025-12-15 E 0 1 8
+2025-12-16 E 9 9 5
+2025-12-17 E 0 6 1
+2025-12-18 E 3 6 3
+2025-12-19 E 6 5 9
+2025-12-20 E 1 1 5
+2025-12-21 E 5 5 5
+2025-12-22 E 6 9 9
+2025-12-23 E 4 2 2
+2025-12-24 E 1 3 4
+2025-12-25 E 3 1 0
+2025-12-26 E 3 4 6
+2025-12-27 E 9 8 5
+2025-12-28 E 0 0 3
+2025-12-29 E 2 0 8
+2025-12-30 E 8 7 0
+2025-12-31 E 2 1 1
+2026-01-01 E 2 9 1
+2026-01-02 E 5 8 9
+2026-01-03 E 6 1 1
+2026-01-04 E 8 7 1
+2026-01-05 E 9 9 4
+2026-01-06 E 1 6 0
+2026-01-07 E 9 6 3
+2026-01-08 E 5 9 6
+2026-01-09 E 0 9 3
+2026-01-10 E 0 0 6
+2026-01-11 E 0 8 9
+2026-01-12 E 1 9 6
+2026-01-13 E 9 4 3
+2026-01-14 E 4 4 9
+2026-01-15 E 6 4 7
+2026-01-16 E 1 0 0
+2026-01-17 E 4 0 6
+2026-01-18 E 4 6 2
+2026-01-19 E 3 5 9
+2026-01-20 E 4 0 6
+2026-01-21 E 2 8 4
+2026-01-22 E 1 1 6
+2026-01-23 E 0 1 0
+2026-01-24 E 5 6 2
+2026-01-25 E 8 8 4
+2026-01-26 E 7 2 0
+2026-01-27 E 1 2 2
+2026-01-28 E 5 5 6
+2026-01-29 E 8 8 0
+2026-01-30 E 4 2 4
+2026-01-31 E 6 5 0
+2026-02-01 E 7 4 2
+2026-02-02 E 0 0 2
+2026-02-03 E 1 2 4
+2026-02-04 E 3 3 5
+2026-02-05 E 6 7 7
+2026-02-06 E 0 5 5
+2026-02-07 E 6 0 3
+2026-02-08 E 6 7 4
+2026-02-09 E 9 1 0
+2026-02-10 E 8 9 7
+2026-02-11 E 8 2 3
+2026-02-12 E 6 5 1
+2026-02-13 E 1 0 2
+2026-02-14 E 1 8 5
+2026-02-15 E 2 3 1
+2026-02-16 E 9 7 3
+2026-02-17 E 1 3 1
+2026-02-18 E 3 3 2
+2026-02-19 E 2 0 7
+2026-02-20 E 7 7 8
+2026-02-21 E 9 4 7
+2026-02-22 E 5 3 6
+2026-02-23 E 8 3 1
+2026-02-24 E 7 6 2
+2026-02-25 E 5 1 2
+2026-02-26 E 0 0 3
+2026-02-27 E 2 5 3
+2026-02-28 E 3 0 1
+2026-03-01 E 3 6 3
+2026-03-02 E 8 9 3
+2026-03-03 E 6 3 4
+2026-03-04 E 7 6 6
+2026-03-05 E 7 5 5
+2026-03-06 E 3 7 3
+2026-03-07 E 0 5 9
+2026-03-08 E 8 8 9
+2026-03-09 E 9 4 1
+2026-03-10 E 8 6 3
+2026-03-11 E 1 9 4
+2026-03-12 E 7 3 9
+2026-03-13 E 3 3 4
+2026-03-14 E 2 7 3
+2026-03-15 E 3 9 1
+2026-03-16 E 8 8 4
+2026-03-17 E 8 1 5
+2026-03-18 E 5 8 5
+2026-03-19 E 8 0 1
+2026-03-20 E 3 9 7
+2026-03-21 E 4 6 5
+2026-03-22 E 6 7 6
+2026-03-23 E 2 3 2
+2026-03-24 E 2 9 5
+2026-03-25 E 7 7 4
+2026-03-26 E 3 0 6
+2026-03-27 E 3 8 8
+2026-03-28 E 8 9 7
+2026-03-29 E 1 2 6
+2026-03-30 E 5 0 6
+2026-03-31 E 6 0 5
+2026-04-01 E 2 8 1
+2026-04-02 E 2 5 2
+2026-04-03 E 3 6 3
+2026-04-04 E 8 1 8
+2026-04-05 E 9 5 6
+2026-04-06 E 2 2 4
+2026-04-07 E 3 7 5
+2026-04-08 E 5 9 9
+2026-04-09 E 8 4 5
+2026-04-10 E 5 1 8
+2026-04-11 E 0 5 3
+2026-04-12 E 7 6 8
+2026-04-13 E 0 7 0
+2026-04-14 E 6 5 6
+2026-04-15 E 0 8 8
+2026-04-16 E 1 8 6
+2026-04-17 E 0 3 0
+2026-04-18 E 8 1 4
+2026-04-19 E 3 7 0
+2026-04-20 E 2 0 3
+2026-04-21 E 4 9 8
+2026-04-22 E 9 5 9
+2026-04-23 E 5 1 0
+2026-04-24 E 8 9 4
+2026-04-25 E 0 6 4
+2026-04-26 E 7 9 6
+2026-04-27 E 9 5 0
+2026-04-28 E 2 7 5
+2026-04-29 E 8 0 4
+2026-04-30 E 5 8 5
+2026-05-01 E 6 7 1
+2026-05-02 E 4 6 9
+2026-05-03 E 9 3 1
+2026-05-04 E 5 1 7
+2026-05-05 E 8 0 1
+2026-05-06 E 5 1 7
+2026-05-07 E 8 8 8
+2026-05-08 E 9 2 0
+2026-05-09 E 0 8 9
+2026-05-10 E 9 8 6
+2026-05-11 E 3 0 9
+2026-05-12 E 5 4 7
+2026-05-13 E 0 1 6
+2026-05-14 E 8 5 4
+2026-05-15 E 1 8 2
+2026-05-16 E 2 2 3
+2026-05-17 E 5 6 2
+2026-05-18 E 3 0 3
+2026-05-19 E 8 9 3
+2026-05-20 E 2 5 4
+2026-05-21 E 8 4 2
+2026-05-22 E 3 0 7
+2026-05-23 E 7 9 5
+2026-05-24 E 0 9 7
+2026-05-25 E 8 6 2
+2026-05-26 E 7 5 6
+2026-05-27 E 0 3 3
+2026-05-28 E 1 4 4
+2026-05-29 E 8 3 3
+2026-05-30 E 9 3 1
+2026-05-31 E 0 4 3
+2026-06-01 E 8 4 2
+2026-06-02 E 4 3 7
+2026-06-03 E 1 1 9
+2026-06-04 E 0 7 5
+2026-06-05 E 5 2 9
+2026-06-06 E 7 1 2
+2026-06-07 E 9 2 5
+2026-06-08 E 8 5 9
+2026-06-09 E 5 0 4
+2026-06-10 E 4 1 5
+2026-06-11 E 5 4 9
+2026-06-12 E 8 1 8
+2026-06-13 E 9 1 4
+2026-06-14 E 5 8 9
+2026-06-15 E 7 0 0
+2026-06-16 E 5 0 0
+2026-06-17 E 7 9 3
+2026-06-18 E 9 4 1
+2026-06-19 E 6 3 7
+2026-06-20 E 3 4 3
+2026-06-21 E 1 1 3
+2026-06-22 E 9 6 1
+2026-06-23 E 9 4 1
+2026-06-24 E 2 6 2
+2026-06-25 E 2 4 3
+2026-06-26 E 7 0 4
+2026-06-27 E 6 5 8
+2026-06-28 E 4 2 1
+2026-06-29 E 2 9 5
+2026-06-30 E 8 0 2
+2026-07-01 E 2 9 1
+2026-07-02 E 5 6 4
+2026-07-03 E 3 6 1
+2026-07-04 E 2 0 6
+2026-07-05 E 0 1 9
+2026-07-06 E 1 7 7
+2026-07-07 E 5 2 7
+2026-07-08 E 5 6 9
+2026-07-09 E 4 2 1
+2026-07-10 E 5 8 1
+2026-07-11 E 2 7 5
+2026-07-12 E 1 1 8
+2026-07-13 E 9 8 0
+2026-07-14 E 9 9 2
+2026-07-15 E 7 5 9
+2026-07-16 E 8 0 0
+2026-07-17 E 4 4 4
+2026-07-18 E 0 2 7
+2026-07-19 E 0 9 1
+2026-07-20 E 6 8 8
+2026-07-21 E 7 2 7
+2026-07-22 E 3 9 5
+2026-07-23 E 3 1 5
+2026-07-24 E 5 9 4
+2026-07-25 E 9 8 1
+2026-07-26 E 0 9 7
+2026-07-27 E 7 0 5
+2026-07-28 E 8 9 5
+2026-07-29 E 7 4 0
+2026-07-30 E 7 0 1
+2026-07-31 E 6 8 3
+2026-08-01 E 3 1 3
+2026-08-02 E 4 7 2
+2026-08-03 E 0 4 3
+2026-08-04 E 6 5 0
+2026-08-05 E 1 5 2
+2026-08-06 E 9 5 6
+2026-08-07 E 0 4 9
+2026-08-08 E 6 4 3
+2026-08-09 E 6 7 2
+2026-08-10 E 7 4 3
+2026-08-11 E 5 3 9
+2026-08-12 E 2 8 1
+2026-08-13 E 3 2 0
+2026-08-14 E 2 5 5
+2026-08-15 E 9 0 9
+2026-08-16 E 1 6 2
+2026-08-17 E 7 6 6
+2026-08-18 E 8 9 6
+2026-08-19 E 1 6 0
+2026-08-20 E 5 1 8
+2026-08-21 E 0 5 4
+2026-08-22 E 6 8 9
+2026-08-23 E 8 4 4
+2026-08-24 E 4 6 7
+2026-08-25 E 2 9 9
+2026-08-26 E 3 2 9
+2026-08-27 E 2 1 1
+2026-08-28 E 6 2 5
+2026-08-29 E 2 0 4
+2026-08-30 E 3 2 3
+2026-08-31 E 0 2 5
+2026-09-01 E 4 0 9
+2026-09-02 E 2 3 6
+2026-09-03 E 7 7 8
+2026-09-04 E 9 5 9
+2026-09-05 E 2 9 2
+2026-09-06 E 2 9 8
+2026-09-07 E 8 2 5
+2026-09-08 E 6 9 5
+2026-09-09 E 1 6 6
+2026-09-11 E 3 6 7
+2026-09-13 E 2 2 1
+2026-09-14 E 2 0 0
+2026-09-15 E 4 0 5
+2026-09-16 E 8 6 7
+2026-09-17 E 3 0 0
+2026-09-18 E 8 6 8
+2026-09-19 E 6 0 9
+2026-09-20 E 6 1 7
+2026-09-21 E 5 5 0
+2026-09-22 E 7 0 2
+2026-09-23 E 3 0 3
+2026-09-24 E 6 6 3
+2026-09-25 E 5 0 6
+2026-09-26 E 9 6 1
+2026-09-27 E 1 4 7
+2026-09-28 E 1 7 6
+2026-09-29 E 4 1 9
+2026-09-30 E 4 2 4
+2026-10-01 E 3 2 8
+2026-10-02 E 6 5 3
+2026-10-03 E 2 9 0
+2026-10-04 E 9 0 2
+2026-10-05 E 8 9 8
+2026-10-06 E 5 9 5
+2026-10-07 E 3 3 0
+2026-10-08 E 5 1 5
+2026-10-09 E 0 9 7
+2026-10-10 E 1 5 2
+2026-10-11 E 6 4 8
+2026-10-12 E 5 9 8
+2026-10-13 E 8 0 8
+2026-10-14 E 9 5 1
+2026-10-15 E 0 2 8
+2026-10-16 E 5 5 4
+2026-10-17 E 3 9 2
+2026-10-18 E 4 8 8
+2026-10-19 E 0 6 9
+2026-10-20 E 5 5 6
+2026-10-21 E 2 0 8
+2026-10-22 E 5 7 4
+2026-10-23 E 9 0 5
+2026-10-24 E 1 2 2
+2026-10-25 E 2 6 7
+2026-10-26 E 1 7 9
+2026-10-27 E 2 4 5
+2026-10-28 E 1 3 5
+2026-10-29 E 8 1 9
+2026-10-30 E 9 1 9
+2026-10-31 E 4 3 0
+2026-11-01 E 5 4 9
+2026-11-02 E 2 4 6
+2026-11-03 E 7 0 1
+2026-11-04 E 9 8 2
+2026-11-05 E 0 8 3
+2026-11-06 E 6 8 5
+2026-11-07 E 6 9 4
+2026-11-08 E 6 1 4
+2026-11-09 E 4 0 4
+2026-11-10 E 4 8 8
+2026-11-11 E 0 5 2
+2026-11-12 E 7 0 9
+2026-11-13 E 6 9 4
+2026-11-14 E 2 2 7
+2026-11-15 E 2 9 8
+2026-11-16 E 1 9 9
+2026-11-17 E 3 5 5`;
+let ROWS=[],db=null,unsub=null,tab="res",seqX=null,seqLag=1;
+const ICONS={
+ res:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+ par:'<rect x="3" y="3" width="5" height="5"/><rect x="9.5" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="9.5" width="5" height="5"/><rect x="9.5" y="9.5" width="5" height="5"/><rect x="16" y="9.5" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="9.5" y="16" width="5" height="5"/><rect x="16" y="16" width="5" height="5"/>',
+ dig:'<path d="M7 4v16M17 4v16"/><path d="M4 8l3-4 3 4M14 16l3 4 3-4"/>',
+ dia:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M8 17.5h2"/>',
+ gra:'<path d="M3 3v18h18"/><path d="M6 15l4-5 3 3 5-7"/><circle cx="18" cy="6" r="1.2"/>',
+ pro:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+ sum:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/>',
+ atr:'<circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2"/><path d="M9 2.5h6"/>',
+ seq:'<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M8 12h8M13 9l3 3-3 3"/>',
+ imp:'<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>'
+};
+const TABS=[["res","Resumen"],["par","00–99"],["dig","Decena/Terminal"],["seq","Secuencias"],["dia","Días"],["gra","Gráfica"],["pro","Pronóstico"],["sum","Patrones"],["atr","Atrasados"],["imp","Datos"]];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function load(){
+ let r=[];try{r=JSON.parse(localStorage.getItem("p3rows")||"[]")}catch(e){}
+ if(r.length&&!ROWS.length){ROWS=r;}
+}
+function saveLocal(){try{localStorage.setItem("p3rows",JSON.stringify(ROWS))}catch(e){}}
+function parseLines(t){
+ const out=[],bad=[];
+ t.split(/\n/).forEach(l=>{
+  l=l.trim();if(!l)return;
+  const d=l.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/)||null;
+  let date;
+  if(d)date=`${d[1]}-${d[2].padStart(2,"0")}-${d[3].padStart(2,"0")}`;
+  else{const m=l.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);if(m)date=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+  const rest=l.replace(/\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\d{1,2}[-\/]\d{1,2}[-\/]\d{4}/,"");
+  const dr=/(^|[^a-z])(e|eve|evening|noche|n)([^a-z]|$)/i.test(rest)?"E":/(^|[^a-z])(m|mid|midday|dia|día)([^a-z]|$)/i.test(rest)?"M":null;
+  const digs=rest.replace(/[a-zA-Zí]+/g," ").match(/\d/g)||[];
+  if(!date||!dr||digs.length<3||digs.length>4){bad.push(l);return}
+  out.push({k:date+dr,d:date,t:dr,n:digs.slice(0,3).join(""),f:digs[3]??""});
+ });
+ return{out,bad};
+}
+const ord=x=>x.d+(x.t==="M"?"0":"1");/* Midday (1:30 pm) va antes que Evening (9:45 pm) el mismo día */
+function sorted(){return ROWS.slice().sort((a,b)=>{const x=ord(a),y=ord(b);return x<y?-1:x>y?1:0})}
+function filtered(){
+ let r=sorted();const f=$("#fDraw").value,n=+$("#fRange").value;
+ if(f!=="A")r=r.filter(x=>x.t===f);
+ if(n)r=r.slice(-n*(f==="A"?2:1));
+ return r;
+}
+function bars(arr,labels,fmt){
+ const mx=Math.max(1,...arr);
+ return arr.map((v,i)=>`<div class="bar"><b>${labels[i]}</b><i style="width:${Math.round(v/mx*60)}%"></i><span>${fmt?fmt(v):v}</span></div>`).join("");
+}
+function balls(x){return [...x.n].map(c=>`<span class="ball">${c}</span>`).join("")+(x.f!==""?`<span class="ball fb" title="Fireball">${x.f}</span>`:"")}
+function chi(counts){const n=counts.reduce((a,b)=>a+b,0),e=n/counts.length;return counts.reduce((s,c)=>s+(c-e)**2/e,0)}
+function render(){
+ const grid=$("#catGrid");
+ if(grid)grid.innerHTML=TABS.map(([k,v])=>`<button type="button" class="catTile${k===tab?" on":""}" data-tab="${k}" role="tab" aria-selected="${k===tab}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||""}</svg><span>${v}</span></button>`).join("");
+ const v=$("#view"),R=filtered();
+ $("#status").textContent=ROWS.length?`${ROWS.length} sorteos guardados · analizando ${R.length}`:"Sin datos todavía";
+ showLatest();
+ if(tab==="imp"){v.innerHTML=explain("imp",R)+impView();wireImp();return}
+ if(!R.length){v.innerHTML=`<div class="card">No hay datos para analizar. Ve a la pestaña <b>Datos</b> para importar resultados.</div>`;return}
+ if(tab==="res")v.innerHTML=resView(R);
+ if(tab==="dig")v.innerHTML=digView(R);
+ if(tab==="seq")v.innerHTML=seqView(R);
+ if(tab==="par")v.innerHTML=parView(R);
+ if(tab==="sum")v.innerHTML=sumView(R);
+ if(tab==="atr")v.innerHTML=atrView(R);
+ if(tab==="dia")v.innerHTML=diaView(R);
+ if(tab==="gra")v.innerHTML=graView(R);
+ if(tab==="pro")v.innerHTML=proView(R);
+ v.innerHTML=explain(tab,R)+v.innerHTML;
+}
+const two=x=>x.n.slice(1);
+const pcs=(v,n)=>(v/n*100).toFixed(1)+"%";
+const pad=i=>String(i).padStart(2,"0");
+function cnt(R){const c=Array(100).fill(0);R.forEach(x=>c[+two(x)]++);return c}
+function two2(x){return `<span class="ball">${x.n[1]}</span><span class="ball">${x.n[2]}</span>`}
+function resView(R){
+ const c=cnt(R),o=c.map((v,i)=>[i,v]);
+ const hot=o.slice().sort((a,b)=>b[1]-a[1]||a[0]-b[0]),cold=o.slice().sort((a,b)=>a[1]-b[1]||a[0]-b[0]);
+ const last=R.slice(-10).reverse();
+ return `<div class="card"><h2>Resumen · últimos 2 dígitos</h2><div class="kpi"><div><b>${R.length}</b>sorteos</div><div><b>${pad(hot[0][0])}</b>más repetido (${hot[0][1]})</div><div><b>${pad(cold[0][0])}</b>menos repetido (${cold[0][1]})</div></div>
+ <p class="note">Esperado por número si fuera azar puro: ${(R.length/100).toFixed(1)} veces.</p></div>
+ <div class="card"><h2>Últimos resultados</h2>${last.map(x=>`<div style="margin:6px 0">${two2(x)} <span class="note">${x.d} · ${x.t==="M"?"Midday":"Evening"}</span></div>`).join("")}</div>
+ <div class="card"><h2>10 más frecuentes</h2>${bars(hot.slice(0,10).map(a=>a[1]),hot.slice(0,10).map(a=>pad(a[0])))}</div>
+ <div class="card"><h2>10 menos frecuentes</h2>${bars(cold.slice(0,10).map(a=>a[1]),cold.slice(0,10).map(a=>pad(a[0])))}</div>`;
+}
+function parView(R){
+ const c=cnt(R),mx=Math.max(1,...c);
+ let t="<tr><th></th>"+[...Array(10).keys()].map(u=>`<th>${u}</th>`).join("")+"</tr>";
+ for(let d=0;d<10;d++){t+=`<tr><th>${d}</th>`+[...Array(10).keys()].map(u=>{const v=c[d*10+u];return `<td style="background:rgba(245,158,11,${(v/mx*0.65).toFixed(2)})">${v}</td>`}).join("")+"</tr>"}
+ const chi2=chi(c);
+ return `<div class="card"><h2>Los 100 números (00–99)</h2><p class="note">Fila = decena, columna = terminal. Más oscuro = salió más veces.</p><div class="sc"><table>${t}</table></div></div>
+ <div class="card"><h2>¿Se desvía del azar?</h2><p class="note">Chi-cuadrado de los 100 números (99 g.l.): por encima de ~123 sería una desviación rara (5%).</p><p><b>${chi2.toFixed(1)}</b> ${chi2>123.2?"⚠️ por encima":"✓ compatible con azar"}</p></div>`;
+}
+function seqView(R){
+ const n=R.length,lag=seqLag,L=[...Array(10).keys()];
+ if(n<lag+8)return `<div class="card">Faltan datos: se necesitan al menos ${lag+8} sorteos en este rango.</div>`;
+ const z=()=>Array.from({length:10},()=>Array(10).fill(0));
+ const DD=z(),DT=z(),TD=z(),TT=z(),DO=Array(10).fill(0),TO=Array(10).fill(0);
+ for(let i=0;i+lag<n;i++){
+  const a=two(R[i]),b=two(R[i+lag]),da=+a[0],ta=+a[1],db=+b[0],tb=+b[1];
+  DO[da]++;TO[ta]++;DD[da][db]++;DT[da][tb]++;TD[ta][db]++;TT[ta][tb]++;
+ }
+ const last=two(R[n-1]),ld=+last[0],lt=+last[1],x=seqX===null?ld:seqX;
+ const sum=r=>r.reduce((a,b)=>a+b,0);
+ const top=(M,i)=>{const r=M[i],t=sum(r);if(!t)return"—";return r.map((v,k)=>[k,v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,3).map(([k,v])=>`<b>${k}</b> <span class="note">${v} · ${(v/t*100).toFixed(0)}%</span>`).join("<br>")};
+ const fm=(M,i)=>{const t=sum(M[i]);return v=>t?`${v} (${(v/t*100).toFixed(1)}%)`:`${v}`};
+ const lagTxt=lag===1?"en el siguiente sorteo":`${lag} sorteos después`;
+ const chips=(attr,cur,vals,fmt)=>`<div class="chips">${vals.map(v=>`<button type="button" class="chip${v===cur?" on":""}" data-${attr}="${v}">${fmt?fmt(v):v}</button>`).join("")}</div>`;
+ const mat=(M,title,og,nx)=>`<details><summary style="cursor:pointer;font-weight:700">${title}</summary><div class="sc"><table style="font-size:11px"><tr><th>${og}↓ ${nx}→</th>${L.map(i=>`<th>${i}</th>`).join("")}<th>n</th></tr>${M.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i}</th>${r.map(v=>`<td style="background:rgba(214,163,62,${(v/mx*.55).toFixed(2)})">${v}</td>`).join("")}<td>${sum(r)}</td></tr>`}).join("")}</table></div></details>`;
+ return `<div class="card"><h2>Secuencias: qué viene después</h2>
+ <p class="note">¿Cuántos sorteos después quieres mirar?</p>
+ ${chips("seqlag",lag,[1,2,3],v=>v===1?"Siguiente":`+${v} sorteos`)}</div>
+ <div class="card"><h2>Después del último sorteo (${last})</h2>
+ <p class="note">El ${last} tiene decena <b>${ld}</b> y terminal <b>${lt}</b>. Esto es lo que más salió ${lagTxt} cuando antes hubo esa decena o ese terminal (top 3, de ${n-lag} casos).</p>
+ <div class="sc"><table><tr><th>Cuando salió…</th><th>Decena después</th><th>Terminal después</th></tr>
+ <tr><td>Decena ${ld}<br><span class="note">${DO[ld]} casos</span></td><td>${top(DD,ld)}</td><td>${top(DT,ld)}</td></tr>
+ <tr><td>Terminal ${lt}<br><span class="note">${TO[lt]} casos</span></td><td>${top(TD,lt)}</td><td>${top(TT,lt)}</td></tr></table></div></div>
+ <div class="card"><h2>Explorar un dígito: ${x}</h2>
+ <p class="note">Elige un dígito para ver qué decenas y terminales salen ${lagTxt}.</p>
+ ${chips("seqx",x,L)}
+ <div class="seqgrp">Después de la decena ${x} (${DO[x]} casos)</div>
+ <p class="note">Decena que sale después</p>${bars(DD[x],L,fm(DD,x))}
+ <p class="note">Terminal que sale después</p>${bars(DT[x],L,fm(DT,x))}
+ <div class="seqgrp">Después del terminal ${x} (${TO[x]} casos)</div>
+ <p class="note">Decena que sale después</p>${bars(TD[x],L,fm(TD,x))}
+ <p class="note">Terminal que sale después</p>${bars(TT[x],L,fm(TT,x))}</div>
+ <div class="card"><h2>Tablas completas</h2><p class="note">Filas = dígito que salió antes; columnas = dígito que salió después. Más oscuro = más veces. La última columna (n) es el total de casos.</p>
+ ${mat(DD,"Decena → Decena","Decena","Decena")}${mat(DT,"Decena → Terminal","Decena","Terminal")}${mat(TD,"Terminal → Decena","Terminal","Decena")}${mat(TT,"Terminal → Terminal","Terminal","Terminal")}</div>`;
+}
+
+function digView(R){
+ const dec=Array(10).fill(0),uni=Array(10).fill(0);
+ R.forEach(x=>{dec[+x.n[1]]++;uni[+x.n[2]]++});
+ const n=R.length,pc=v=>`${v} (${(v/n*100).toFixed(1)}%)`,L=[...Array(10).keys()];
+ const a=chi(dec),b=chi(uni),f=v=>`${v.toFixed(1)} ${v>16.92?"⚠️":"✓"}`;
+ return `<div class="card"><h2>Decena (1.er dígito del par)</h2>${bars(dec,L,pc)}</div>
+ <div class="card"><h2>Terminal (2.º dígito del par)</h2>${bars(uni,L,pc)}</div>
+ <div class="card"><h2>¿Se desvía del azar?</h2><p class="note">Chi-cuadrado (9 g.l.), umbral 16.9.</p><table><tr><th>Decena</th><th>Terminal</th></tr><tr><td>${f(a)}</td><td>${f(b)}</td></tr></table></div>`;
+}
+function sumView(R){
+ const sm=Array(19).fill(0),pp=[0,0,0,0],rep={i:0,r:0,e:0,c:0};
+ R.forEach(x=>{const a=+x.n[1],b=+x.n[2];sm[a+b]++;
+  pp[(a%2===0?1:0)+(b%2===0?2:0)]++;
+  if(a===b)rep.i++;else if(a===b+1||b===a+1)rep.c++;
+  if(a+b===9)rep.e++;
+  if(a!==b&&a+b!==9&&Math.abs(a-b)!==1)rep.r++});
+ const n=R.length,pc=v=>`${v} (${(v/n*100).toFixed(0)}%)`;
+ return `<div class="card"><h2>Suma de los 2 dígitos</h2>${bars(sm,[...Array(19).keys()])}</div>
+ <div class="card"><h2>Pares / impares</h2>${bars([pp[0],pp[1],pp[2],pp[3]],["I-I","P-I","I-P","P-P"],pc)}<p class="note">Decena-Terminal: P = par, I = impar.</p></div>
+ <div class="card"><h2>Tipos de pareja</h2>${bars([rep.i,rep.c,rep.e,rep.r],["Repetido (00, 11…)","Consecutivo (12, 43…)","Suma 9 (09, 36…)","Otros"],pc)}<p class="note">Un mismo número puede caer en dos categorías (p. ej. 45); aquí cuenta en "Repetido" o "Consecutivo" primero.</p></div>`;
+}
+function atrView(R){
+ const f=$("#fDraw").value,all=sorted().filter(x=>f==="A"||x.t===f),N=all.length,last=Array(100).fill(-1);
+ all.forEach((x,i)=>{last[+two(x)]=i});
+ const g=last.map((v,i)=>[i,v<0?null:N-1-v]);
+ const never=g.filter(a=>a[1]===null).map(a=>pad(a[0]));
+ const top=g.filter(a=>a[1]!==null).sort((a,b)=>b[1]-a[1]).slice(0,20);
+ const recent=g.filter(a=>a[1]!==null).sort((a,b)=>a[1]-b[1]).slice(0,10);
+ const row=a=>`<tr><th>${pad(a[0])}</th><td>${a[1]}</td></tr>`;
+ return `<div class="card"><h2>Más atrasados (20)</h2><p class="note">Sorteos transcurridos desde que salió cada número, sobre todo el historial. “Atrasado” no lo hace más probable: cada sorteo parte de cero.</p>
+ <div class="sc"><table><tr><th>Número</th><th>Sorteos sin salir</th></tr>${top.map(row).join("")}</table></div>${never.length?`<p class="note">Nunca han salido en tus datos: ${never.join(", ")}</p>`:""}</div>
+ <div class="card"><h2>Salieron hace poco (10)</h2><div class="sc"><table><tr><th>Número</th><th>Sorteos desde que salió</th></tr>${recent.map(row).join("")}</table></div></div>`;
+}
+const DN=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+function dowOf(d){const [y,m,dd]=d.split("-").map(Number);return new Date(y,m-1,dd).getDay()}
+function topN(list,n){const c={};list.forEach(p=>c[p]=(c[p]||0)+1);return Object.entries(c).sort((a,b)=>b[1]-a[1]||(a[0]<b[0]?-1:1)).slice(0,n)}
+function fmtTop(t){return t.length?t.map(([p,v])=>`<b>${p}</b>×${v}`).join(" · "):"—"}
+function diaView(R){
+ const wd=[...Array(7)].map(()=>[]),md=[...Array(31)].map(()=>[]);
+ R.forEach(x=>{const p=two(x);wd[dowOf(x.d)].push(p);md[+x.d.slice(8,10)-1].push(p)});
+ const wrows=[1,2,3,4,5,6,0].map(d=>`<tr><th style="text-align:left">${DN[d]}</th><td>${wd[d].length}</td><td style="text-align:left">${fmtTop(topN(wd[d],3))}</td><td>${topN(wd[d].map(p=>p[0]),1).map(a=>a[0]).join("")||"—"}</td><td>${topN(wd[d].map(p=>p[1]),1).map(a=>a[0]).join("")||"—"}</td></tr>`).join("");
+ const mrows=md.map((l,i)=>l.length?`<tr><th>${i+1}</th><td>${l.length}</td><td style="text-align:left">${fmtTop(topN(l,3))}</td></tr>`:"").join("");
+ return `<div class="card"><h2>Lo que más sale por día de la semana</h2><div class="sc"><table><tr><th>Día</th><th>Sorteos</th><th>Pares más repetidos</th><th>Decena</th><th>Terminal</th></tr>${wrows}</table></div><p class="note">×2 = salió 2 veces. Decena y terminal = dígito que más aparece en esa posición.</p></div>
+ <div class="card"><h2>Lo que más sale por día del mes</h2><div class="sc"><table><tr><th>Día</th><th>Sorteos</th><th>Pares más repetidos</th></tr>${mrows||"<tr><td colspan=3>Sin datos</td></tr>"}</table></div><p class="note">Con pocos meses de datos cada día tiene muy pocos sorteos (casi todo es ×1); importa más historial para que esto signifique algo.</p></div>`;
+}
+function graView(R){
+ const S=R.slice(-90),n=S.length,W=700,H=280,pl=34,pr=10,pt=10,pb=22;
+ const X=i=>pl+(n>1?i*(W-pl-pr)/(n-1):0),Y=v=>pt+(99-v)/99*(H-pt-pb);
+ const vals=S.map(x=>+two(x));
+ const ma=vals.map((_,i)=>{const a=vals.slice(Math.max(0,i-4),i+1);return a.reduce((s,v)=>s+v,0)/a.length});
+ const path=a=>a.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join("");
+ const grid=[0,25,50,75,99].map(g=>`<line x1="${pl}" x2="${W-pr}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--bd)"/><text x="${pl-4}" y="${Y(g)+4}" text-anchor="end" font-size="11" fill="var(--mu)">${pad(g)}</text>`).join("");
+ const dots=vals.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3" fill="var(--ac)"><title>${S[i].d}: ${pad(v)}</title></circle>`).join("");
+ const svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${grid}<path d="${path(vals)}" fill="none" stroke="var(--ac)" stroke-width="1.5" opacity=".6"/><path d="${path(ma)}" fill="none" stroke="var(--ac2)" stroke-width="2.5" stroke-dasharray="6 4"/>${dots}<text x="${pl}" y="${H-5}" font-size="11" fill="var(--mu)">${S[0].d.slice(5)}</text><text x="${W-pr}" y="${H-5}" text-anchor="end" font-size="11" fill="var(--mu)">${S[n-1].d.slice(5)}</text></svg>`;
+ const buckets=Array(10).fill(0);R.forEach(x=>buckets[Math.floor(+two(x)/10)]++);
+ const all=cnt(R),rec=cnt(R.slice(-30)),nd=(dowOf(R[R.length-1].d)+1)%7,wdc=cnt(R.filter(x=>dowOf(x.d)===nd));
+ const nm=a=>{const m=Math.max(1,...a);return a.map(v=>v/m)},na=nm(all),nr=nm(rec),nw=nm(wdc);
+ const sc=i=>0.5*na[i]+0.3*nr[i]+0.2*nw[i];
+ const top=[...Array(100).keys()].sort((a,b)=>sc(b)-sc(a)||a-b).slice(0,8);
+ const rows=top.map(i=>`<tr><th>${pad(i)}</th><td>${all[i]}</td><td>${rec[i]}</td><td>${wdc[i]}</td><td><b>${Math.round(sc(i)*100)}</b></td></tr>`).join("");
+ return `<div class="card"><h2>Cómo se comportan los resultados</h2><p class="note">Cada punto es el par (00–99) de un sorteo; la línea punteada es el promedio móvil de 5 sorteos. Últimos ${n} sorteos.</p>${svg}</div>
+ <div class="card"><h2>Rango de los pares</h2>${bars(buckets,["00s","10s","20s","30s","40s","50s","60s","70s","80s","90s"],v=>`${v} (${(v/R.length*100).toFixed(0)}%)`)}</div>
+ <div class="card"><h2>Resumen: números más frecuentes</h2><p class="note">Puntaje 0–100 = 50% frecuencia total + 30% últimos 30 sorteos + 20% frecuencia en ${DN[nd]} (el día siguiente al último sorteo cargado, ${R[R.length-1].d}).</p>
+ <div class="sc"><table><tr><th>Número</th><th>Total</th><th>Últ. 30</th><th>${DN[nd].slice(0,3)}</th><th>Puntaje</th></tr>${rows}</table></div>
+ <p class="note warn">Es un ranking de lo que <b>más ha salido</b>, no de lo que es más probable. Matemáticamente cada número del 00 al 99 tiene 1% de probabilidad en cada sorteo, sin importar el historial.</p></div>`;
+}
+const wom=d=>Math.ceil(+d.slice(8,10)/7);
+const UL=a=>`<ul style="padding-left:18px;margin:6px 0">${a.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+const card=(li,tp)=>`<div class="card"><h2>📖 Qué está pasando con tus datos</h2>${UL(li)}<b>Cómo leerlo</b>${UL(tp)}</div>`;
+const FLBTN=`<p><a href="https://www.floridalottery.com/pick3" target="_blank" rel="noopener" style="display:inline-block;background:var(--ac);color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600">Abrir Florida Lottery · Pick 3 ↗</a><br><span class="note">floridalottery.com/pick3 → “Past Results”</span></p>`;
+function nextDate(R){const l=R[R.length-1].d.split("-").map(Number),n=new Date(l[0],l[1]-1,l[2]+1);return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")}
+function scores(T,date){
+ const nd=dowOf(date),nw=wom(date);
+ const a=cnt(T),b=cnt(T.filter(x=>dowOf(x.d)===nd)),c=cnt(T.filter(x=>wom(x.d)===nw)),r=cnt(T.slice(-28));
+ const nm=z=>{const m=Math.max(1,...z);return z.map(v=>v/m)};
+ const A=nm(a),B=nm(b),C=nm(c),Q=nm(r);
+ return{a,b,c,r,s:A.map((_,i)=>0.2*A[i]+0.35*B[i]+0.25*C[i]+0.2*Q[i])};
+}
+const top20=S=>[...Array(100).keys()].sort((x,y)=>S[y]-S[x]||x-y).slice(0,20);
+function backtest(R){
+ const n=Math.min(100,R.length-60);if(n<10)return null;let h=0;
+ for(let i=R.length-n;i<R.length;i++){const t=top20(scores(R.slice(0,i),R[i].d).s);if(t.includes(+two(R[i])))h++}
+ return{h,n};
+}
+function explain(tab,R){
+ const n=R.length,E=(n/100).toFixed(1),f=$("#fDraw").value,fl=f==="A"?"Midday y Evening":f==="M"?"Midday":"Evening";
+ let li=[],tp=[];
+ if(tab==="pro")return"";
+ if(tab==="imp"){
+  const a=sorted();
+  li=a.length?[`Hay ${a.length} sorteos guardados, del ${a[0].d} al ${a[a.length-1].d}.`,`De cada sorteo se guardan los 3 dígitos, pero el análisis usa solo los 2 últimos (decena y terminal). El Fireball es opcional y no se usa.`,`Si pegas una fecha y sorteo que ya existen, se reemplazan; no se duplican.`]:["Todavía no hay sorteos guardados."];
+  tp=["Pega una línea por sorteo: fecha, M o E y los dígitos.","Para mantener los datos al día, abre Florida Lottery con el botón de abajo y copia los resultados nuevos."];
+  return card(li,tp)+`<div class="card">${FLBTN}</div>`;
+ }
+ if(tab==="seq"){
+  const lg=seqLag;
+  li=[`Cada sorteo se divide en decena (1.er dígito del par) y terminal (2.º dígito): el 26 tiene decena 2 y terminal 6.`,`Se compara cada sorteo con el que sale ${lg===1?"inmediatamente después":lg+" sorteos después"} y se cuenta qué decena y qué terminal salieron. Hay ${Math.max(0,n-lg)} casos (${fl}).`,`Se cruzan los cuatro casos: decena→decena, decena→terminal, terminal→decena y terminal→terminal.`];
+  tp=[`Con 10 dígitos posibles, lo esperado por azar es cerca de 10% para cada uno. Con pocos casos, diferencias de 3 a 5 puntos son normales.`,`“Suele venir después” describe el pasado; no es una señal para el próximo sorteo, porque cada sorteo es independiente.`];
+ }
+ if(tab==="res"){
+  const c=cnt(R),o=c.map((v,i)=>[i,v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]),nv=c.filter(v=>v===0).length;
+  li=[`Estás viendo ${n} sorteos (${fl}), del ${R[0].d} al ${R[n-1].d}. De cada uno solo cuentan los dos últimos dígitos.`,`El par que más salió es ${pad(o[0][0])} (${o[0][1]} veces) y el que menos, ${pad(o[99][0])} (${o[99][1]} veces). ${nv?nv+" números no han salido nunca en este rango.":"Los 100 números han salido al menos una vez."}`,`Si todo fuera azar puro, cada número saldría unas ${E} veces en ${n} sorteos.`];
+  tp=[`Compara cada frecuencia contra ${E}: una diferencia de 1 a 3 veces es normal; solo el doble o más merece atención.`,`“Últimos resultados” muestra lo más reciente; no anticipa el siguiente.`];
+ }
+ if(tab==="par"){
+  const c=cnt(R),mx=Math.max(...c),im=c.indexOf(mx),x2=chi(c);
+  li=[`Cada celda es un número de 00 a 99: la fila es la decena y la columna el terminal (fila 4, columna 7 = 47). El número dentro es cuántas veces salió.`,`La celda más oscura es ${pad(im)} con ${mx} veces; lo esperado por azar es ${E}.`,`El chi-cuadrado da ${x2.toFixed(1)} frente al límite de 123.2: ${x2>123.2?"lo supera, así que los datos se desvían más de lo normal (esto ocurre por casualidad 1 de cada 20 veces).":"está por debajo, así que los datos son compatibles con un sorteo justo."}`];
+  tp=["Mira primero el chi-cuadrado y después la cuadrícula.",`Celdas oscuras juntas no son “zonas calientes”: con ${n} sorteos la mayoría de las diferencias son casualidad.`];
+ }
+ if(tab==="dig"){
+  const d=Array(10).fill(0),u=Array(10).fill(0);R.forEach(x=>{d[+x.n[1]]++;u[+x.n[2]]++});
+  const mx=a=>a.indexOf(Math.max(...a)),mn=a=>a.indexOf(Math.min(...a));
+  li=[`Decena (primer dígito del par): el más frecuente es el ${mx(d)} (${pcs(d[mx(d)],n)}) y el menos frecuente el ${mn(d)} (${pcs(d[mn(d)],n)}).`,`Terminal (segundo dígito): el más frecuente es el ${mx(u)} (${pcs(u[mx(u)],n)}) y el menos frecuente el ${mn(u)} (${pcs(u[mn(u)],n)}).`,`Si fuera azar puro, cada dígito saldría 10% de las veces en cada posición. Chi-cuadrado: decena ${chi(d).toFixed(1)}, terminal ${chi(u).toFixed(1)} (límite 16.9).`];
+  tp=["Una barra larga solo importa si se aleja mucho del 10%; 1 o 2 puntos de diferencia es normal.","Un ✓ en el chi-cuadrado significa que no hay evidencia de que la máquina favorezca un dígito."];
+ }
+ if(tab==="dia"){
+  const wd=[...Array(7)].map(()=>[]),md=[...Array(31)].map(()=>[]);
+  R.forEach(x=>{const p=two(x);wd[dowOf(x.d)].push(p);md[+x.d.slice(8,10)-1].push(p)});
+  let bw=null,bm=null;
+  wd.forEach((l,d)=>{const t=topN(l,1)[0];if(t&&(!bw||t[1]>bw[2]))bw=[d,t[0],t[1]]});
+  md.forEach((l,d)=>{const t=topN(l,1)[0];if(t&&(!bm||t[1]>bm[2]))bm=[d+1,t[0],t[1]]});
+  li=[`Tus ${n} sorteos se reparten en 7 días de la semana (unos ${(n/7).toFixed(1)} por día) y en 31 días del mes (unos ${(n/30.4).toFixed(1)} por día).`,`La mayor repetición por día de la semana es el ${bw[1]} los ${DN[bw[0]]} (${bw[2]} veces). Por día del mes, el ${bm[1]} el día ${bm[0]} (${bm[2]} veces).`,`“×2” junto a un par significa que ese par salió 2 veces en ese día.`];
+  tp=["Con pocas repeticiones (×2 o ×3) es casi seguro casualidad; hay muy pocos sorteos por cada día.","Vale más fijarte en las tablas cuando tengas varios años de historial."];
+ }
+ if(tab==="gra"){
+  const S=R.slice(-90),v=S.map(x=>+two(x)),m=v.reduce((s,a)=>s+a,0)/v.length,l5=v.slice(-5).reduce((s,a)=>s+a,0)/Math.min(5,v.length);
+  const b=Array(10).fill(0);R.forEach(x=>b[Math.floor(+two(x)/10)]++);const ib=b.indexOf(Math.max(...b));
+  li=[`Cada punto es el par de un sorteo (00 abajo, 99 arriba); se muestran los últimos ${S.length}. Toca un punto para ver su fecha y número.`,`El promedio de esos pares es ${m.toFixed(1)}; en un sorteo justo se espera 49.5. El último par fue ${pad(v[v.length-1])} y el promedio móvil de 5 sorteos está en ${l5.toFixed(1)}.`,`En “Rango de los pares”, el rango más frecuente es el ${ib*10}s con ${pcs(b[ib],n)}; se espera 10% por rango.`];
+  tp=["La línea sube y baja sin forma fija: es lo normal en un sorteo aleatorio, no una tendencia.","La línea punteada suaviza el ruido; si se aleja de 49.5 por unos sorteos, suele volver sola.","No intentes adivinar el siguiente punto por la forma de la línea: cada sorteo es independiente del anterior."];
+ }
+ if(tab==="sum"){
+  const sm=Array(19).fill(0);let rp=0;R.forEach(x=>{const a=+x.n[1],b=+x.n[2];sm[a+b]++;if(a===b)rp++});
+  const is=sm.indexOf(Math.max(...sm));
+  li=[`Se suman la decena y el terminal de cada par (resultado de 0 a 18). La suma más frecuente fue ${is} (${sm[is]} veces, ${pcs(sm[is],n)}).`,`Es normal que las sumas del medio salgan más: hay más combinaciones que suman 9 (10%) que 0 o 18 (1% cada una).`,`Los pares repetidos (00, 11…99) salieron ${rp} veces (${pcs(rp,n)}); se espera 10%.`];
+  tp=["Las barras forman una campana centrada en 9: es lo esperado, no una señal.","Si las barras de pares/impares son parecidas (cerca de 25% cada una), todo va como en un sorteo justo."];
+ }
+ if(tab==="atr"){
+  const all=sorted().filter(x=>f==="A"||x.t===f),N=all.length,last=Array(100).fill(-1);all.forEach((x,i)=>{last[+two(x)]=i});
+  const g=last.map((v,i)=>[i,v<0?null:N-1-v]).filter(a=>a[1]!==null).sort((a,b)=>b[1]-a[1]),nv=last.filter(v=>v<0).length;
+  li=[g.length?`El número más atrasado es el ${pad(g[0][0])}: lleva ${g[0][1]} sorteos sin salir (de ${N} cargados).`:"Aún no hay datos.",`Con 100 números posibles, cada uno sale en promedio una vez cada 100 sorteos, así que pasar más de 100 sin salir es normal.`,nv?`${nv} números nunca han salido en tus datos.`:"Todos los números han salido al menos una vez en tus datos."];
+  tp=["“Atrasado” solo describe el pasado: la lotería no tiene memoria y al número no “le toca”.","Los números que salieron hace poco pueden repetirse igual que cualquier otro."];
+ }
+ return card(li,tp);
+}
+function proView(R){
+ if(R.length<30)return`<div class="card">Para el pronóstico se necesitan al menos 30 sorteos. Carga más datos en la pestaña Datos.</div>`;
+ const nd=nextDate(R),S=scores(R,nd),t=top20(S.s),tot=t.reduce((s,i)=>s+S.s[i],0),bt=backtest(R),dw=DN[dowOf(nd)],wk=wom(nd);
+ const cx=130,cy=130,rad=120;let ang=-Math.PI/2,paths="";
+ t.forEach((i,k)=>{const fr=S.s[i]/tot,a2=ang+fr*2*Math.PI,x1=cx+rad*Math.cos(ang),y1=cy+rad*Math.sin(ang),x2=cx+rad*Math.cos(a2),y2=cy+rad*Math.sin(a2);
+  paths+=`<path d="M${cx} ${cy}L${x1.toFixed(1)} ${y1.toFixed(1)}A${rad} ${rad} 0 ${fr>.5?1:0} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}Z" fill="hsl(${k*18} 65% 52%)" stroke="var(--sf)" stroke-width="1"><title>${pad(i)}: ${(fr*100).toFixed(1)}%</title></path>`;ang=a2});
+ const rows=t.map((i,k)=>`<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:hsl(${k*18} 65% 52%)"></span> ${k+1}</td><th>${pad(i)}</th><td>${S.a[i]}</td><td>${S.b[i]}</td><td>${S.c[i]}</td><td>${S.r[i]}</td><td><b>${Math.round(S.s[i]*100)}</b></td></tr>`).join("");
+ const pct=bt?bt.h/bt.n*100:0;
+ const btx=bt?`Prueba con el pasado: aplicando este mismo método a los últimos ${bt.n} sorteos, el número real estuvo en la lista de 20 en ${bt.h} (${pct.toFixed(0)}%). Por puro azar se espera 20%. ${pct<=27?"No supera al azar de forma clara.":"Quedó algo por encima, pero con tan pocos sorteos puede ser casualidad."}`:"Faltan datos para la prueba con el pasado (se necesitan más de 70 sorteos).";
+ return`<div class="card"><h2>Pronóstico por repeticiones</h2><p class="note">Para el próximo sorteo: <b>${dw} ${nd}</b> (semana ${wk} del mes), a partir de ${R.length} sorteos.</p>
+ <div class="sc"><table><tr><th>#</th><th>Núm</th><th>Total</th><th>${dw.slice(0,3)}</th><th>Sem ${wk}</th><th>4 sem</th><th>Punt.</th></tr>${rows}</table></div></div>
+ <div class="card"><h2>Gráfica de pastel</h2><svg viewBox="0 0 260 260" style="width:100%;max-width:300px;display:block;margin:0 auto">${paths}</svg><p class="note">Cada porción es la parte del puntaje que tiene ese número entre los 20. Porciones parecidas significan que los números están casi igualados; no es un porcentaje de probabilidad. Los colores corresponden al # de la tabla.</p></div>
+ <div class="card"><h2>📖 Qué está pasando con tus datos</h2>${UL([`Para cada número del 00 al 99 se cuentan sus repeticiones en 4 casos: en total (<b>Total</b>), en el mismo día de la semana que el próximo sorteo (<b>${dw.slice(0,3)}</b>), en la misma semana del mes (<b>Sem ${wk}</b>) y en las últimas 4 semanas, 28 sorteos (<b>4 sem</b>).`,`El puntaje mezcla esos casos: 35% día de la semana, 25% semana del mes, 20% últimas 4 semanas y 20% total. Los 20 con más puntaje forman la lista.`,btx])}<b>Cómo leerlo</b>${UL(["Un puntaje alto solo significa “se ha repetido más en estos casos”, no que sea más probable.",`Matemáticamente, cada número del 00 al 99 tiene 1% de probabilidad en cada sorteo, sin importar el historial; los 20 de la lista suman 20%, igual que cualquier otro grupo de 20.`,"Para que las columnas Día y Semana tengan sentido, usa “Todo el historial” y “Solo Evening”.","Juega solo dinero que puedas permitirte perder."])}</div>
+ <div class="card"><h2>Resultados oficiales</h2>${FLBTN}</div>`;
+}
+function impView(){
+ return `<div class="card"><h2>Estado</h2><p class="note" id="msg" role="status">Elige una opción: actualizar por Internet, cargar un archivo o escribir resultados a mano.</p></div>
+ <div class="card"><h2>🌐 Actualizar desde Internet</h2>
+ <p class="note">Descarga los últimos sorteos Midday y Evening de Florida y los suma a tu base de datos sin borrar nada.</p>
+ <div class="row"><button class="p" id="syncData" type="button">↻ Actualizar desde Internet</button></div></div>
+ <div class="card dbCard"><h2>📂 Cargar base de datos</h2>
+ <p class="note">Elige un archivo <b>.json</b> o <b>.csv</b> exportado desde esta app (o un <b>.txt</b> con un sorteo por línea). Reconoce fecha, Midday/Evening, los 3 dígitos y el Fireball.</p>
+ <div class="row"><select id="dbMode" aria-label="Modo de carga"><option value="merge">Combinar con lo que ya tengo</option><option value="replace">Reemplazar toda la base</option></select></div>
+ <div class="row"><button class="p" id="dbPick" type="button">📂 Elegir archivo…</button></div>
+ <input type="file" id="dbFile" accept=".json,.csv,.txt,application/json,text/csv,text/plain" class="hide"></div>
+ <div class="card"><h2>✍️ Entrada manual</h2>
+ <p class="note">Un sorteo por línea: <b>fecha, M o E, y los dígitos</b> (Fireball opcional al final). Ejemplos:<br>2026-08-04 M 5 8 2 1<br>2026-08-04 E 6 5 0<br>08/03/2026 M 464</p>
+ <p class="note">También puedes pegar el texto completo de lotteryusa.com/florida/pick-3/year (Evening) o /florida/midday-pick-3/year (Midday); una página cada vez.</p>
+ <textarea id="txt" placeholder="2026-08-04 M 5 8 2 1"></textarea>
+ <div class="row" style="margin-top:8px"><button class="p" id="go" type="button">Guardar</button><button id="exp" type="button">Exportar al cuadro</button></div></div>
+ <div class="card"><h2>💾 Respaldo</h2><p class="note">Guarda tu base de datos en un archivo para cargarla después.</p>
+ <div class="row"><button id="downloadCsv" type="button">⬇ Descargar CSV</button><button id="downloadJson" type="button">⬇ Descargar JSON</button></div></div>
+ <div class="card"><h2>⚙️ Avanzado</h2><div class="row"><button id="seed" type="button">Cargar historial incluido</button><button id="clr" type="button">Borrar todo</button></div>
+ <p class="note">Los datos oficiales están en floridalottery.com/pick3 (Past Results). Comprueba los resultados en la fuente oficial si detectas alguna discrepancia.</p></div>`;
+}
+const LU="https://www.lotteryusa.com/florida/";
+const SOURCES=[
+ {t:"E",u:LU+"pick-3/year"},{t:"E",u:LU+"pick-3/"},
+ {t:"M",u:LU+"midday-pick-3/year"},{t:"M",u:LU+"midday-pick-3/"}
+];
+// Varios proxies CORS que se prueban EN PARALELO: gana el primero que devuelva filas.
+const PROXIES=[
+ ["directo",u=>u],
+ ["jina",u=>"https://r.jina.ai/"+u],
+ ["allorigins",u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u)],
+ ["codetabs",u=>"https://api.codetabs.com/v1/proxy/?quest="+encodeURIComponent(u)],
+ ["thingproxy",u=>"https://thingproxy.freeboard.io/fetch/"+u]
+];
+function parseLotteryUSA(text,type){
+ const mon={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+ const clean=String(text).replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/[*_`\\]/g,"").replace(/\s+/g," ");
+ const out=[],seen=new Set();
+ const add=(y,mo,da,n3,fb)=>{
+  const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`,k=d+type;
+  if(+mo<1||+mo>12||+da<1||+da>31||seen.has(k))return;seen.add(k);
+  out.push({k,d,t:type,n:n3,f:fb||""});
+ };
+ const dig="(\\d)[\\s,\\-–|]+(\\d)[\\s,\\-–|]+(\\d)(?:[\\s,|]*(?:FB|Fireball)[^:\\d]*:?\\s*(\\d))?";
+ let re=new RegExp("(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+(\\d{4})[\\s|:\\-–]*"+dig,"gi"),m;
+ while((m=re.exec(clean)))add(m[3],mon[m[1].toLowerCase()],m[2],m[4]+m[5]+m[6],m[7]);
+ re=new RegExp("\\b(\\d{1,2})/(\\d{1,2})/(\\d{4})[\\s|:\\-–]*"+dig,"g");
+ while((m=re.exec(clean)))add(m[3],m[1],m[2],m[4]+m[5]+m[6],m[7]);
+ return out;
+}
+async function fetchSource(src){
+ const tries=PROXIES.map(async([name,mk])=>{
+  const c=new AbortController(),timer=setTimeout(()=>c.abort(),15000);
+  try{
+   const r=await fetch(mk(src.u),{cache:"no-store",signal:c.signal});
+   if(!r.ok)throw new Error(`${name}: HTTP ${r.status}`);
+   const body=await r.text(),rows=parseLotteryUSA(body,src.t);
+   if(!rows.length)throw new Error(`${name}: sin filas (${body.replace(/\s+/g," ").slice(0,70)})`);
+   return rows;
+  }catch(e){throw new Error(e.name==="AbortError"?`${name}: tiempo agotado`:(e.message.startsWith(name)?e.message:`${name}: ${e.message}`))}
+  finally{clearTimeout(timer)}
+ });
+ return Promise.any(tries);
+}
+function parseArchive(text){
+ const out=[],seen=new Set();
+ const months={january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+ const add=(y,mo,da,draw,num,fb="")=>{
+  y=+y;mo=+mo;da=+da;
+  if(y<100)y+=2000;
+  if(mo<1||mo>12||da<1||da>31)return;
+  const n=String(num).replace(/[^0-9]/g,"").slice(0,3);
+  if(n.length!==3)return;
+  const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`;
+  const t=/midday|mid-day|^M$/i.test(draw)?"M":"E",k=d+t;
+  const f=String(fb||"").replace(/\D/g,"").slice(0,1);
+  const old=out.find(x=>x.k===k);
+  if(old){if(!old.f&&f)old.f=f;return;}
+  if(!seen.has(k)){seen.add(k);out.push({k,d,t,n,f});}
+ };
+ // Normaliza HTML/Markdown a líneas sencillas y reconoce tablas como:
+ // November 19, 2026 | Midday | 9-7-9 | FB 4
+ const lines=String(text).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<\/(tr|p|li|h[1-6])>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").split(/\r?\n/);
+ for(const raw of lines){
+  const line=raw.replace(/\*\*/g,"").replace(/\s+/g," ").trim();
+  if(!line||/^\|?\s*:?[-| ]+:?\s*\|?$/.test(line))continue;
+  let m=line.match(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})\s*\|\s*(Midday|Evening)\s*\|\s*(\d)\s*[- ]\s*(\d)\s*[- ]\s*(\d)(?:\s*\|?\s*(?:FB\s*)?(\d))?/i);
+  if(m){add(m[3],months[m[1].toLowerCase()],m[2],m[4],m[5]+m[6]+m[7],m[8]||"");continue;}
+  // HTML/PDF-style table: 11/19/2026 | 9 - 7 - 9 FB 4 | 1 - 2 - 3 FB 8
+  m=line.match(/\b(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})\b\s*\|?\s*(.+)/);
+  if(m){
+   const rest=m[4];
+   const cells=rest.split("|").map(x=>x.trim());
+   if(cells.length>=2 && /\d\s*[- ]\s*\d\s*[- ]\s*\d/.test(cells[0])){
+    const date=[m[1],m[2],m[3]];let nums=cells.map(x=>x.match(/(\d)\s*[- ]\s*(\d)\s*[- ]\s*(\d)(?:\s*(?:FB|Fireball)\s*(\d))?/i)).filter(Boolean);
+    if(nums[0])add(date[2],date[0],date[1],"M",nums[0][1]+nums[0][2]+nums[0][3],nums[0][4]||"");
+    if(nums[1])add(date[2],date[0],date[1],"E",nums[1][1]+nums[1][2]+nums[1][3],nums[1][4]||"");
+    continue;
+   }
+  }
+  // ISO or US date with explicit draw label.
+  m=line.match(/\b(\d{4})-(\d{1,2})-(\d{1,2})\s*\|?\s*(Midday|Evening)\s*\|?\s*(\d)[\s-]+(\d)[\s-]+(\d)(?:\s*\|?\s*(?:FB\s*)?(\d))?/i);
+  if(m){add(m[1],m[2],m[3],m[4],m[5]+m[6]+m[7],m[8]||"");continue;}
+  m=line.match(/\b(\d{1,2})[\/-](\d{1,2})[\/-](\d{2,4})\s+(Midday|Evening|M|E)\s+(\d)\s*[- ]\s*(\d)\s*[- ]\s*(\d)(?:\s+FB\s*(\d))?/i);
+  if(m)add(m[3],m[1],m[2],m[4],m[5]+m[6]+m[7],m[8]||"");
+ }
+ return out.sort((a,b)=>a.k.localeCompare(b.k));
+}
+function latestFor(type){return sorted().filter(x=>x.t===type).slice(-1)[0]||null}
+function showLatest(){
+ for(const [type,id] of [["M","M"],["E","E"]]){
+  const x=latestFor(type),num=$("#latest"+id),date=$("#latest"+id+"Date");
+  if(num)num.textContent=x?x.n:"---";
+  if(date)date.textContent=x?`${x.d}${x.f!==""?" · FB "+x.f:""}`:"Sin datos";
+ }
+}
+function downloadFile(name,content,type){
+ const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function exportCsv(){
+ const rows=sorted(),header="fecha,sorteo,numero,fireball";
+ const csv=[header,...rows.map(x=>[x.d,x.t==="M"?"Midday":"Evening",x.n,x.f].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(","))].join("\r\n");
+ downloadFile("sofist-corax-pick3-resultados.csv","\uFEFF"+csv,"text/csv;charset=utf-8");
+}
+function exportJson(){downloadFile("sofist-corax-pick3-resultados.json",JSON.stringify({app:"Sofist Corax Estadistics",exportedAt:new Date().toISOString(),count:ROWS.length,results:sorted()},null,2),"application/json");}
+
+async function persistAll(){
+ saveLocal();
+ if(db){
+  const years={};ROWS.forEach(x=>{const y=x.d.slice(0,4);(years[y]=years[y]||[]).push(`${x.d}|${x.t}|${x.n}|${x.f}`)});
+  for(const y of Object.keys(years))await db.collection("draws").doc("y"+y).set({rows:years[y]});
+ }
+}
+async function updateResults(){
+ const btns=[$("#syncTop"),$("#syncData")].filter(Boolean);
+ const status=$("#syncStatus"),msg=$("#msg");
+ btns.forEach(b=>{b.disabled=true;b.textContent="⏳ ACTUALIZANDO…"});
+ if(status)status.textContent="Conectando con el archivo de resultados…";
+ if(msg)msg.textContent="Descargando resultados recientes…";
+ try{
+  let incoming=[];const errors=[];
+  const results=await Promise.allSettled(["E","M"].map(async type=>{
+   let last;
+   for(const src of SOURCES.filter(x=>x.t===type)){
+    try{return await fetchSource(src)}catch(e){last=e;(e.errors||[e]).forEach(x=>errors.push(`${type==="E"?"Evening":"Midday"} · ${x.message}`))}
+   }
+   throw last;
+  }));
+  results.forEach(r=>{if(r.status==="fulfilled")incoming=incoming.concat(r.value)});
+  if(incoming.length<1)throw new Error(`No se obtuvieron resultados. ${[...new Set(errors)].slice(0,5).join(" | ")}. Usa "Guardar" pegando el texto de la página (ver abajo).`);
+  const missing=results.map((r,i)=>r.status==="rejected"?["Evening","Midday"][i]:null).filter(Boolean);
+  if(missing.length)errors.partial=missing.join(", ");
+  const map=new Map(ROWS.map(x=>[x.k,x]));
+  let added=0,updated=0;
+  incoming.forEach(x=>{
+   const old=map.get(x.k);
+   if(!old){map.set(x.k,x);added++}
+   else{
+    // Keep previously imported Fireball digit when the archive does not include it.
+    const merged={...old,...x,f:old.f||x.f};
+    if(old.n!==x.n||old.t!==x.t){updated++}
+    map.set(x.k,merged);
+   }
+  });
+  ROWS=[...map.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+  await persistAll();
+  const newest=incoming.reduce((a,b)=>a.k>b.k?a:b,incoming[0]);
+  const stamp=new Date().toLocaleString("es-ES");
+  localStorage.setItem("p3lastSync",stamp);
+  const result=`✓ Actualización completada: ${added} sorteos nuevos, ${updated} revisados. Se leyeron ${incoming.length} resultados${errors.partial?` (sin datos de ${errors.partial})`:""}; último registro ${newest.d} (${newest.t==="M"?"Midday":"Evening"}).`;
+  if(status)status.textContent=`✓ ${result} · ${stamp}`;
+  if(msg)msg.textContent=result;
+  render2();showLatest();
+ }catch(err){
+  const reason=err.name==="AbortError"?"La conexión tardó demasiado.":(err.message||"No se pudo consultar la fuente.");
+  const fail=`No se pudo actualizar automáticamente: ${reason} Puedes importar los resultados manualmente o abrir el historial.`;
+  if(status)status.textContent=fail;
+  if(msg)msg.textContent=fail;
+  console.error("Sofist Corax update error",err);
+ }finally{
+  btns.forEach(b=>{b.disabled=false;b.textContent=b.id==="syncTop"?"↻ ACTUALIZAR RESULTADOS":"↻ Actualizar desde Internet"});
+ }
+}
+
+function normDraw(o){
+ let d=String(o.d??o.date??o.fecha??"").trim(),t=String(o.t??o.draw??o.sorteo??"").trim(),n=String(o.n??o.number??o.numero??o.num??"").replace(/\D/g,""),f=String(o.f??o.fireball??o.fb??"").replace(/\D/g,"").slice(0,1);
+ let m=d.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+ if(m)d=`${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+ else{m=d.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);if(!m)return null;d=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+ t=/^(m|mid|dia|día)/i.test(t)?"M":/^(e|eve|n|noche)/i.test(t)?"E":null;
+ if(!t||n.length<3)return null;n=n.slice(0,3);
+ return{k:d+t,d,t,n,f};
+}
+function parseDbFile(text){
+ text=String(text).replace(/^\uFEFF/,"");
+ const rows=[];let bad=0;
+ try{
+  const j=JSON.parse(text);
+  const arr=Array.isArray(j)?j:(j.results||j.rows||j.draws||[]);
+  arr.forEach(it=>{
+   let r=null;
+   if(typeof it==="string"){const [d,t,n,f]=it.split("|");r=normDraw({d,t,n,f})}
+   else if(it&&typeof it==="object")r=normDraw(it);
+   r?rows.push(r):bad++;
+  });
+  return{rows,bad};
+ }catch(e){}
+ const lines=text.split(/\r?\n/).filter(l=>l.trim());
+ if(lines.length&&/fecha|date/i.test(lines[0])&&lines[0].includes(",")){
+  const cells=l=>(l.match(/("([^"]|"")*"|[^,]*)(,|$)/g)||[]).map(x=>x.replace(/,$/,"").replace(/^"|"$/g,"").replace(/""/g,'"').trim());
+  const h=cells(lines[0]).map(x=>x.toLowerCase());
+  lines.slice(1).forEach(l=>{const c=cells(l),o={};h.forEach((k,i)=>o[k]=c[i]);const r=normDraw({d:o.fecha??o.date,t:o.sorteo??o.draw,n:o.numero??o.number,f:o.fireball});r?rows.push(r):bad++});
+  return{rows,bad};
+ }
+ const {out,bad:b}=parseLines(text);
+ if(out.length)return{rows:out,bad:b.length};
+ let t=/midday/i.test(text)?"M":"E";
+ return{rows:parseLotteryUSA(text,t),bad:0};
+}
+async function loadDbFile(file){
+ const msg=$("#msg");
+ try{
+  const {rows,bad}=parseDbFile(await file.text());
+  if(!rows.length){msg.textContent=`No se reconoció ningún sorteo en “${file.name}”. Usa un JSON o CSV exportado desde esta app, o un TXT con un sorteo por línea.`;msg.scrollIntoView({block:"nearest",behavior:"smooth"});return}
+  const mode=$("#dbMode").value;
+  if(mode==="replace"&&!confirm(`Se reemplazarán los ${ROWS.length} sorteos actuales por ${rows.length} del archivo. ¿Continuar?`))return;
+  const before=ROWS.length,map=new Map(mode==="replace"?[]:ROWS.map(x=>[x.k,x]));
+  rows.forEach(x=>{const o=map.get(x.k);map.set(x.k,{...o,...x,f:x.f!==""?x.f:(o?.f??"")})});
+  ROWS=[...map.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+  await persistAll();
+  const info=`✓ “${file.name}” cargado: ${rows.length} sorteos leídos${bad?`, ${bad} filas ignoradas`:""}. Base actual: ${ROWS.length} sorteos (${mode==="replace"?"reemplazada":ROWS.length-before+" nuevos"}).`;
+  render2();showLatest();$("#msg").textContent=info;$("#msg").scrollIntoView({block:"nearest",behavior:"smooth"});
+ }catch(e){msg.textContent="No se pudo leer el archivo: "+(e.message||e);}
+}
+function wireImp(){
+ $("#dbPick")?.addEventListener("click",()=>$("#dbFile").click());
+ $("#dbFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(f)loadDbFile(f);e.target.value=""});
+ $("#syncData")?.addEventListener("click",updateResults);
+ $("#downloadCsv")?.addEventListener("click",exportCsv);
+ $("#downloadJson")?.addEventListener("click",exportJson);
+ $("#go").onclick=async()=>{
+  const {out,bad}=parseLines($("#txt").value);
+  if(!out.length){
+   const txt=$("#txt").value,t=/midday/i.test(txt)?"M":"E",pg=parseLotteryUSA(txt,t);
+   if(pg.length){
+    const m2=new Map(ROWS.map(x=>[x.k,x]));pg.forEach(x=>m2.set(x.k,{...m2.get(x.k),...x}));
+    ROWS=[...m2.values()];saveLocal();$("#msg").textContent=`${pg.length} sorteos ${t==="M"?"Midday":"Evening"} importados desde el texto de la página.`;$("#txt").value="";render2();showLatest();return;
+   }
+   $("#msg").textContent="No se reconoció ninguna línea.";return}
+  const m=new Map(ROWS.map(x=>[x.k,x]));out.forEach(x=>m.set(x.k,x));
+  ROWS=[...m.values()];saveLocal();
+  let ok=true;
+  if(db){try{
+   const years={};ROWS.forEach(x=>{const y=x.d.slice(0,4);(years[y]=years[y]||[]).push(`${x.d}|${x.t}|${x.n}|${x.f}`)});
+   for(const y of Object.keys(years))await db.collection("draws").doc("y"+y).set({rows:years[y]});
+  }catch(e){ok=false}}
+  $("#msg").textContent=`${out.length} sorteos guardados${bad.length?`, ${bad.length} líneas ignoradas`:""}${db&&!ok?" (solo en este navegador: no se pudo guardar en la base)":""}.`;
+  $("#txt").value="";render2();
+ };
+ $("#exp").onclick=()=>{$("#txt").value=sorted().map(x=>`${x.d} ${x.t} ${[...x.n].join(" ")}${x.f!==""?" "+x.f:""}`).join("\n")};
+ $("#seed").onclick=()=>{const {out}=parseLines(SEED);const m=new Map(ROWS.map(x=>[x.k,x]));out.forEach(x=>m.set(x.k,x));ROWS=[...m.values()];saveLocal();$("#msg").textContent=out.length+" sorteos del historial cargados (nov 2025 – nov 2026, Evening).";render2()};
+ $("#clr").onclick=async()=>{
+  if(!confirm("¿Borrar todos los datos?"))return;
+  const ys=[...new Set(ROWS.map(x=>x.d.slice(0,4)))];
+  ROWS=[];saveLocal();
+  if(db){try{for(const y of ys)await db.collection("draws").doc("y"+y).set({rows:[]})}catch(e){}}
+  render();
+ };
+}
+function render2(){const m=$("#msg")?.textContent;render();if(tab==="imp"&&m)$("#msg").textContent=m}
+function fromSnap(s){
+ const m=new Map();
+ s.docs.forEach(d=>{(d.data()?.rows||[]).forEach(r=>{const [dt,t,n,f]=r.split("|");m.set(dt+t,{k:dt+t,d:dt,t,n,f})})});
+ if(m.size){ROWS=[...m.values()];saveLocal();render()}
+}
+$("#view").addEventListener("click",e=>{const b=e.target.closest("[data-seqx],[data-seqlag]");if(!b)return;if(b.dataset.seqx!==undefined)seqX=+b.dataset.seqx;if(b.dataset.seqlag!==undefined)seqLag=+b.dataset.seqlag;render()});
+$("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");if(!b)return;tab=b.dataset.tab;render()});
+// El botón superior debe funcionar desde cualquier pestaña (no solo desde Datos).
+$("#syncTop").addEventListener("click",updateResults);
+$("#fDraw").onchange=$("#fRange").onchange=render;
+load();render();showLatest();
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script></main></body></html>
