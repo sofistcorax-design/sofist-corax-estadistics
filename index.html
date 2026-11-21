@@ -83,12 +83,71 @@ a{color:#efc45d}
 @media(min-width:700px){.catGrid{grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}.catTile{min-height:92px;font-size:12px}}
 .dbCard select{width:100%}
 .catTile:last-child:nth-child(3n+1){grid-column:1/-1}
-@media(min-width:700px){.catGrid{grid-template-columns:repeat(10,minmax(0,1fr))!important}.catTile:last-child:nth-child(3n+1){grid-column:auto}}
+@media(min-width:700px){.catGrid{grid-template-columns:repeat(6,minmax(0,1fr))!important}.catTile:last-child:nth-child(3n+1){grid-column:auto}}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
 .chip{min-width:38px;padding:8px 10px;border-radius:9px;font-weight:700}
 .chip.on{background:linear-gradient(135deg,#8f651c,#e0b54e);border-color:#f0c865;color:#15110a}
 .seqgrp{margin:10px 0 4px;color:#d5bd83;font-weight:700;font-size:13px}
 details summary{padding:6px 0}
+.catTile.sec{border-color:#8f7330}
+.p4head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.p4ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#2a2112,#14120c);border:1px solid #8f7330;flex:none}
+.p4ico svg{width:28px;height:28px;stroke:#e4b94f;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.p4t{flex:1;min-width:150px}.p4t h2{margin:0}.p4t .note{margin:2px 0 0}
+.chipn{font-size:11px;opacity:.8;margin-left:3px}
+.stRow{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--bd);border-radius:10px;margin:6px 0;background:#0d0e11}
+.stRow.ok{border-color:#1f7a45;background:rgba(34,197,94,.09)}
+.stRow .tx{flex:1;min-width:0}.stRow .tx b{display:block;font-size:13px}.stRow .tx span{font-size:12px;color:var(--mu)}
+.stRow .res{font-size:12px;color:#c6b78f;text-align:right;max-width:38%}
+.okc,.nokc{flex:none;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+.okc{background:#16a34a;box-shadow:0 0 10px #22c55e55}
+.okc.sm{width:18px;height:18px;box-shadow:none}
+.okc svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.okc.sm svg{width:11px;height:11px}
+.nokc{border:1.5px solid #4b4535}
+.nokc svg{width:10px;height:10px;stroke:#6f6a5c;stroke-width:2.5;fill:none;stroke-linecap:round}
+.p4sum{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.p4sum strong{font-size:22px;color:#4ade80}
+.pills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media(min-width:700px){.pills{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.pill{background:#0d0e11;border:1px solid #7a4636;border-radius:10px;padding:8px 4px;text-align:center}
+.pill b{display:block;font-size:20px;letter-spacing:1px;color:#f0c65d}
+.pill span{font-size:11px;color:var(--mu)}
+
+/* ---- Análisis estadístico: 8 secciones nuevas ---- */
+.catTile span{max-width:100%;overflow-wrap:break-word}
+@media(max-width:520px){.catTile{font-size:12px;padding-left:3px;padding-right:3px}}
+.lt{flex:none;width:18px;height:18px;border-radius:50%;display:inline-block;border:1.5px solid #4b4535;background:#2a2a2a}
+.lt.ok{background:#16a34a;border-color:#4ade80;box-shadow:0 0 10px #22c55e55}
+.lt.am{background:#d97706;border-color:#fbbf24;box-shadow:0 0 10px #f59e0b55}
+.lt.rd{background:#dc2626;border-color:#f87171;box-shadow:0 0 10px #ef444455}
+.lt.gy{background:#4b4b4b;border-color:#777}
+.stRow.am{border-color:#b7791f;background:rgba(245,158,11,.09)}
+.stRow.rd{border-color:#b42318;background:rgba(239,68,68,.11)}
+.stRow .res b{color:#f0c65d}
+.lights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0 10px}
+.lgt{background:#0d0e11;border:1px solid #443821;border-radius:12px;padding:10px 6px;text-align:center}
+.lgt::before{content:"";display:block;width:26px;height:26px;border-radius:50%;margin:0 auto 6px}
+.lgt.ok::before{background:#16a34a;box-shadow:0 0 14px #22c55e66}
+.lgt.am::before{background:#d97706;box-shadow:0 0 14px #f59e0b66}
+.lgt.rd::before{background:#dc2626;box-shadow:0 0 14px #ef444466}
+.lgt b{display:block;font-size:22px}
+.lgt span{font-size:11px;color:var(--mu);line-height:1.2;display:block}
+.kpi4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.kpi4 div{background:#0d0e11;border:1px solid #443821;border-radius:8px;padding:8px 4px;text-align:center;font-size:11px;color:var(--mu)}
+.kpi4 b{display:block;font-size:18px;color:var(--tx)}
+@media(max-width:520px){.kpi4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ci{position:relative;height:12px;background:#0d0e11;border:1px solid var(--bd);border-radius:6px;margin-top:6px}
+.ciR{position:absolute;top:2px;bottom:2px;border-radius:3px;background:linear-gradient(90deg,#9a6b1c,#f0c65d);opacity:.85}
+.ciE{position:absolute;top:-3px;bottom:-3px;width:2px;background:#fff}
+.ciO{position:absolute;top:1px;bottom:1px;width:6px;margin-left:-3px;border-radius:3px;background:var(--ac2);border:1px solid #15110a}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin:6px 0}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.cellb{min-width:46px;padding:5px 4px;font-size:12px;border-radius:6px}
+.cellb.rd{background:#7f1d1d;border-color:#f87171;color:#fff}
+.cellb.am{background:#78450f;border-color:#fbbf24;color:#fff}
+.cellb.sel{outline:2px solid #e4b94f}
+.tdl{text-align:left!important}
+.verd{display:flex;gap:8px;align-items:flex-start;margin:8px 0 0;font-size:13px}
 </style></head><body><main>
 <h1 style="display:flex;align-items:center;gap:10px"><img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px">Sofist Corax Estadistics</h1>
 <p class="sub">Pick 3 Florida · últimos 2 dígitos</p>
@@ -484,9 +543,21 @@ const ICONS={
  sum:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/>',
  atr:'<circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2"/><path d="M9 2.5h6"/>',
  seq:'<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M8 12h8M13 9l3 3-3 3"/>',
- imp:'<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>'
+ p4:'<circle cx="12" cy="12" r="9"/><path d="M13.5 7.5l-5 6h7M13.5 7.5v9"/>',
+ evi:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>',
+ imp:'<ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+ sem:'<rect x="8" y="2.5" width="8" height="19" rx="3"/><circle cx="12" cy="7" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="17" r="1.4"/>',
+ rac:'<path d="M3 17h4V8h4v9h4V8h4v9h2"/>',
+ ind:'<circle cx="8.5" cy="12" r="5"/><circle cx="16" cy="12" r="5" opacity=".6"/><path d="M12.2 9.2l-.4 5.6"/>',
+ int:'<path d="M4 7v10M20 7v10M4 12h16"/><path d="M8 9.5v5M12 8.5v7M16 9.5v5"/>',
+ mc:'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.1"/><circle cx="15.5" cy="8.5" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="8.5" cy="15.5" r="1.1"/><circle cx="15.5" cy="15.5" r="1.1"/>',
+ est:'<path d="M3 3v18h18"/><path d="M6 8h13M6 16h13" stroke-dasharray="2 2.5" opacity=".6"/><path d="M6 12l3-1.5 3 2.5 3-3.5 3 2.5"/>',
+ pal:'<circle cx="12" cy="12" r="9"/><path d="M7.5 12.5l3 3 6-6.5"/>',
+ cal:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+ des:'<path d="M4 6h10M4 12h10M4 18h10"/><circle cx="18" cy="12" r="3.5"/><path d="M15.6 14.4l4.8-4.8"/>',
+ que:'<path d="M4 6h6M4 12h6M4 18h6"/><path d="M13.5 12.5l3 3 5-6"/>'
 };
-const TABS=[["res","Resumen"],["par","00–99"],["dig","Decena/Terminal"],["seq","Secuencias"],["dia","Días"],["gra","Gráfica"],["pro","Pronóstico"],["sum","Patrones"],["atr","Atrasados"],["imp","Datos"]];
+const TABS=[["res","Resumen"],["par","00–99"],["dig","Decena/Terminal"],["seq","Secuencias"],["dia","Días"],["gra","Gráfica"],["pro","Pronóstico"],["sum","Patrones"],["atr","Atrasados"],["evi","Descartar"],["sem","Semáforo"],["rac","Rachas"],["ind","Independencia"],["int","Intervalos"],["des","Lista de descartes"],["que","Los que quedan"],["mc","Monte Carlo"],["est","Estabilidad"],["pal","Palomitas"],["cal","Calidad"],["imp","Datos"],["p4","Pick 4"]];
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 function load(){
  let r=[];try{r=JSON.parse(localStorage.getItem("p3rows")||"[]")}catch(e){}
@@ -525,12 +596,15 @@ function balls(x){return [...x.n].map(c=>`<span class="ball">${c}</span>`).join(
 function chi(counts){const n=counts.reduce((a,b)=>a+b,0),e=n/counts.length;return counts.reduce((s,c)=>s+(c-e)**2/e,0)}
 function render(){
  const grid=$("#catGrid");
- if(grid)grid.innerHTML=TABS.map(([k,v])=>`<button type="button" class="catTile${k===tab?" on":""}" data-tab="${k}" role="tab" aria-selected="${k===tab}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||""}</svg><span>${v}</span></button>`).join("");
+ if(grid)grid.innerHTML=TABS.map(([k,v])=>`<button type="button" class="catTile${k===tab?" on":""}${k==="p4"?" sec":""}" data-tab="${k}" role="tab" aria-selected="${k===tab}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||""}</svg><span>${v}</span></button>`).join("");
  const v=$("#view"),R=filtered();
- $("#status").textContent=ROWS.length?`${ROWS.length} sorteos guardados · analizando ${R.length}`:"Sin datos todavía";
+ $("#status").textContent=tab==="p4"?(ROWS4.length?`Pick 4 · ${ROWS4.length} sorteos guardados · analizando ${filtered4().length}`:"Pick 4 · sin datos todavía"):(ROWS.length?`${ROWS.length} sorteos guardados · analizando ${R.length}`:"Sin datos todavía");
  showLatest();
+ if(tab==="p4"){v.innerHTML=p4View();return}
+ if(NTABS.includes(tab)){v.innerHTML=nxView(tab);return}
  if(tab==="imp"){v.innerHTML=explain("imp",R)+impView();wireImp();return}
  if(!R.length){v.innerHTML=`<div class="card">No hay datos para analizar. Ve a la pestaña <b>Datos</b> para importar resultados.</div>`;return}
+ if(tab==="evi"){v.innerHTML=eviView(R);return}
  if(tab==="res")v.innerHTML=resView(R);
  if(tab==="dig")v.innerHTML=digView(R);
  if(tab==="seq")v.innerHTML=seqView(R);
@@ -547,12 +621,115 @@ const pcs=(v,n)=>(v/n*100).toFixed(1)+"%";
 const pad=i=>String(i).padStart(2,"0");
 function cnt(R){const c=Array(100).fill(0);R.forEach(x=>c[+two(x)]++);return c}
 function two2(x){return `<span class="ball">${x.n[1]}</span><span class="ball">${x.n[2]}</span>`}
+/* ---- Pick 3: estadísticas vs. último resultado (palomita verde) ---- */
+function p3Stats(T,L){
+ /* T = sorteos anteriores al último (el último resultado queda fuera de todos los cálculos) */
+ const out=[],lp=+two(L),la=Math.floor(lp/10),lb=lp%10;
+ const tally=arr=>{const m=new Map();arr.forEach(v=>m.set(v,(m.get(v)||0)+1));return[...m].sort((a,b)=>b[1]-a[1]||(a[0]<b[0]?-1:a[0]>b[0]?1:0))};
+ const leaders=arr=>{const t=tally(arr);return t.length?t.filter(a=>a[1]===t[0][1]).slice(0,3).map(a=>a[0]):[]};
+ const add=(name,pred,ok,act,pr,pe)=>out.push({name,pred:pred.map(v=>pr?pad(v):v).join(pr&&pred.length>3?" · ":" / "),ok:!!ok,act,pe});
+ const P=T.map(x=>+two(x)),A=P.map(v=>Math.floor(v/10)),B=P.map(v=>v%10);
+ const typ=(a,b)=>a===b?"Repetido":Math.abs(a-b)===1?"Consecutivo":a+b===9?"Suma 9":"Otros";
+ const pp=(a,b)=>`${a%2===0?"P":"I"}-${b%2===0?"P":"I"}`;
+ let t=leaders(P);add("Par (00–99) más frecuente",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100);
+ t=tally(P).slice(0,10).map(a=>a[0]);add("Top 10 pares más frecuentes",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100);
+ t=leaders(A);add("Decena más frecuente",t,t.includes(la),`salió ${la}`,0,t.length/10);
+ t=leaders(B);add("Terminal más frecuente",t,t.includes(lb),`salió ${lb}`,0,t.length/10);
+ t=leaders(P.map((v,i)=>A[i]+B[i]));add("Suma más frecuente",t,t.includes(la+lb),`sumó ${la+lb}`,0,t.reduce((q,v)=>q+(v<=9?v+1:19-v),0)/100);
+ t=leaders(P.map((v,i)=>pp(A[i],B[i])));add("Pares / impares más frecuente",t,t.includes(pp(la,lb)),pp(la,lb),0,t.length*0.25);
+ t=leaders(P.map((v,i)=>typ(A[i],B[i])));add("Tipo de pareja más frecuente",t,t.includes(typ(la,lb)),typ(la,lb),0,t.reduce((q,v)=>q+({Repetido:.10,Consecutivo:.18,"Suma 9":.08,Otros:.64}[v]||0),0));
+ const wd=T.filter(x=>dowOf(x.d)===dowOf(L.d));
+ if(wd.length>=3){t=tally(wd.map(x=>+two(x))).slice(0,3).map(a=>a[0]);add(`Top 3 pares del ${DN[dowOf(L.d)]}`,t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100)}
+ if(T.length>=2){
+  const pv=P[P.length-1],pa=Math.floor(pv/10),pb=pv%10;
+  const na=[],nb=[],nd=[],nt=[];
+  for(let i=0;i<T.length-1;i++){
+   if(A[i]===pa)na.push(A[i+1]);if(B[i]===pb)nb.push(B[i+1]);
+   if(P[i]===pv){nd.push(A[i+1]);nt.push(B[i+1])}
+  }
+  if(nd.length){t=leaders(nd);add(`Decena más frecuente después del ${pad(pv)} (${nd.length} casos)`,t,t.includes(la),`salió ${la}`,0,t.length/10);
+   t=leaders(nt);add(`Terminal más frecuente después del ${pad(pv)} (${nt.length} casos)`,t,t.includes(lb),`salió ${lb}`,0,t.length/10)}
+  if(na.length){t=leaders(na);add(`Decena que sigue a la decena ${pa}`,t,t.includes(la),`salió ${la}`,0,t.length/10)}
+  if(nb.length){t=leaders(nb);add(`Terminal que sigue al terminal ${pb}`,t,t.includes(lb),`salió ${lb}`,0,t.length/10)}
+ }
+ /* Descartes: funcionan si el resultado NO estaba entre los atrasados (historial completo anterior al último) */
+ const f=$("#fDraw").value,H=sorted().filter(x=>(f==="A"||x.t===f)&&ord(x)<ord(L)),N=H.length;
+ if(N>=20){
+  const lpv=Array(100).fill(-1),ldv=Array(10).fill(-1),ltv=Array(10).fill(-1);
+  H.forEach((x,i)=>{lpv[+two(x)]=i;ldv[+x.n[1]]=i;ltv[+x.n[2]]=i});
+  const g20=lpv.map((v,i)=>[i,v<0?N:N-1-v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,20).map(a=>a[0]);
+  add("Descarte · 20 números más atrasados",g20,!g20.includes(lp),g20.includes(lp)?`salió ${pad(lp)} · estaba en la lista`:`salió ${pad(lp)} · no estaba`,1,1-g20.length/100);
+  const od=ld=>{const g=ld.map((v,i)=>[i,v<0?N:N-1-v]),m=Math.max(...g.map(a=>a[1]));return g.filter(a=>a[1]===m).slice(0,3).map(a=>a[0])};
+  t=od(ldv);add("Descarte · decena más atrasada",t,!t.includes(la),`salió decena ${la}`,0,1-t.length/10);
+  t=od(ltv);add("Descarte · terminal más atrasado",t,!t.includes(lb),`salió terminal ${lb}`,0,1-t.length/10);
+ }
+ if(T.length>=30){t=top20(scores(T,L.d).s);add("Top 20 del Pronóstico",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100)}
+ return out;
+}
+function p3Est(R){
+ if(R.length<21)return "";
+ const L=R[R.length-1],st=p3Stats(R.slice(0,-1),L),ok=st.filter(s=>s.ok).length;
+ return `<div class="card"><h2>Estadísticas vs. último resultado</h2>
+ <div style="margin:6px 0">${two2(L)} <span class="note">${L.d} · ${L.t==="M"?"Midday":"Evening"}</span></div>
+ <div class="p4sum"><strong>${ok} de ${st.length}</strong><span class="note">estadísticas coincidieron</span></div>
+ <p class="note">Cada estadística se calculó ignorando el último resultado: solo con los sorteos anteriores (${R.length-1} en este rango; los descartes usan todo el historial previo). ${CK_OK.replace('class="okc"','class="okc sm"')} = habría coincidido; el resto no. En los <b>Descarte</b> la palomita significa lo contrario: el resultado <b>no</b> estaba entre los números o dígitos atrasados.</p>
+ ${st.map(s=>`<div class="stRow${s.ok?" ok":""}">${s.ok?CK_OK:CK_NO}<div class="tx"><b>${s.name}</b><span>Predicción: ${s.pred}</span></div><div class="res">${s.act}</div></div>`).join("")}
+ <p class="note warn" style="margin-top:10px">La palomita describe lo que ya pasó: algunas estadísticas coinciden por casualidad (p. ej. un top 10 de 100 pares acierta 10% de las veces al azar). No significa que vayan a funcionar en el próximo sorteo.</p></div>`;
+}
+/* ---- Pick 3: pestaña Descartar (atrasados + qué sigue a cada número) ---- */
+let folN=null;
+function eviView(R){
+ const f=$("#fDraw").value,all=sorted().filter(x=>f==="A"||x.t===f),N=all.length,L=[...Array(10).keys()];
+ const lp=Array(100).fill(-1),ld=Array(10).fill(-1),lt=Array(10).fill(-1);
+ all.forEach((x,i)=>{lp[+two(x)]=i;ld[+x.n[1]]=i;lt[+x.n[2]]=i});
+ const gp=lp.map((v,i)=>[i,v<0?null:N-1-v]).sort((a,b)=>(b[1]===null?1e9:b[1])-(a[1]===null?1e9:a[1])||a[0]-b[0]).slice(0,20);
+ const gd=ld.map((v,i)=>[i,v<0?N:N-1-v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
+ const gt=lt.map((v,i)=>[i,v<0?N:N-1-v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
+ const n=R.length,per=Array.from({length:100},()=>({c:0,d:Array(10).fill(0),t:Array(10).fill(0),p:Array(100).fill(0)}));
+ for(let i=0;i<n-1;i++){const a=+two(R[i]),b=+two(R[i+1]),o=per[a];o.c++;o.d[Math.floor(b/10)]++;o.t[b%10]++;o.p[b]++}
+ const sel=folN===null?+two(R[n-1]):folN,sd=Math.floor(sel/10),st=sel%10,o=per[sel];
+ const fm=v=>o.c?`${v} (${(v/o.c*100).toFixed(1)}%)`:`${v}`;
+ const chips=(attr,cur)=>`<div class="chips">${L.map(v=>`<button type="button" class="chip${v===cur?" on":""}" data-${attr}="${v}">${v}</button>`).join("")}</div>`;
+ const lead=a=>{const m=Math.max(...a);return a.map((v,i)=>[i,v]).filter(z=>z[1]===m).map(z=>z[0]).slice(0,3).join(" / ")};
+ const nextP=o.p.map((v,i)=>[i,v]).filter(z=>z[1]>0).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,5);
+ const best=(a,c)=>{if(!c)return"—";const m=Math.max(...a);return `<b>${lead(a)}</b> <span class="note">${m} · ${(m/c*100).toFixed(0)}%</span>`};
+ const never=lp.map((v,i)=>v<0?pad(i):null).filter(Boolean);
+ return `<div class="card"><h2>Los 20 números más atrasados</h2>
+ <p class="note">Números para descartar según este criterio: los que llevan más sorteos sin salir (sobre ${N} sorteos${f==="A"?"":f==="M"?" Midday":" Evening"}, todo el historial).</p>
+ <div class="pills">${gp.map(([i,g],k)=>`<div class="pill"><b>${pad(i)}</b><span>${g===null?"nunca":g+" sorteos"}</span></div>`).join("")}</div>
+ ${never.length>20?`<p class="note">${never.length} números nunca han salido en tus datos.</p>`:""}
+ <p class="note warn" style="margin-top:10px">Ojo: es una lista de descarte por criterio, no una probabilidad. Estadísticamente, un número atrasado tiene el mismo 1% de salir que cualquiera, porque cada sorteo es independiente.</p></div>
+ <div class="card"><h2>Decenas más atrasadas</h2><p class="note">Sorteos transcurridos desde que cada dígito salió como decena (1.er dígito del par).</p>${bars(gd.map(a=>a[1]),gd.map(a=>a[0]),v=>`${v} sorteos`)}</div>
+ <div class="card"><h2>Terminales más atrasados</h2><p class="note">Sorteos transcurridos desde que cada dígito salió como terminal (2.º dígito del par).</p>${bars(gt.map(a=>a[1]),gt.map(a=>a[0]),v=>`${v} sorteos`)}</div>
+ <div class="card"><h2>Qué sale después de cada número</h2>
+ <p class="note">Elige un número para ver qué decena y qué terminal salieron con más frecuencia en el sorteo siguiente (${n} sorteos del rango).</p>
+ <p class="note" style="margin-bottom:0">Decena</p>${chips("fold",sd)}<p class="note" style="margin-bottom:0">Terminal</p>${chips("folt",st)}
+ <div class="row"><button type="button" data-folreset="1">Usar el último sorteo (${pad(+two(R[n-1]))})</button></div>
+ <h2 style="margin-top:6px">Después del ${pad(sel)} <span class="note">· ${o.c} casos</span></h2>
+ ${o.c?`<p>Más frecuente después: decena <b>${lead(o.d)}</b> y terminal <b>${lead(o.t)}</b>.</p>
+ <p class="note">Decena que sale después</p>${bars(o.d,L,fm)}
+ <p class="note">Terminal que sale después</p>${bars(o.t,L,fm)}
+ <p class="note">Pares que más han seguido al ${pad(sel)}</p><p>${nextP.map(([i,v])=>`<b>${pad(i)}</b>×${v}`).join(" · ")}</p>`:`<p class="note">El ${pad(sel)} no ha salido (o solo salió en el último sorteo) en este rango, así que no hay datos de lo que viene después.</p>`}
+ <p class="note">Con ${n} sorteos, cada número tiene pocos casos: diferencias de una o dos veces son casualidad.</p></div>
+ <div class="card"><details><summary style="cursor:pointer;font-weight:700">Tabla de los 100 números</summary>
+ <p class="note">Decena y terminal que más han salido en el sorteo siguiente a cada número (porcentaje sobre sus casos).</p>
+ <div class="sc"><table style="font-size:12px"><tr><th>Núm</th><th>Casos</th><th>Decena después</th><th>Terminal después</th></tr>${per.map((p,i)=>`<tr><th>${pad(i)}</th><td>${p.c}</td><td>${best(p.d,p.c)}</td><td>${best(p.t,p.c)}</td></tr>`).join("")}</table></div></details></div>`;
+}
+$("#view").addEventListener("click",e=>{
+ const b=e.target.closest("[data-fold],[data-folt],[data-folreset]");if(!b)return;
+ const R=filtered(),cur=folN===null?(R.length?+two(R[R.length-1]):0):folN;
+ if(b.dataset.folreset!==undefined)folN=null;
+ else if(b.dataset.fold!==undefined)folN=(+b.dataset.fold)*10+cur%10;
+ else folN=Math.floor(cur/10)*10+(+b.dataset.folt);
+ render();
+});
 function resView(R){
  const c=cnt(R),o=c.map((v,i)=>[i,v]);
  const hot=o.slice().sort((a,b)=>b[1]-a[1]||a[0]-b[0]),cold=o.slice().sort((a,b)=>a[1]-b[1]||a[0]-b[0]);
  const last=R.slice(-10).reverse();
  return `<div class="card"><h2>Resumen · últimos 2 dígitos</h2><div class="kpi"><div><b>${R.length}</b>sorteos</div><div><b>${pad(hot[0][0])}</b>más repetido (${hot[0][1]})</div><div><b>${pad(cold[0][0])}</b>menos repetido (${cold[0][1]})</div></div>
  <p class="note">Esperado por número si fuera azar puro: ${(R.length/100).toFixed(1)} veces.</p></div>
+ ${p3Est(R)}
  <div class="card"><h2>Últimos resultados</h2>${last.map(x=>`<div style="margin:6px 0">${two2(x)} <span class="note">${x.d} · ${x.t==="M"?"Midday":"Evening"}</span></div>`).join("")}</div>
  <div class="card"><h2>10 más frecuentes</h2>${bars(hot.slice(0,10).map(a=>a[1]),hot.slice(0,10).map(a=>pad(a[0])))}</div>
  <div class="card"><h2>10 menos frecuentes</h2>${bars(cold.slice(0,10).map(a=>a[1]),cold.slice(0,10).map(a=>pad(a[0])))}</div>`;
@@ -810,13 +987,14 @@ function parseLotteryUSA(text,type){
  while((m=re.exec(clean)))add(m[3],m[1],m[2],m[4]+m[5]+m[6],m[7]);
  return out;
 }
-async function fetchSource(src){
+async function fetchSource(src,parse){
+ parse=parse||parseLotteryUSA;
  const tries=PROXIES.map(async([name,mk])=>{
   const c=new AbortController(),timer=setTimeout(()=>c.abort(),15000);
   try{
    const r=await fetch(mk(src.u),{cache:"no-store",signal:c.signal});
    if(!r.ok)throw new Error(`${name}: HTTP ${r.status}`);
-   const body=await r.text(),rows=parseLotteryUSA(body,src.t);
+   const body=await r.text(),rows=parse(body,src.t);
    if(!rows.length)throw new Error(`${name}: sin filas (${body.replace(/\s+/g," ").slice(0,70)})`);
    return rows;
   }catch(e){throw new Error(e.name==="AbortError"?`${name}: tiempo agotado`:(e.message.startsWith(name)?e.message:`${name}: ${e.message}`))}
@@ -1036,6 +1214,708 @@ function fromSnap(s){
  s.docs.forEach(d=>{(d.data()?.rows||[]).forEach(r=>{const [dt,t,n,f]=r.split("|");m.set(dt+t,{k:dt+t,d:dt,t,n,f})})});
  if(m.size){ROWS=[...m.values()];saveLocal();render()}
 }
+/* ===================== PICK 4 (sección aparte) ===================== */
+let ROWS4=[],p4sub="res",p4msg="";
+const SOURCES4=[
+ {t:"E",u:LU+"pick-4/year"},{t:"E",u:LU+"pick-4/"},
+ {t:"M",u:LU+"midday-pick-4/year"},{t:"M",u:LU+"midday-pick-4/"}
+];
+const P4_FIG=["Todos distintos","Un par","Dos pares","Trío","Cuádruple"];
+const CK_OK='<span class="okc" title="Funcionó con el último resultado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>';
+const CK_NO='<span class="nokc" title="No coincidió"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>';
+function load4(){try{const r=JSON.parse(localStorage.getItem("p4rows")||"[]");if(Array.isArray(r))ROWS4=r}catch(e){}}
+function save4(){try{localStorage.setItem("p4rows",JSON.stringify(ROWS4))}catch(e){}}
+function sorted4(){return ROWS4.slice().sort((a,b)=>{const x=ord(a),y=ord(b);return x<y?-1:x>y?1:0})}
+function filtered4(){
+ let r=sorted4();const f=$("#fDraw").value,n=+$("#fRange").value;
+ if(f!=="A")r=r.filter(x=>x.t===f);
+ if(n)r=r.slice(-n*(f==="A"?2:1));
+ return r;
+}
+function parseLines4(t){
+ const out=[],bad=[];
+ t.split(/\n/).forEach(l=>{
+  l=l.trim();if(!l)return;
+  const d=l.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  let date;
+  if(d)date=`${d[1]}-${d[2].padStart(2,"0")}-${d[3].padStart(2,"0")}`;
+  else{const m=l.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);if(m)date=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+  const rest=l.replace(/\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\d{1,2}[-\/]\d{1,2}[-\/]\d{4}/,"");
+  const dr=/(^|[^a-z])(e|eve|evening|noche|n)([^a-z]|$)/i.test(rest)?"E":/(^|[^a-z])(m|mid|midday|dia|día)([^a-z]|$)/i.test(rest)?"M":null;
+  const digs=rest.replace(/[a-zA-Zí]+/g," ").match(/\d/g)||[];
+  if(!date||!dr||digs.length<4||digs.length>5){bad.push(l);return}
+  out.push({k:date+dr,d:date,t:dr,n:digs.slice(0,4).join(""),f:digs[4]??""});
+ });
+ return{out,bad};
+}
+function parseLotteryUSA4(text,type){
+ const mon={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+ const clean=String(text).replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/[*_`\\]/g,"").replace(/\s+/g," ");
+ const out=[],seen=new Set();
+ const add=(y,mo,da,n4,fb)=>{
+  const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`,k=d+type;
+  if(+mo<1||+mo>12||+da<1||+da>31||seen.has(k))return;seen.add(k);
+  out.push({k,d,t:type,n:n4,f:fb||""});
+ };
+ const sep="[\\s,\\-–|]+";
+ const dig="(\\d)"+sep+"(\\d)"+sep+"(\\d)"+sep+"(\\d)(?:[\\s,|]*(?:FB|Fireball)[^:\\d]*:?\\s*(\\d))?";
+ let re=new RegExp("(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\\.?\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+(\\d{4})[\\s|:\\-–]*"+dig,"gi"),m;
+ while((m=re.exec(clean)))add(m[3],mon[m[1].toLowerCase()],m[2],m[4]+m[5]+m[6]+m[7],m[8]);
+ re=new RegExp("\\b(\\d{1,2})/(\\d{1,2})/(\\d{4})[\\s|:\\-–]*"+dig,"g");
+ while((m=re.exec(clean)))add(m[3],m[1],m[2],m[4]+m[5]+m[6]+m[7],m[8]);
+ return out;
+}
+function mergeRows4(list){
+ const map=new Map(ROWS4.map(x=>[x.k,x]));let added=0,updated=0;
+ list.forEach(x=>{const o=map.get(x.k);if(!o){added++;map.set(x.k,x)}else{if(o.n!==x.n)updated++;map.set(x.k,{...o,...x,f:x.f!==""?x.f:(o.f??"")})}});
+ ROWS4=[...map.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+ save4();return{added,updated};
+}
+async function updateResults4(){
+ const btn=$("#p4sync");
+ if(btn){btn.disabled=true;btn.textContent="⏳ Actualizando…"}
+ p4msg="Descargando resultados de Pick 4…";const m0=$("#p4msg");if(m0)m0.textContent=p4msg;
+ try{
+  let incoming=[];const errors=[];
+  const results=await Promise.allSettled(["E","M"].map(async type=>{
+   let last;
+   for(const src of SOURCES4.filter(x=>x.t===type)){
+    try{return await fetchSource(src,parseLotteryUSA4)}catch(e){last=e;(e.errors||[e]).forEach(x=>errors.push(`${type==="E"?"Evening":"Midday"} · ${x.message}`))}
+   }
+   throw last;
+  }));
+  results.forEach(r=>{if(r.status==="fulfilled")incoming=incoming.concat(r.value)});
+  if(!incoming.length)throw new Error(`No se obtuvieron resultados. ${[...new Set(errors)].slice(0,3).join(" | ")}. Puedes pegar el texto de la página en la pestaña Datos.`);
+  const missing=results.map((r,i)=>r.status==="rejected"?["Evening","Midday"][i]:null).filter(Boolean);
+  const {added,updated}=mergeRows4(incoming);
+  const newest=incoming.reduce((a,b)=>a.k>b.k?a:b,incoming[0]);
+  p4msg=`✓ Pick 4 actualizado: ${added} sorteos nuevos, ${updated} corregidos${missing.length?` (sin datos de ${missing.join(", ")})`:""}. Último registro ${newest.d} (${newest.t==="M"?"Midday":"Evening"}) · ${new Date().toLocaleString("es-ES")}`;
+ }catch(err){
+  p4msg=`No se pudo actualizar Pick 4: ${err.name==="AbortError"?"La conexión tardó demasiado.":(err.message||"fuente no disponible")}`;
+  console.error("Pick 4 update error",err);
+ }finally{
+  if(tab==="p4")render();
+ }
+}
+function p4Save(){
+ const ta=$("#p4txt");if(!ta)return;
+ const {out,bad}=parseLines4(ta.value);
+ if(out.length){const r=mergeRows4(out);p4msg=`${out.length} sorteos guardados (${r.added} nuevos)${bad.length?`, ${bad.length} líneas ignoradas`:""}.`}
+ else{
+  const t=/midday/i.test(ta.value)?"M":"E",pg=parseLotteryUSA4(ta.value,t);
+  if(pg.length){const r=mergeRows4(pg);p4msg=`${pg.length} sorteos ${t==="M"?"Midday":"Evening"} importados desde el texto de la página (${r.added} nuevos).`}
+  else p4msg="No se reconoció ninguna línea. Formato: 2026-08-04 M 5 8 2 1 (Fireball opcional al final).";
+ }
+ render();
+}
+function p4Clear(){
+ if(!confirm("¿Borrar todos los datos de Pick 4?"))return;
+ ROWS4=[];save4();p4msg="Datos de Pick 4 borrados.";render();
+}
+function p4Csv(){
+ const rows=sorted4(),csv=["fecha,sorteo,numero,fireball",...rows.map(x=>[x.d,x.t==="M"?"Midday":"Evening",x.n,x.f].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(","))].join("\r\n");
+ downloadFile("sofist-corax-pick4-resultados.csv","\uFEFF"+csv,"text/csv;charset=utf-8");
+}
+function p4Figure(d){const c={};d.forEach(v=>c[v]=(c[v]||0)+1);const s=Object.values(c).sort((a,b)=>b-a).join("");return({"1111":"Todos distintos","211":"Un par","22":"Dos pares","31":"Trío","4":"Cuádruple"})[s]}
+function p4Feat(x){
+ const d=[...x.n].map(Number),ev=d.filter(v=>v%2===0).length,hi=d.filter(v=>v>=5).length;
+ return{d,sum:d.reduce((a,b)=>a+b,0),par:`${ev} pares · ${4-ev} impares`,alt:`${hi} altos · ${4-hi} bajos`,fig:p4Figure(d),a:x.n.slice(0,2),b:x.n.slice(2)};
+}
+/* ---- Frecuencias ---- */
+function p4Freq(R){
+ const n=R.length,L=[...Array(10).keys()],pos=[0,1,2,3].map(()=>Array(10).fill(0)),tot=Array(10).fill(0);
+ R.forEach(x=>[...x.n].forEach((c,i)=>{pos[i][+c]++;tot[+c]++}));
+ const hm=`<tr><th></th>${L.map(d=>`<th>${d}</th>`).join("")}</tr>`+pos.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i+1}.ª</th>${r.map(v=>`<td style="background:rgba(214,163,62,${(v/mx*.6).toFixed(2)})">${v}</td>`).join("")}</tr>`}).join("");
+ const mx=Math.max(...tot),mn=Math.min(...tot),dm=tot.indexOf(mx),dn=tot.indexOf(mn),pc=v=>`${v} (${(v/(n*4)*100).toFixed(1)}%)`;
+ const F=R.map(p4Feat),t2=a=>{const t=topN(a,10);return bars(t.map(z=>z[1]),t.map(z=>z[0]))};
+ const sums=topN(F.map(f=>f.sum),8),par=topN(F.map(f=>f.par),5),alt=topN(F.map(f=>f.alt),5);
+ const fig=P4_FIG.map(k=>F.filter(f=>f.fig===k).length);
+ const rep=topN(R.map(x=>x.n),10).filter(a=>a[1]>1);
+ return `<div class="card"><h2>Frecuencias · dígitos</h2><div class="kpi"><div><b>${n}</b>sorteos</div><div><b>${dm}</b>más frecuente (${mx})</div><div><b>${dn}</b>menos frecuente (${mn})</div></div>
+ <p class="note">Esperado por azar: cada dígito unas ${(n*4/10).toFixed(1)} veces en total (${(n/10).toFixed(1)} por posición).</p></div>
+ <div class="card"><h2>Por posición</h2><p class="note">Fila = posición del dígito en el número de 4. Columna = dígito. Más oscuro = salió más veces.</p><div class="sc"><table>${hm}</table></div></div>
+ <div class="card"><h2>Dígitos (todas las posiciones)</h2>${bars(tot,L,pc)}</div>
+ <div class="card"><h2>Últimos 2 dígitos · top 10</h2>${t2(F.map(f=>f.b))}</div>
+ <div class="card"><h2>Primeros 2 dígitos · top 10</h2>${t2(F.map(f=>f.a))}</div>
+ <div class="card"><h2>Suma de los 4 dígitos · top 8</h2>${bars(sums.map(z=>z[1]),sums.map(z=>z[0]))}</div>
+ <div class="card"><h2>Pares / impares</h2>${bars(par.map(z=>z[1]),par.map(z=>z[0]))}<h2 style="margin-top:12px">Altos (5–9) / bajos (0–4)</h2>${bars(alt.map(z=>z[1]),alt.map(z=>z[0]))}</div>
+ <div class="card"><h2>Forma del número</h2>${bars(fig,P4_FIG,v=>`${v} (${(v/n*100).toFixed(0)}%)`)}<p class="note">Esperado por azar: 50% todos distintos, 43% un par, 3% dos pares, 4% trío, 0.1% cuádruple.</p></div>
+ <div class="card"><h2>Combinaciones repetidas</h2>${rep.length?rep.map(([k,v])=>`<div style="margin:6px 0">${balls({n:k,f:""})} <span class="note">×${v}</span></div>`).join(""):`<p class="note">Ninguna combinación de 4 dígitos se ha repetido en este rango (hay 10 000 posibles).</p>`}</div>`;
+}
+/* ---- Vista principal ---- */
+function p4View(){
+ const R=filtered4(),subs=[["res","Resultados"],["fre","Frecuencias"],["dat","Datos"]];
+ const head=`<div class="card"><div class="p4head"><div class="p4ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS.p4}</svg></div>
+ <div class="p4t"><h2>Pick 4 Florida</h2><p class="note">4 dígitos · Midday y Evening${ROWS4.length?` · ${ROWS4.length} sorteos guardados`:""}</p></div>
+ <button class="p" id="p4sync" type="button">↻ Actualizar</button></div>
+ ${p4msg?`<p class="note" id="p4msg" role="status" style="margin:10px 0 0">${esc(p4msg)}</p>`:`<p class="note" id="p4msg" role="status" style="margin:0"></p>`}
+ <div class="chips" style="margin:12px 0 0">${subs.map(([k,v])=>`<button type="button" class="chip${k===p4sub?" on":""}" data-p4sub="${k}">${v}</button>`).join("")}</div></div>`;
+ let body="";
+ if(p4sub==="dat"){
+  body=`<div class="card"><h2>✍️ Entrada manual</h2><p class="note">Un sorteo por línea: <b>fecha, M o E, y los 4 dígitos</b> (Fireball opcional al final). Ejemplos:<br>2026-08-04 M 5 8 2 1<br>2026-08-04 E 6 5 0 9 3<br>08/03/2026 M 4642</p>
+  <p class="note">También puedes pegar el texto de lotteryusa.com/florida/pick-4/year (Evening) o /florida/midday-pick-4/year (Midday); una página cada vez.</p>
+  <textarea id="p4txt" placeholder="2026-08-04 M 5 8 2 1"></textarea>
+  <div class="row" style="margin-top:8px"><button class="p" id="p4go" type="button">Guardar</button><button id="p4csv" type="button">⬇ Descargar CSV</button><button id="p4clr" type="button">Borrar Pick 4</button></div></div>`;
+ }else if(!R.length){
+  body=`<div class="card">Todavía no hay resultados de Pick 4 en este rango. Toca <b>↻ Actualizar</b> para descargarlos o pégalos en la pestaña <b>Datos</b>.</div>`;
+ }else if(p4sub==="fre"){
+  body=p4Freq(R);
+ }else{
+  const lt=t=>sorted4().filter(x=>x.t===t).slice(-1)[0]||null,box=(t,l)=>{const x=lt(t);return `<div class="latestBox"><small>Último ${l}</small><strong>${x?x.n:"----"}</strong><em>${x?`${x.d}${x.f!==""?" · FB "+x.f:""}`:"Sin datos"}</em></div>`};
+  body=`<div class="card"><h2>Último resultado</h2><div class="latestResults">${box("M","Midday")}${box("E","Evening")}</div></div>
+  <div class="card"><h2>Últimos resultados</h2>${R.slice(-10).reverse().map(x=>`<div style="margin:6px 0">${balls(x)} <span class="note">${x.d} · ${x.t==="M"?"Midday":"Evening"}</span></div>`).join("")}
+  <p class="note">Mostrando ${R.length} sorteos según los filtros de arriba (sorteo y rango).</p></div>`;
+ }
+ return head+body;
+}
+$("#view").addEventListener("click",e=>{
+ const s=e.target.closest("[data-p4sub]");
+ if(s){e.preventDefault();p4sub=s.dataset.p4sub;render();return}
+ if(e.target.closest("#p4sync")){updateResults4();return}
+ if(e.target.closest("#p4go")){p4Save();return}
+ if(e.target.closest("#p4csv")){p4Csv();return}
+ if(e.target.closest("#p4clr")){p4Clear();return}
+});
+load4();
+/* =================== fin PICK 4 =================== */
+
+/* =================== ANÁLISIS ESTADÍSTICO · 8 secciones nuevas =================== */
+const NX={dsD:1,dsT:1,indS:"n",estD:0,estP:"d",estW:30,palN:100,mcS:5000};
+const NTABS=["sem","rac","ind","int","des","que","mc","est","pal","cal"];
+const CACHE={};let mcCache=null,mcRun=null;
+/* ---- matemáticas básicas (sin librerías) ---- */
+function lgam(x){
+ const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+ if(x<0.5)return Math.log(Math.PI/Math.abs(Math.sin(Math.PI*x)))-lgam(1-x);
+ x-=1;let a=0.99999999999980993;const t=x+7.5;
+ for(let i=0;i<8;i++)a+=c[i]/(x+i+1);
+ return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
+}
+function gq(a,x){/* gamma incompleta regularizada superior Q(a,x) */
+ if(x<=0)return 1;
+ if(x<a+1){let ap=a,sum=1/a,del=sum;for(let n=0;n<1000;n++){ap++;del*=x/ap;sum+=del;if(Math.abs(del)<Math.abs(sum)*1e-14)break}
+  return Math.min(1,Math.max(0,1-sum*Math.exp(-x+a*Math.log(x)-lgam(a))))}
+ let b=x+1-a,c=1e300,d=1/b,h=d;
+ for(let i=1;i<1000;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-14)break}
+ return Math.min(1,Math.max(0,Math.exp(-x+a*Math.log(x)-lgam(a))*h));
+}
+const chiP=(x,df)=>df>0?gq(df/2,x/2):1;
+function erf(x){const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+0.3275911*x);return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x))}
+const nCdf=z=>0.5*(1+erf(z/Math.SQRT2)),p2=z=>Math.min(1,2*(1-nCdf(Math.abs(z))));
+function wilson(k,n,z=1.96){if(!n)return[0,1];const p=k/n,d=1+z*z/n,c=p+z*z/(2*n),h=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return[Math.max(0,(c-h)/d),Math.min(1,(c+h)/d)]}
+function rng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hashRows(R){let h=2166136261;const s=R.map(x=>x.k+x.n).join("|");for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(36)+"_"+R.length}
+const fp=p=>p<0.001?"<0.001":p<0.01?p.toFixed(4):p.toFixed(3);
+const pc1=v=>(v*100).toFixed(1)+"%";
+const dd=x=>+x.n[1],tt=x=>+x.n[2],pn=x=>+two(x);
+const ok3=x=>!!x&&/^\d{3}$/.test(String(x.n)),ok4=x=>!!x&&/^\d{4}$/.test(String(x.n));
+const F3=()=>filtered().filter(ok3),F4=()=>filtered4().filter(ok4);
+function allDraw(){const f=$("#fDraw").value;return sorted().filter(x=>ok3(x)&&(f==="A"||x.t===f))}
+function rangeBoth(rows){const n=+$("#fRange").value;return n?rows.slice(-n*2):rows}
+function chiTab(M){/* chi-cuadrado de independencia / homogeneidad en tabla de contingencia */
+ const r=M.map(x=>x.reduce((a,b)=>a+b,0)),nc=M[0].length,c=Array(nc).fill(0);M.forEach(row=>row.forEach((v,j)=>c[j]+=v));
+ const N=r.reduce((a,b)=>a+b,0),ri=r.map((v,i)=>v>0?i:-1).filter(i=>i>=0),ci=c.map((v,j)=>v>0?j:-1).filter(j=>j>=0);
+ let x=0,minE=Infinity;
+ ri.forEach(i=>ci.forEach(j=>{const e=r[i]*c[j]/N;x+=(M[i][j]-e)**2/e;if(e<minE)minE=e}));
+ const df=(ri.length-1)*(ci.length-1);
+ return{x,df,minE:isFinite(minE)?minE:0,N,p:df>0?chiP(x,df):1};
+}
+/* ---- piezas de interfaz ---- */
+function nxHead(k,title,sub){return `<div class="card"><div class="p4head"><div class="p4ico"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg></div><div class="p4t"><h2>${title}</h2><p class="note">${sub}</p></div></div></div>`}
+const nxChips=(key,cur,vals,fmt)=>`<div class="chips">${vals.map(v=>`<button type="button" class="chip${v===cur?" on":""}" data-nx="${key}:${v}">${fmt?fmt(v):v}</button>`).join("")}</div>`;
+const LT=l=>`<span class="lt ${l}"></span>`;
+const lvl=(p,bonf)=>p<bonf?"rd":p<0.05?"am":"ok";
+const scope=(n)=>`Analizando <b>${n}</b> sorteos según los filtros de arriba (sorteo y rango). Con más historial las pruebas tienen más potencia: prueba "Todo el historial".`;
+function nxView(t){
+ try{
+  if(t==="sem")return semView();if(t==="rac")return racView();if(t==="ind")return indView();
+  if(t==="int")return intView();if(t==="des")return desView();if(t==="que")return queView();if(t==="mc")return mcView();if(t==="est")return estView();
+  if(t==="pal")return palView();if(t==="cal")return calView();
+ }catch(e){console.error(e);return `<div class="card warn">No se pudo calcular esta sección: ${esc(e.message||e)}. Revisa la pestaña <b>Calidad</b>: puede haber registros mal cargados.</div>`}
+ return"";
+}
+/* ======================= 1 · SEMÁFORO DE DESVÍOS ======================= */
+function mc100P(n,x){
+ const key="c100_"+n;let a=CACHE[key];
+ if(!a){const S=2000,r=rng(1234567+n),c=new Int32Array(100),e=n/100;a=new Float64Array(S);
+  for(let s=0;s<S;s++){c.fill(0);for(let i=0;i<n;i++)c[Math.floor(r()*100)]++;let q=0;for(let j=0;j<100;j++)q+=(c[j]-e)**2/e;a[s]=q}
+  CACHE[key]=a}
+ let g=0;for(let s=0;s<a.length;s++)if(a[s]>=x-1e-9)g++;
+ return(g+1)/(a.length+1);
+}
+function semTests(){
+ const T=[],skip=[];
+ const mk=(g,name,x,df,minE,pSim)=>T.push({g,name,x,df,minE,p:pSim!==undefined?pSim:chiP(x,df),sim:pSim!==undefined});
+ const home=(arrA,arrB)=>{const a=Array(10).fill(0),b=Array(10).fill(0);arrA.forEach(v=>a[v]++);arrB.forEach(v=>b[v]++);return chiTab([a,b])};
+ const R=F3();
+ if(R.length>=30){
+  const dec=Array(10).fill(0),uni=Array(10).fill(0);R.forEach(x=>{dec[dd(x)]++;uni[tt(x)]++});
+  mk("Pick 3","Decena",chi(dec),9,R.length/10);
+  mk("Pick 3","Terminal",chi(uni),9,R.length/10);
+  const x100=chi(cnt(R));mk("Pick 3","Los 100 pares (00–99)",x100,99,R.length/100,mc100P(R.length,x100));
+ }else skip.push("Pick 3: se necesitan al menos 30 sorteos en el rango elegido.");
+ const B=rangeBoth(sorted().filter(ok3)),M=B.filter(x=>x.t==="M"),E=B.filter(x=>x.t==="E");
+ if(M.length>=20&&E.length>=20){
+  [["Decena",dd],["Terminal",tt]].forEach(([nm,f])=>{const r=home(M.map(f),E.map(f));mk("Pick 3",`Midday vs Evening · ${nm}`,r.x,r.df,r.minE)});
+ }else skip.push(`Pick 3 · Midday vs Evening: faltan datos (Midday ${M.length}, Evening ${E.length}; se necesitan 20 de cada uno).`);
+ const R4=F4();
+ if(R4.length>=30){[0,1,2,3].forEach(i=>{const c=Array(10).fill(0);R4.forEach(x=>c[+x.n[i]]++);mk("Pick 4",`Posición ${i+1}`,chi(c),9,R4.length/10)})}
+ else skip.push(ROWS4.length?"Pick 4: se necesitan al menos 30 sorteos en el rango elegido.":"Pick 4: todavía no hay datos (cárgalos en la pestaña Pick 4).");
+ const B4=rangeBoth(sorted4().filter(ok4)),M4=B4.filter(x=>x.t==="M"),E4=B4.filter(x=>x.t==="E");
+ if(M4.length>=20&&E4.length>=20){[0,1,2,3].forEach(i=>{const r=home(M4.map(x=>+x.n[i]),E4.map(x=>+x.n[i]));mk("Pick 4",`Midday vs Evening · posición ${i+1}`,r.x,r.df,r.minE)})}
+ else if(ROWS4.length)skip.push(`Pick 4 · Midday vs Evening: faltan datos (Midday ${M4.length}, Evening ${E4.length}).`);
+ return{T,skip};
+}
+function semView(){
+ const head=nxHead("sem","Semáforo de desvíos","Todas las pruebas de uniformidad en un solo lugar, con corrección por pruebas múltiples");
+ const {T,skip}=semTests(),k=T.length;
+ const sk=skip.length?`<div class="card note">${skip.map(esc).join("<br>")}</div>`:"";
+ if(!k)return head+`<div class="card">No hay suficientes datos para ninguna prueba.</div>`+sk;
+ const bonf=0.05/k;T.forEach(t=>t.l=lvl(t.p,bonf));
+ const c={ok:0,am:0,rd:0};T.forEach(t=>c[t.l]++);
+ const pany=1-Math.pow(0.95,k),minp=Math.min(...T.map(t=>t.p));
+ const txt=c.rd===0
+  ?`Ninguna prueba sobrevive la corrección: ${c.am?`las ${c.am} que salieron con p < 0.05 son lo que se espera por casualidad con ${k} pruebas`:`todo es compatible con azar`}. Sin la corrección sería fácil ver desvíos que no existen.`
+  :`${c.rd} prueba${c.rd>1?"s siguen":" sigue"} siendo significativa${c.rd>1?"s":""} aun después de la corrección (p < ${fp(bonf)}). Antes de interpretarlo, revisa la pestaña <b>Calidad</b>: datos mal cargados producen desvíos falsos.`;
+ const row=t=>`<div class="stRow ${t.l}">${LT(t.l)}<div class="tx"><b>${esc(t.name)}</b><span>χ² = ${t.x.toFixed(1)} · ${t.df} g.l.${t.sim?" · p por simulación":""}${(!t.sim&&t.minE<5)?" · ⚠ pocos datos por celda":""}</span></div><div class="res"><b>p = ${fp(t.p)}</b></div></div>`;
+ const groups=["Pick 3","Pick 4"].map(g=>{const L=T.filter(t=>t.g===g);return L.length?`<div class="card"><h2>${g}</h2>${L.map(row).join("")}</div>`:""}).join("");
+ return head+`<div class="card"><div class="lights"><div class="lgt ok"><b>${c.ok}</b><span>sin desvío<br>(p ≥ 0.05)</span></div><div class="lgt am"><b>${c.am}</b><span>probable casualidad<br>(p &lt; 0.05)</span></div><div class="lgt rd"><b>${c.rd}</b><span>sobreviven la corrección<br>(p &lt; ${fp(bonf)})</span></div></div>
+ <div class="kpi4"><div><b>${k}</b>pruebas</div><div><b>${c.am+c.rd}</b>con p &lt; 0.05</div><div><b>${(k*0.05).toFixed(1)}</b>fallarían solo por azar</div><div><b>${(pany*100).toFixed(0)}%</b>prob. de que falle ≥ 1</div></div>
+ <p style="margin:10px 0 0">${txt}</p>
+ <p class="note">Corrección de Bonferroni: con ${k} pruebas, una cuenta como "real" solo si p &lt; 0.05 / ${k} = ${fp(bonf)}. El p-valor más bajo es ${fp(minp)}; con ${k} pruebas de puro azar lo normal es que el menor ronde 1/${k+1} ≈ ${fp(1/(k+1))}.</p></div>
+ ${groups}${sk}
+ <div class="card"><h2>Cómo leerlo</h2><div class="legend"><span>${LT("ok")} p ≥ 0.05</span><span>${LT("am")} p &lt; 0.05 pero no sobrevive la corrección</span><span>${LT("rd")} sobrevive la corrección</span></div>
+ <p class="note">El p-valor es la probabilidad de ver un desvío igual o mayor si los sorteos fueran puro azar. Los 100 pares usan simulación (con pocos sorteos la aproximación chi-cuadrado falla). Las pruebas Midday vs Evening comparan si ambos sorteos reparten los dígitos igual. Las pruebas no son del todo independientes entre sí, así que Bonferroni es conservador.</p></div>`;
+}
+/* ======================= 2 · RACHAS ======================= */
+function runList(b){const r=[];b.forEach(v=>{const l=r[r.length-1];if(l&&l[0]===v)l[1]++;else r.push([v,1])});return r}
+function pLongest(n,p,k){/* P(racha más larga de éxitos ≥ k) en n ensayos, exacto */
+ if(k<=0)return 1;if(k>n)return 0;
+ let a=new Float64Array(k),b=new Float64Array(k);a[0]=1;const q=1-p;
+ for(let i=0;i<n;i++){b.fill(0);let z=0;for(let j=0;j<k;j++){const v=a[j];if(!v)continue;z+=v*q;if(j+1<k)b[j+1]=v*p}b[0]=z;const t=a;a=b;b=t}
+ let s=0;for(let j=0;j<k;j++)s+=a[j];return Math.max(0,1-s);
+}
+function eLongest(n,p){let e=0;for(let k=1;k<=n;k++){const v=pLongest(n,p,k);e+=v;if(v<1e-7)break}return e}
+function runsTest(b){const n=b.length,n1=b.reduce((a,v)=>a+v,0),n2=n-n1;if(n1<2||n2<2)return null;
+ const R=runList(b).length,mu=1+2*n1*n2/n,va=2*n1*n2*(2*n1*n2-n)/(n*n*(n-1)),z=(R-mu)/Math.sqrt(va);return{R,mu,z,p:p2(z)}}
+const RS=[
+ {t:"Pares / impares",a:"Par",b:"Impar",f:x=>pn(x)%2===0?1:0,p:.5,d:"Par o impar del número 00–99."},
+ {t:"Altos / bajos",a:"Alto (50–99)",b:"Bajo (00–49)",f:x=>pn(x)>=50?1:0,p:.5,d:"Alto si el número es 50 o más."},
+ {t:"Repetidos",a:"Repetido (00, 11…)",b:"No repetido",f:x=>dd(x)===tt(x)?1:0,p:.1,d:"Repetido = decena igual al terminal (10% de probabilidad)."}
+];
+function racView(){
+ const head=nxHead("rac","Rachas","¿El resultado se “pega” o se “alterna” más de lo normal?");
+ const R=F3(),n=R.length;
+ if(n<30)return head+`<div class="card">Se necesitan al menos 30 sorteos en este rango (hay ${n}).</div>`;
+ let tests=0,flag=0;
+ const cards=RS.map(s=>{
+  const b=R.map(s.f),r=runList(b),n1=b.reduce((a,v)=>a+v,0);
+  const l1=Math.max(0,...r.filter(z=>z[0]===1).map(z=>z[1])),l0=Math.max(0,...r.filter(z=>z[0]===0).map(z=>z[1]));
+  const key1=`rl${n}_${s.p}`,key0=`rl${n}_${1-s.p}`;
+  const e1=CACHE[key1]??(CACHE[key1]=eLongest(n,s.p)),e0=CACHE[key0]??(CACHE[key0]=eLongest(n,1-s.p));
+  const p1=pLongest(n,s.p,l1),p0=pLongest(n,1-s.p,l0),rt=runsTest(b);
+  tests+=1+1+(rt?1:0);[p1,p0].forEach(v=>{if(v<0.05)flag++});if(rt&&rt.p<0.05)flag++;
+  const rl=(pp)=>{return pp<0.05?"am":"ok"};
+  let verd,vl="ok";
+  if(rt&&rt.p<0.05){vl="am";verd=rt.z<0?"Tiende a <b>pegarse</b>: hay menos cambios de rachas de lo normal.":"Tiende a <b>alternarse</b>: cambia más seguido de lo normal."}
+  else verd="Se comporta como el azar: ni se pega ni se alterna de más.";
+  if(p1<0.05||p0<0.05){vl="am";verd+=" Alguna racha larga es poco común.";}
+  const cur=r[r.length-1],curN=cur[0]===1?s.a:s.b;
+  const q=s.p,dist=(v,pp)=>{const m=Math.min(10,Math.max(...r.filter(z=>z[0]===v).map(z=>z[1]),1));let h="";for(let k=1;k<=m;k++){const o=r.filter(z=>z[0]===v&&z[1]===k).length,e=n*(1-pp)*(1-pp)*Math.pow(pp,k);h+=`<tr><th>${k}</th><td>${o}</td><td>${e.toFixed(1)}</td></tr>`}return h};
+  return `<div class="card"><h2>${s.t}</h2><p class="note">${s.d} Hubo ${n1} de ${n} (${pc1(n1/n)}) y ${r.length} rachas en total.</p>
+  <div class="sc"><table><tr><th class="tdl">Medida</th><th>Observado</th><th>Esperado</th><th>p-valor</th></tr>
+  <tr><td class="tdl">Racha más larga · ${s.a}</td><td>${l1}</td><td>≈ ${e1.toFixed(1)}</td><td>${LT(rl(p1))} ${fp(p1)}</td></tr>
+  <tr><td class="tdl">Racha más larga · ${s.b}</td><td>${l0}</td><td>≈ ${e0.toFixed(1)}</td><td>${LT(rl(p0))} ${fp(p0)}</td></tr>
+  ${rt?`<tr><td class="tdl">Cantidad de rachas</td><td>${rt.R}</td><td>≈ ${rt.mu.toFixed(1)}</td><td>${LT(rl(rt.p))} ${fp(rt.p)}</td></tr>`:""}</table></div>
+  <div class="verd">${LT(vl)}<span>${verd}</span></div>
+  <p class="note">Racha actual: ${cur[1]} seguido${cur[1]>1?"s":""} de ${curN}.</p>
+  <details><summary style="cursor:pointer;font-weight:700">Rachas por longitud (observadas vs. esperadas)</summary><div class="sc"><table><tr><th>Largo</th><th>${s.a}</th><th>esp. ≈</th><th>${s.b}</th><th>esp. ≈</th></tr>
+  ${(()=>{const m=Math.min(10,Math.max(l1,l0,1));let h="";for(let k=1;k<=m;k++){const o1=r.filter(z=>z[0]===1&&z[1]===k).length,o0=r.filter(z=>z[0]===0&&z[1]===k).length,pp=s.p;h+=`<tr><th>${k}</th><td>${o1}</td><td>${(n*(1-pp)*(1-pp)*Math.pow(pp,k)).toFixed(1)}</td><td>${o0}</td><td>${(n*pp*pp*Math.pow(1-pp,k)).toFixed(1)}</td></tr>`}return h})()}</table></div></details></div>`;
+ }).join("");
+ return head+`<div class="card note">${scope(n)} Se hicieron ${tests} pruebas: con p &lt; 0.05 se esperan ≈ ${(tests*0.05).toFixed(1)} falsas alarmas; salieron ${flag}.</div>${cards}
+ <div class="card"><h2>Cómo leerlo</h2><p class="note">“Esperado” es la racha más larga que daría el azar puro en ${n} sorteos (cálculo exacto). La prueba de rachas cuenta los cambios entre un tipo y otro: <b>menos</b> rachas de lo normal = se pega; <b>más</b> = se alterna. Un p-valor chico en una sola de estas ${tests} pruebas puede ser casualidad.</p></div>`;
+}
+/* ======================= 3 · INDEPENDENCIA ENTRE SORTEOS ======================= */
+function transTable(A,B,la,lb){const M=Array.from({length:la},()=>Array(lb).fill(0));for(let i=0;i+1<A.length;i++)M[A[i]][B[i+1]]++;return M}
+function permP(A,B,la,lb,x0,S,seed){
+ const r=rng(seed),n=A.length,Bs=B.slice();let g=0;
+ for(let s=0;s<S;s++){for(let i=n-1;i>0;i--){const j=Math.floor(r()*(i+1)),t=Bs[i];Bs[i]=Bs[j];Bs[j]=t}
+  if(chiTab(transTable(A,Bs,la,lb)).x>=x0-1e-9)g++}
+ return(g+1)/(S+1);
+}
+function acf(x,K){const n=x.length,m=x.reduce((a,b)=>a+b,0)/n;let d=0;x.forEach(v=>d+=(v-m)**2);const r=[];for(let k=1;k<=K;k++){let s=0;for(let i=0;i+k<n;i++)s+=(x[i]-m)*(x[i+k]-m);r.push(d?s/d:0)}return r}
+function ljung(r,n){let q=0;r.forEach((v,i)=>q+=v*v/(n-i-1));q*=n*(n+2);return{q,p:chiP(q,r.length)}}
+function acfSvg(r,band){
+ const W=700,H=190,pl=40,pr=8,pt=10,pb=22,K=r.length,m=Math.max(band*1.6,...r.map(Math.abs)),Y=v=>pt+(m-v)/(2*m)*(H-pt-pb),bw=(W-pl-pr)/K;
+ let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="Autocorrelación por retraso">`;
+ s+=`<rect x="${pl}" y="${Y(band)}" width="${W-pl-pr}" height="${Y(-band)-Y(band)}" fill="var(--ac2)" opacity=".12"/>`;
+ [band,-band].forEach(v=>s+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--ac2)" stroke-dasharray="5 4"/><text x="${pl-4}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="var(--mu)">${v>0?"+":"−"}${band.toFixed(2)}</text>`);
+ s+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--bd)"/>`;
+ r.forEach((v,i)=>{const x=pl+i*bw+bw*.2,out=Math.abs(v)>band,y0=Y(0),y1=Y(v);
+  s+=`<rect x="${x.toFixed(1)}" y="${Math.min(y0,y1).toFixed(1)}" width="${(bw*.6).toFixed(1)}" height="${Math.max(1,Math.abs(y1-y0)).toFixed(1)}" fill="${out?"#ef4444":"var(--bar)"}"><title>Lag ${i+1}: ${v.toFixed(3)}</title></rect><text x="${(x+bw*.3).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="11" fill="var(--mu)">${i+1}</text>`});
+ return s+"</svg>";
+}
+function indView(){
+ const head=nxHead("ind","Independencia entre sorteos","¿El sorteo anterior influye en el siguiente, o lo que se ve es ruido?");
+ const R=F3(),n=R.length;
+ if(n<40)return head+`<div class="card">Se necesitan al menos 40 sorteos en este rango (hay ${n}).</div>`;
+ const sig="ind_"+hashRows(R);let C=CACHE[sig];
+ if(!C){
+  const D=R.map(dd),Tm=R.map(tt),Pm=R.map(x=>pn(x)%2),Hm=R.map(x=>dd(x)>=5?1:0);
+  const defs=[["Decena → Decena",D,D,10,10],["Decena → Terminal",D,Tm,10,10],["Terminal → Decena",Tm,D,10,10],["Terminal → Terminal",Tm,Tm,10,10],["Par/impar → Par/impar",Pm,Pm,2,2],["Alto/bajo → Alto/bajo",Hm,Hm,2,2]];
+  C={tests:defs.map(([nm,A,B,la,lb],ix)=>{const r=chiTab(transTable(A,B,la,lb));return{nm,...r,pp:permP(A,B,la,lb,r.x,800,99+ix+n)}})};
+  CACHE[sig]=C;
+ }
+ const series={n:["Número (00–99)",R.map(pn)],d:["Decena",R.map(dd)],t:["Terminal",R.map(tt)]};
+ const lb={};Object.entries(series).forEach(([k,[nm,x]])=>{const r=acf(x,10);lb[k]={r,...ljung(r,n)}});
+ const k=C.tests.length+3,bonf=0.05/k;
+ const rowsT=C.tests.map(t=>{const l=lvl(t.pp,bonf);t.l=l;return `<div class="stRow ${l}">${LT(l)}<div class="tx"><b>${t.nm}</b><span>χ² = ${t.x.toFixed(1)} · ${t.df} g.l. · p asintótico ${fp(t.p)}${t.minE<5?" (⚠ pocos datos por celda: confía en la permutación)":""}</span></div><div class="res"><b>p = ${fp(t.pp)}</b><br><span>permutación</span></div></div>`}).join("");
+ const lbRows=Object.entries(series).map(([kk,[nm]])=>{const l=lvl(lb[kk].p,bonf);lb[kk].l=l;return `<div class="stRow ${l}">${LT(l)}<div class="tx"><b>${nm} · autocorrelación lags 1–10</b><span>Ljung–Box Q = ${lb[kk].q.toFixed(1)} · 10 g.l.</span></div><div class="res"><b>p = ${fp(lb[kk].p)}</b></div></div>`}).join("");
+ const all=[...C.tests.map(t=>t.pp),...Object.values(lb).map(v=>v.p)],nflag=all.filter(p=>p<0.05).length,nbon=all.filter(p=>p<bonf).length;
+ const sel=lb[NX.indS],band=1.96/Math.sqrt(n),outs=sel.r.map((v,i)=>[i+1,v]).filter(a=>Math.abs(a[1])>band);
+ const verd=nbon?`${nbon} prueba${nbon>1?"s superan":" supera"} la corrección (p &lt; ${fp(bonf)}): hay indicios de dependencia entre sorteos; revisa también <b>Calidad</b> de datos.`:`Ninguna prueba supera la corrección: no hay evidencia de que un sorteo influya en el siguiente. Lo que se ve en las tablas de <b>Secuencias</b> es ruido compatible con azar.`;
+ return head+`<div class="card"><h2>Veredicto</h2><div class="kpi4"><div><b>${k}</b>pruebas</div><div><b>${nflag}</b>con p &lt; 0.05</div><div><b>${(k*0.05).toFixed(1)}</b>fallarían solo por azar</div><div><b>${nbon}</b>superan la corrección</div></div><p style="margin:10px 0 0">${verd}</p><p class="note">${scope(n)}</p></div>
+ <div class="card"><h2>Tabla de transición (sorteo anterior → siguiente)</h2><p class="note">Chi-cuadrado de independencia sobre las mismas tablas de la pestaña Secuencias, más dos versiones 2×2 (par/impar y alto/bajo). Como cada celda tiene pocos casos, el p-valor principal sale de 800 permutaciones del orden de los sorteos.</p>${rowsT}</div>
+ <div class="card"><h2>Autocorrelación · lags 1 a 10</h2><p class="note">Correlación entre un sorteo y el que ocurrió k sorteos después. La banda es el 95% esperable por azar (±${band.toFixed(2)}).</p>${nxChips("indS",NX.indS,["n","d","t"],v=>series[v][0])}${lbRows}
+ ${acfSvg(sel.r,band)}
+ <div class="sc"><table><tr><th>Lag</th>${sel.r.map((_,i)=>`<th>${i+1}</th>`).join("")}</tr><tr><th>r</th>${sel.r.map(v=>`<td style="${Math.abs(v)>band?"color:#f87171;font-weight:700":""}">${v.toFixed(2)}</td>`).join("")}</tr></table></div>
+ <p class="note">${outs.length?`Fuera de la banda: lag ${outs.map(a=>a[0]).join(", ")}. `:"Ningún lag sale de la banda. "}Con 10 lags se espera ≈ 0.5 fuera de la banda solo por casualidad.</p></div>`;
+}
+/* ======================= 4 · INTERVALOS ENTRE APARICIONES ======================= */
+const GB=[[1,25],[26,50],[51,100],[101,150],[151,200],[201,300],[301,1e9]];
+const gbLabel=b=>b[1]>=1e9?`${b[0]}+`:`${b[0]}–${b[1]}`;
+function gapStat(seq,n){
+ const last=new Int32Array(100).fill(-1),bins=Array(GB.length).fill(0);let ng=0,sg=0;
+ for(let i=0;i<n;i++){const v=seq[i];if(last[v]>=0){const g=i-last[v];ng++;sg+=g;for(let j=0;j<GB.length;j++)if(g>=GB[j][0]&&g<=GB[j][1]){bins[j]++;break}}last[v]=i}
+ const del=Array.from(last,l=>l<0?n:n-1-l);
+ return{bins,ng,mean:ng?sg/ng:0,del,max:Math.max(...del),c:[100,200,300].map(t=>del.filter(d=>d>t).length)};
+}
+function digGap(seq,n){
+ const last=Array(10).fill(-1),c=Array(10).fill(0),sg=Array(10).fill(0),mx=Array(10).fill(0);
+ for(let i=0;i<n;i++){const v=seq[i];c[v]++;if(last[v]>=0){const g=i-last[v];sg[v]+=g;if(g>mx[v])mx[v]=g}last[v]=i}
+ return D10.map(v=>({v,c:c[v],mean:c[v]>1?sg[v]/(c[v]-1):0,max:mx[v],del:last[v]<0?n:n-1-last[v]}));
+}
+function dgTable(nm,seq,n){
+ return `<div class="card"><h2>${nm}: intervalos entre apariciones</h2><div class="sc"><table><tr><th>Dígito</th><th>Salió</th><th>Intervalo medio</th><th>Mayor intervalo</th><th>Atraso actual</th></tr>${digGap(seq,n).map(o=>`<tr><th>${o.v}</th><td>${o.c}</td><td>${o.mean?o.mean.toFixed(1):"—"}</td><td>${o.max||"—"}</td><td>${o.del}</td></tr>`).join("")}</table></div><p class="note">Cada dígito tiene 10% por sorteo, así que el intervalo esperado es ≈ 10 sorteos. El atraso actual no lo hace más probable.</p></div>`;
+}
+function intView(){
+ const head=nxHead("int","Intervalos entre apariciones","¿Los atrasados lo están más de lo que dictaría el azar? (distribución geométrica)");
+ const all=allDraw(),n=all.length;
+ if(n<120)return head+`<div class="card">Se necesitan al menos 120 sorteos en el historial de este sorteo (hay ${n}).</div>`;
+ const seq=all.map(pn),sig="int_"+hashRows(all);let C=CACHE[sig];
+ const obs=gapStat(seq,n);
+ if(!C){
+  const S=1000,r=rng(777+n),sims=[],buf=new Int32Array(n);
+  for(let s=0;s<S;s++){for(let i=0;i<n;i++)buf[i]=Math.floor(r()*100);sims.push(gapStat(buf,n))}
+  const E=GB.map((_,j)=>sims.reduce((a,x)=>a+x.bins[j],0)/S);
+  const chiOf=b=>b.reduce((a,v,j)=>a+(E[j]>0?(v-E[j])**2/E[j]:0),0),x0=chiOf(obs.bins);
+  let g=0;sims.forEach(x=>{if(chiOf(x.bins)>=x0-1e-9)g++});
+  const up=f=>{const v=f(obs);let c=0;sims.forEach(x=>{if(f(x)>=v-1e-9)c++});return c/S};
+  const mean=f=>sims.reduce((a,x)=>a+f(x),0)/S;
+  C={E,x0,pGof:(g+1)/(S+1),eMean:mean(x=>x.mean),pMax:up(x=>x.max),eMax:mean(x=>x.max),pc:[0,1,2].map(i=>up(x=>x.c[i])),ec:[0,1,2].map(i=>mean(x=>x.c[i]))};
+  CACHE[sig]=C;
+ }
+ const lGof=lvl(C.pGof,0.05/1),rowsB=GB.map((b,j)=>`<tr><th>${gbLabel(b)}</th><td>${obs.bins[j]}</td><td>${C.E[j].toFixed(1)}</td><td>${C.E[j]>0?(obs.bins[j]/C.E[j]).toFixed(2)+"×":"—"}</td></tr>`).join("");
+ const top=obs.del.map((d,i)=>[i,d]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,10);
+ const th=[100,200,300];
+ const rowsC=th.map((t,i)=>`<tr><th>&gt; ${t}</th><td>${obs.c[i]}</td><td>${C.ec[i].toFixed(1)}</td><td>${(100*Math.pow(.99,t)).toFixed(1)}</td><td>${LT(C.pc[i]<0.05?"am":"ok")} ${fp(C.pc[i])}</td></tr>`).join("");
+ const lMax=C.pMax<0.05?"am":"ok";
+ const vTxt=(C.pMax<0.05||C.pc.some(v=>v<0.05))
+  ?"Los números más atrasados lo están <b>más de lo esperado</b> en alguna medida. Con varias medidas, una puede salir así por casualidad; no implica que vayan a salir antes."
+  :"Los atrasados lo están <b>tanto como dicta el azar</b>: la mayor espera y la cantidad de números con espera larga son normales para este tamaño de historial.";
+ return head+`<div class="card"><h2>Veredicto</h2><div class="verd" style="margin:0">${LT(C.pMax<0.05||C.pGof<0.05?"am":"ok")}<span>${vTxt}</span></div>
+ <div class="kpi" style="margin-top:10px"><div><b>${n}</b>sorteos</div><div><b>${obs.ng}</b>intervalos medidos</div><div><b>${obs.mean.toFixed(0)}</b>media observada (≈ ${C.eMean.toFixed(0)} esperada)</div></div>
+ <p class="note">Solo se usan los 2 últimos dígitos del Pick 3 (decena y terminal): el primer dígito no cuenta. Usa todo el historial del sorteo elegido (como la pestaña Atrasados). Cada número tiene 1% por sorteo, así que el intervalo entre apariciones sigue una distribución geométrica con media 100. La referencia "esperado" sale de ${1000} historiales aleatorios del mismo tamaño, lo que corrige que los intervalos largos quedan cortados al final del historial.</p></div>
+ <div class="card"><h2>¿Cuánto tarda cada número en repetirse?</h2><div class="sc"><table><tr><th>Sorteos entre apariciones</th><th>Observado</th><th>Esperado</th><th>Razón</th></tr>${rowsB}</table></div>
+ <div class="verd">${LT(lGof)}<span>Ajuste global a la geométrica (chi-cuadrado por simulación): χ² = ${C.x0.toFixed(1)} · p = ${fp(C.pGof)}.</span></div></div>
+ <div class="card"><h2>¿Los atrasados lo son más de lo normal?</h2><div class="sc"><table><tr><th>Sin salir hace</th><th>Números hoy</th><th>Esperado (simulado)</th><th>Teórico 100·0.99<sup>d</sup></th><th>p (≥ observado)</th></tr>${rowsC}</table></div>
+ <div class="verd">${LT(lMax)}<span>Mayor atraso actual: <b>${obs.max}</b> sorteos (esperado ≈ ${C.eMax.toFixed(0)}) · p = ${fp(C.pMax)}.</span></div></div>
+ <div class="card"><h2>Los 10 más atrasados</h2><div class="sc"><table><tr><th>Número</th><th>Atraso</th><th>Prob. teórica de llegar a ese atraso (0.99<sup>d</sup>)</th><th>Esperarías así de atrasados (de 100)</th></tr>${top.map(([i,d])=>`<tr><th>${pad(i)}</th><td>${d}</td><td>${pc1(Math.pow(.99,d))}</td><td>${(100*Math.pow(.99,d)).toFixed(1)}</td></tr>`).join("")}</table></div>
+ <p class="note warn">Que un número lleve mucho sin salir no lo hace más probable: el sorteo no tiene memoria. Esta tabla solo mide si hay más atrasados de lo que el azar produce de forma natural.</p></div>${dgTable("Decenas",all.map(dd),n)}${dgTable("Terminales",all.map(tt),n)}`;
+}
+/* ======================= 4b · LISTA DE DESCARTES Y LOS QUE QUEDAN (solo decena y terminal) ======================= */
+const TYP=["Par–Par","Par–Impar","Impar–Par","Impar–Impar"],TYS=["PP","PI","IP","II"];
+const typOf=v=>(Math.floor(v/10)%2)*2+(v%2);
+const D10=[...Array(10).keys()];
+function descData(){
+ const all=allDraw(),N=all.length,lp=Array(100).fill(-1),ld=Array(10).fill(-1),lt=Array(10).fill(-1);
+ all.forEach((x,i)=>{lp[pn(x)]=i;ld[dd(x)]=i;lt[tt(x)]=i});
+ const rk=a=>a.map((v,i)=>[i,v<0?N:N-1-v,v<0]).sort((x,y)=>y[1]-x[1]||x[0]-y[0]);
+ const g20=rk(lp).slice(0,20),dD=rk(ld).slice(0,NX.dsD),dT=rk(lt).slice(0,NX.dsT);
+ const why=Array(100).fill(0);/* bits: 1 = entre los 20 atrasados, 2 = decena atrasada, 4 = terminal atrasado */
+ g20.forEach(a=>{why[a[0]]|=1});
+ dD.forEach(a=>D10.forEach(t=>{why[a[0]*10+t]|=2}));
+ dT.forEach(a=>D10.forEach(d=>{why[d*10+a[0]]|=4}));
+ const disc=[],keep=[];why.forEach((w,i)=>{(w?disc:keep).push(i)});
+ return{N,g20,dD,dT,why,disc,keep};
+}
+function desView(){
+ const head=nxHead("des","Lista de descartes","Resumen de todo lo que se descarta: los 20 números más atrasados y las decenas y terminales más atrasados (solo los 2 últimos dígitos)");
+ const D=descData();
+ if(D.N<20)return head+`<div class="card">Se necesitan al menos 20 sorteos en el historial de este sorteo (hay ${D.N}).</div>`;
+ const f=$("#fDraw").value,fl=f==="A"?"":f==="M"?" Midday":" Evening",list=a=>a.map(pad).join(" · ");
+ const since=(g,nv)=>nv?"nunca ha salido":g+" sorteos sin salir";
+ const dn=D.dD.map(([d,g,nv])=>`<p style="margin:6px 0"><b>Decena ${d}</b> <span class="note">${since(g,nv)}</span><br>${list(D10.map(t=>d*10+t))}</p>`).join("");
+ const tn=D.dT.map(([t,g,nv])=>`<p style="margin:6px 0"><b>Terminal ${t}</b> <span class="note">${since(g,nv)}</span><br>${list(D10.map(d=>d*10+t))}</p>`).join("");
+ const cell=i=>`<td style="${D.why[i]?"background:rgba(239,68,68,.22);color:#f3a1a1;text-decoration:line-through":"background:rgba(34,197,94,.14);font-weight:700"}">${pad(i)}</td>`;
+ const grid=`<div class="sc"><table style="font-size:12px"><tr><th>Dec / Ter</th>${D10.map(t=>`<th>${t}</th>`).join("")}</tr>${D10.map(d=>`<tr><th>${d}</th>${D10.map(t=>cell(d*10+t)).join("")}</tr>`).join("")}</table></div>`;
+ const by=b=>D.why.filter(w=>w&b).length;
+ return head+`<div class="card"><h2>Resumen</h2><div class="kpi"><div><b>${D.disc.length}</b>descartados</div><div><b>${D.keep.length}</b>quedan</div><div><b>20 · ${D.dD.length} · ${D.dT.length}</b>atrasados · decenas · terminales</div></div>
+ <p class="note" style="margin:10px 0 0">Decenas atrasadas a descartar</p>${nxChips("dsD",NX.dsD,[1,2,3])}
+ <p class="note" style="margin:0">Terminales atrasados a descartar</p>${nxChips("dsT",NX.dsT,[1,2,3])}
+ <p class="note">El atraso se mide sobre todo el historial${fl} (${D.N} sorteos), igual que en <b>Atrasados</b> y <b>Descartar</b>. Por defecto se descarta 1 decena y 1 terminal.</p></div>
+ <div class="card"><h2>Los 20 números atrasados descartados</h2><div class="pills">${D.g20.map(([i,g,nv])=>`<div class="pill"><b>${pad(i)}</b><span>${nv?"nunca":g+" sorteos"}</span></div>`).join("")}</div></div>
+ <div class="card"><h2>Decenas y terminales descartados</h2><p class="note">Al descartar una decena o un terminal se descartan sus 10 números.</p>${dn}${tn}</div>
+ <div class="card"><h2>Todos los números descartados (${D.disc.length})</h2>${grid}
+ <p class="note">Rojo tachado = descartado · verde = queda. Motivos: ${by(1)} por estar entre los 20 atrasados, ${by(2)} por decena atrasada, ${by(4)} por terminal atrasado (un número puede tener más de un motivo).</p>
+ <p style="margin:6px 0 0">${list(D.disc)}</p></div>
+ <p class="note warn">Es una lista de descarte por criterio, no una probabilidad: cada número descartado tiene el mismo 1% de salir que cualquiera, porque cada sorteo es independiente.</p>`;
+}
+function queView(){
+ const head=nxHead("que","Los que quedan","Números que sobreviven a todos los descartes, con énfasis en las decenas y terminales más frecuentes y el tipo par/impar más frecuente (solo los 2 últimos dígitos)");
+ const D=descData(),R=F3(),n=R.length;
+ if(D.N<20||n<20)return head+`<div class="card">Se necesitan al menos 20 sorteos (historial: ${D.N}; en el rango elegido: ${n}).</div>`;
+ const cd=Array(10).fill(0),ct=Array(10).fill(0),cy=[0,0,0,0];
+ R.forEach(x=>{cd[dd(x)]++;ct[tt(x)]++;cy[typOf(pn(x))]++});
+ const dOut=D.dD.map(a=>a[0]),tOut=D.dT.map(a=>a[0]);
+ const rkF=(c,out)=>c.map((v,i)=>[i,v]).filter(a=>!out.includes(a[0])).sort((a,b)=>b[1]-a[1]||a[0]-b[0]);
+ const rd=rkF(cd,dOut),rt=rkF(ct,tOut),topD=rd.slice(0,3).map(a=>a[0]),topT=rt.slice(0,3).map(a=>a[0]);
+ const ty=cy.map((v,i)=>[i,v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]),topY=ty[0][0];
+ const kt=[0,0,0,0];D.keep.forEach(v=>{kt[typOf(v)]++});
+ const sc=v=>(topD.includes(Math.floor(v/10))?1:0)+(topT.includes(v%10)?1:0)+(typOf(v)===topY?1:0);
+ const rows=D.keep.map(v=>({v,s:sc(v),f:cd[Math.floor(v/10)]+ct[v%10]})).sort((a,b)=>b.s-a.s||b.f-a.f||a.v-b.v);
+ const bar=(lab,c,m,ex)=>`<div class="bar"><b style="width:auto;min-width:34px">${lab}</b><i style="width:${Math.round(c/Math.max(1,m)*60)}%"></i><span>${c} (${pcs(c,n)})${ex||""}</span></div>`;
+ const mx=Math.max(1,...rd.map(a=>a[1]),...rt.map(a=>a[1]));
+ const groups=[3,2,1,0].map(s=>{const g=rows.filter(r=>r.s===s);return g.length?`<p class="seqgrp">${s} de 3 criterios · ${g.length} número${g.length>1?"s":""}</p><div class="pills">${g.map(r=>`<div class="pill"><b>${pad(r.v)}</b><span>${TYS[typOf(r.v)]}</span></div>`).join("")}</div>`:""}).join("");
+ return head+`<div class="card"><h2>Resumen</h2><div class="kpi"><div><b>${D.keep.length}</b>números quedan</div><div><b>${TYS[topY]}</b>${TYP[topY]} es el tipo más frecuente</div><div><b>${rows.filter(r=>r.s===3).length}</b>cumplen los 3 criterios</div></div>
+ <p class="note" style="margin-top:10px">Criterios: decena entre las 3 más frecuentes (<b>${topD.join(" · ")}</b>), terminal entre los 3 más frecuentes (<b>${topT.join(" · ")}</b>) y tipo par/impar más frecuente (<b>${TYP[topY]}</b>). Las frecuencias se cuentan sobre los ${n} sorteos del rango elegido; los descartes, sobre todo el historial. Cambia cuántas decenas y terminales se descartan en <b>Lista de descartes</b>.</p></div>
+ <div class="card"><h2>Decenas más frecuentes</h2><p class="note">Solo las que no fueron descartadas${dOut.length?` (descartada${dOut.length>1?"s":""}: ${dOut.join(", ")})`:""}.</p>${rd.map(([i,c])=>bar(i,c,mx)).join("")}</div>
+ <div class="card"><h2>Terminales más frecuentes</h2><p class="note">Solo los que no fueron descartados${tOut.length?` (descartado${tOut.length>1?"s":""}: ${tOut.join(", ")})`:""}.</p>${rt.map(([i,c])=>bar(i,c,mx)).join("")}</div>
+ <div class="card"><h2>Tipo par/impar más frecuente</h2><p class="note">Primero la decena, luego el terminal: Par–Impar = decena par y terminal impar. “Quedan” = cuántos de los números restantes son de ese tipo.</p>${ty.map(([i,c])=>bar(TYP[i],c,ty[0][1],` · quedan ${kt[i]}`)).join("")}</div>
+ <div class="card"><h2>Números que quedan, por prioridad</h2><p class="note">Ordenados por cuántos criterios cumplen. Debajo de cada número: tipo (P = par, I = impar; decena–terminal).</p>${groups}</div>
+ <p class="note warn">Es un resumen de filtrado, no una predicción: cada número que queda tiene el mismo 1% de salir, y las frecuencias pasadas no cambian eso.</p>`;
+}
+/* ======================= 5 · SIMULACIÓN MONTE CARLO ======================= */
+function mcMetrics(seq,n){
+ const c=new Int32Array(100),last=new Int32Array(100).fill(-1);
+ for(let i=0;i<n;i++){const v=seq[i];c[v]++;last[v]=i}
+ let mx=0,del=0,x=0;const e=n/100;
+ for(let j=0;j<100;j++){if(c[j]>mx)mx=c[j];const d=last[j]<0?n:n-1-last[j];if(d>del)del=d;x+=(c[j]-e)**2/e}
+ return[mx,del,x];
+}
+function mcStart(R,sig,S){
+ const n=R.length,real=mcMetrics(R.map(pn),n),rnd=rng((Date.now()^(n*7919))>>>0);
+ const run={sig,S,n,real,done:0,res:[new Float64Array(S),new Float64Array(S),new Float64Array(S)]},buf=new Int32Array(n);
+ mcRun=run;
+ (function step(){
+  if(mcRun!==run)return;
+  const end=Math.min(S,run.done+500);
+  for(let s=run.done;s<end;s++){for(let i=0;i<n;i++)buf[i]=Math.floor(rnd()*100);const m=mcMetrics(buf,n);run.res[0][s]=m[0];run.res[1][s]=m[1];run.res[2][s]=m[2]}
+  run.done=end;
+  if(end>=S){mcCache=run;mcRun=null;if(tab==="mc")render();return}
+  const el=$("#mcprog");if(el)el.textContent=`${end.toLocaleString("es-ES")} de ${S.toLocaleString("es-ES")} historiales simulados…`;
+  setTimeout(step,0);
+ })();
+}
+function mcStat(arr,real){
+ const S=arr.length,s=Float64Array.from(arr).sort();let lt=0,eq=0;
+ for(let i=0;i<S;i++){if(s[i]<real-1e-9)lt++;else if(s[i]<=real+1e-9)eq++}
+ return{pct:(lt+eq/2)/S*100,pge:(S-lt)/S,lo:s[Math.floor(S*.025)],med:s[Math.floor(S*.5)],hi:s[Math.min(S-1,Math.floor(S*.975))]};
+}
+function histSvg(vals,real,integer){
+ let mn=Infinity,mx=-Infinity;for(const v of vals){if(v<mn)mn=v;if(v>mx)mx=v}
+ mn=Math.min(mn,real);mx=Math.max(mx,real);
+ const w=integer?Math.max(1,Math.ceil((mx-mn+1)/40)):((mx-mn)/30||1),nb=integer?Math.ceil((mx-mn+1)/w):30,h=Array(nb).fill(0);
+ for(const v of vals)h[Math.min(nb-1,Math.floor((v-mn)/w))]++;
+ const W=700,H=140,pl=6,pr=6,pt=14,pb=20,m=Math.max(...h),bw=(W-pl-pr)/nb,xr=pl+Math.min(nb-1,Math.floor((real-mn)/w))*bw+bw/2;
+ let s=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="Distribución simulada">`;
+ h.forEach((c,i)=>{const bh=c/m*(H-pt-pb);s+=`<rect x="${(pl+i*bw+1).toFixed(1)}" y="${(H-pb-bh).toFixed(1)}" width="${Math.max(1,bw-2).toFixed(1)}" height="${bh.toFixed(1)}" fill="var(--bar)" opacity=".75"/>`});
+ s+=`<line x1="${xr.toFixed(1)}" x2="${xr.toFixed(1)}" y1="${pt-6}" y2="${H-pb}" stroke="var(--ac2)" stroke-width="2.5"/><text x="${Math.min(W-40,Math.max(40,xr)).toFixed(1)}" y="10" text-anchor="middle" font-size="11" fill="var(--ac2)">tu historial</text>`;
+ const f=v=>integer?String(Math.round(v)):(+v).toFixed(0);
+ return s+`<text x="${pl}" y="${H-4}" font-size="11" fill="var(--mu)">${f(mn)}</text><text x="${W-pr}" y="${H-4}" text-anchor="end" font-size="11" fill="var(--mu)">${f(mx)}</text></svg>`;
+}
+function mcView(){
+ const head=nxHead("mc","Simulación Monte Carlo","¿Lo que ves es raro o normal? Se compara contra miles de historiales aleatorios");
+ const R=F3(),n=R.length;
+ if(n<30)return head+`<div class="card">Se necesitan al menos 30 sorteos en este rango (hay ${n}).</div>`;
+ const sig=hashRows(R)+"_"+NX.mcS,sels=nxChips("mcS",NX.mcS,[1000,5000,20000],v=>v.toLocaleString("es-ES")+" historiales");
+ if(!(mcCache&&mcCache.sig===sig)){
+  if(!(mcRun&&mcRun.sig===sig))mcStart(R,sig,NX.mcS);
+  return head+`<div class="card"><h2>Simulando…</h2>${sels}<p class="note" id="mcprog" role="status">Preparando ${NX.mcS.toLocaleString("es-ES")} historiales de ${n} sorteos…</p></div>`;
+ }
+ const C=mcCache,defs=[
+  ["Número más repetido",0,true,v=>`${v} veces`,"el número más repetido salió"],
+  ["Atraso máximo (número que más lleva sin salir)",1,true,v=>`${v} sorteos`,"el mayor atraso fue de"],
+  ["Chi-cuadrado de los 100 números",2,false,v=>v.toFixed(1),"el chi-cuadrado fue de"]
+ ];
+ const cards=defs.map(([nm,i,int,fm,ph])=>{
+  const real=C.real[i],st=mcStat(C.res[i],real),hi=st.pct>=97.5,lo=st.pct<=2.5;
+  const l=hi||lo?"am":"ok",vt=hi?"Inusualmente <b>alto</b>: cae en el 2.5% más extremo del azar.":lo?(i===2?"Inusualmente <b>bajo</b>: los números están más parejos de lo que el azar suele dar.":"Inusualmente <b>bajo</b>: cae en el 2.5% más bajo del azar."):"<b>Normal</b>: un historial aleatorio como el tuyo da esto con frecuencia.";
+  return `<div class="card"><h2>${nm}</h2><div class="kpi"><div><b>${fm(+(+real).toFixed(1))}</b>tu historial</div><div><b>P${st.pct.toFixed(0)}</b>percentil</div><div><b>${fm(+(+st.med).toFixed(1))}</b>mediana del azar</div></div>
+  ${histSvg(C.res[i],real,int)}
+  <div class="verd">${LT(l)}<span>${vt} En ${C.S.toLocaleString("es-ES")} historiales aleatorios de ${C.n} sorteos, ${(st.pge*100).toFixed(1)}% tuvo un valor igual o mayor al tuyo. El 95% central del azar va de ${fm(+(+st.lo).toFixed(1))} a ${fm(+(+st.hi).toFixed(1))}.</span></div></div>`;
+ }).join("");
+ return head+`<div class="card"><h2>Simulación</h2><p class="note">${scope(n)} Se generaron ${C.S.toLocaleString("es-ES")} historiales aleatorios (números 00–99 con 1% cada uno) del mismo tamaño que el tuyo y se midió cada uno igual que el real.</p>${sels}<div class="row"><button type="button" class="p" id="mcgo">↻ Volver a simular</button></div></div>${cards}
+ <div class="card"><h2>Cómo leerlo</h2><p class="note">El percentil indica dónde cae tu historial entre los simulados: P50 es lo típico; por debajo de P2.5 o por encima de P97.5 sería raro. Son 3 medidas, así que que una caiga en la cola de vez en cuando es esperable (ver Semáforo). Cada simulación usa semilla nueva, por eso los valores cambian un poco al repetir.</p></div>`;
+}
+/* ======================= 6 · ESTABILIDAD EN EL TIEMPO ======================= */
+function kolmoP(d){if(d<0.28)return 1;let s=0;for(let j=1;j<=100;j++){const t=Math.exp(-2*j*j*d*d);s+=(j%2?1:-1)*t;if(t<1e-12)break}return Math.min(1,Math.max(0,2*s))}
+function cpTest(x){
+ const n=x.length,k=x.reduce((a,b)=>a+b,0),ph=k/n;if(ph<=0||ph>=1)return null;
+ let s=0,best=0,bt=0,sb=0;
+ for(let t=1;t<=n;t++){s+=x[t-1];const b=Math.abs(s-t*k/n);if(b>best){best=b;bt=t;sb=s}}
+ const D=best/Math.sqrt(n*ph*(1-ph));
+ return{D,p:kolmoP(D),t:bt,before:bt?sb/bt:0,after:n-bt?(k-sb)/(n-bt):0};
+}
+function estView(){
+ const head=nxHead("est","Estabilidad en el tiempo","Gráfica de control: ¿la frecuencia de un dígito cambia de régimen en algún momento?");
+ const R=F3(),n=R.length;
+ if(n<60)return head+`<div class="card">Se necesitan al menos 60 sorteos en este rango (hay ${n}). Prueba con "Todo el historial".</div>`;
+ const d=NX.estD,pos=NX.estP,f=pos==="d"?dd:tt,p=.1,q=.9,w=Math.max(10,Math.min(NX.estW,Math.floor(n/3)));
+ const xs=R.map(r=>f(r)===d?1:0),nb=Math.floor(n/w),st=n-nb*w,props=[];
+ for(let b=0;b<nb;b++){let s=0;for(let i=0;i<w;i++)s+=xs[st+b*w+i];props.push(s/w)}
+ const sg=Math.sqrt(p*q/w),hiY=Math.min(1,Math.max(p+3.4*sg,Math.max(...props)+.03)),W=700,H=250,pl=40,pr=10,pt=12,pb=24;
+ const X=i=>pl+(nb>1?i*(W-pl-pr)/(nb-1):(W-pl-pr)/2),Y=v=>pt+(hiY-v)/hiY*(H-pt-pb);
+ const hl=(v,o)=>`<line x1="${pl}" x2="${W-pr}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" ${o}/>`;
+ let c1=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img" aria-label="Gráfica de control">`;
+ c1+=`<rect x="${pl}" y="${Y(p+3*sg).toFixed(1)}" width="${W-pl-pr}" height="${(Y(Math.max(0,p-3*sg))-Y(p+3*sg)).toFixed(1)}" fill="var(--ac)" opacity=".09"/>`;
+ c1+=`<rect x="${pl}" y="${Y(p+2*sg).toFixed(1)}" width="${W-pl-pr}" height="${(Y(Math.max(0,p-2*sg))-Y(p+2*sg)).toFixed(1)}" fill="var(--ac2)" opacity=".13"/>`;
+ [p+3*sg,Math.max(0,p-3*sg)].forEach(v=>c1+=hl(v,'stroke="#ef4444" stroke-dasharray="5 4" opacity=".8"'));
+ [p+2*sg,Math.max(0,p-2*sg)].forEach(v=>c1+=hl(v,'stroke="var(--ac2)" stroke-dasharray="3 4" opacity=".8"'));
+ c1+=hl(p,'stroke="var(--tx)" opacity=".55"');
+ [0,.1,.2,.3,.4,.5].filter(v=>v<=hiY).forEach(v=>c1+=`<text x="${pl-4}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="var(--mu)">${Math.round(v*100)}%</text>`);
+ c1+=`<path d="${props.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join("")}" fill="none" stroke="var(--ac)" stroke-width="1.6" opacity=".7"/>`;
+ let out3=0,out2=0;
+ props.forEach((v,i)=>{const z=Math.abs(v-p)/sg,col=z>3?"#ef4444":z>2?"#f59e0b":"var(--bar)";if(z>3)out3++;else if(z>2)out2++;c1+=`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="4" fill="${col}"><title>${R[st+i*w].d} → ${R[st+i*w+w-1].d}: ${(v*100).toFixed(0)}%</title></circle>`});
+ c1+=`<text x="${pl}" y="${H-6}" font-size="11" fill="var(--mu)">${R[st].d.slice(2)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-size="11" fill="var(--mu)">${R[n-1].d.slice(2)}</text></svg>`;
+ /* CUSUM */
+ const S=[0];xs.forEach((v,i)=>S.push(S[i]+v-p));
+ const m=Math.max(2.3*Math.sqrt(n*p*q),...S.map(Math.abs))*1.05,H2=200,XT=t=>pl+t/n*(W-pl-pr),YT=v=>pt+(m-v)/(2*m)*(H2-pt-pb);
+ let up="",dn="";for(let t=0;t<=n;t+=Math.max(1,Math.floor(n/80))){const b=1.96*Math.sqrt(t*p*q);up+=`${XT(t).toFixed(1)},${YT(b).toFixed(1)} `;dn=`${XT(t).toFixed(1)},${YT(-b).toFixed(1)} `+dn}
+ let c2=`<svg viewBox="0 0 ${W} ${H2}" style="width:100%;height:auto" role="img" aria-label="Desviación acumulada"><polygon points="${up}${dn}" fill="var(--ac2)" opacity=".12"/><line x1="${pl}" x2="${W-pr}" y1="${YT(0).toFixed(1)}" y2="${YT(0).toFixed(1)}" stroke="var(--bd)"/>`;
+ c2+=`<path d="${S.map((v,i)=>(i?"L":"M")+XT(i).toFixed(1)+" "+YT(v).toFixed(1)).join("")}" fill="none" stroke="var(--ac)" stroke-width="2"/>`;
+ const cp=cpTest(xs);
+ if(cp)c2+=`<line x1="${XT(cp.t).toFixed(1)}" x2="${XT(cp.t).toFixed(1)}" y1="${pt}" y2="${H2-pb}" stroke="#ef4444" stroke-dasharray="4 4"/>`;
+ c2+=`<text x="${pl-4}" y="${YT(0)+4}" text-anchor="end" font-size="10" fill="var(--mu)">0</text></svg>`;
+ /* escaneo de los 20 casos */
+ const scan=[...Array(10).keys()].map(dg=>["d","t"].map(ps=>{const g=ps==="d"?dd:tt,r=cpTest(R.map(x=>g(x)===dg?1:0));return r?r.p:1}));
+ const flat=scan.flat(),k=flat.length,bonf=0.05/k,nf=flat.filter(v=>v<0.05).length,nb2=flat.filter(v=>v<bonf).length;
+ const cell=(dg,ps,pv)=>`<td><button type="button" class="cellb${pv<bonf?" rd":pv<0.05?" am":""}${dg===d&&ps===pos?" sel":""}" data-est="${dg}:${ps}">${fp(pv)}</button></td>`;
+ const f0=xs.reduce((a,b)=>a+b,0)/n,l=!cp?"ok":cp.p<bonf?"rd":cp.p<0.05?"am":"ok";
+ const dt=cp?R[Math.min(n-1,cp.t)].d:"";
+ const verdict=cp?(cp.p<0.05?`Posible cambio hacia el <b>${dt}</b>: antes ${pc1(cp.before)}, después ${pc1(cp.after)} (p = ${fp(cp.p)}${cp.p<bonf?"":"; con 20 combinaciones esto no sobrevive a la corrección"}).`:`No hay señal de cambio de régimen (p = ${fp(cp.p)}). El mejor punto de corte sería ${dt}: ${pc1(cp.before)} antes y ${pc1(cp.after)} después, diferencia compatible con azar.`):"Este dígito no aparece (o aparece siempre) en el rango: no se puede evaluar.";
+ return head+`<div class="card"><h2>Frecuencia del dígito ${d} · ${pos==="d"?"decena":"terminal"}</h2>
+ <p class="note">Dígito</p>${nxChips("estD",d,[...Array(10).keys()])}<p class="note">Posición</p>${nxChips("estP",pos,["d","t"],v=>v==="d"?"Decena":"Terminal")}<p class="note">Tamaño de bloque</p>${nxChips("estW",NX.estW,[15,30,50],v=>v+" sorteos")}
+ <p class="note">${scope(n)} Cada punto es el % de sorteos en que salió el ${d} en ${w} sorteos seguidos. Esperado 10%; las bandas son ±2σ (95%) y ±3σ (99.7%).</p>${c1}
+ <div class="legend"><span>— esperado 10%</span><span>··· ±2σ</span><span style="color:#f87171">- - ±3σ</span></div>
+ <div class="kpi"><div><b>${pc1(f0)}</b>frecuencia total</div><div><b>${out2+out3} de ${nb}</b>bloques fuera de ±2σ</div><div><b>${out3}</b>fuera de ±3σ</div></div>
+ <p class="note">Con ${nb} bloques se esperan ≈ ${(nb*0.05).toFixed(1)} fuera de ±2σ solo por casualidad.</p></div>
+ <div class="card"><h2>¿Hubo un cambio de régimen?</h2><p class="note">Desviación acumulada respecto al 10%: si la línea se mantiene dentro de la banda y sin giro sostenido, la frecuencia es estable. La raya roja marca el punto de mayor cambio.</p>${c2}<div class="verd">${LT(l)}<span>${verdict}</span></div></div>
+ <div class="card"><h2>Los 20 casos a la vez</h2><p class="note">p-valor de cambio de régimen para cada dígito y posición. Con 20 pruebas se esperan ≈ ${(k*0.05).toFixed(1)} con p &lt; 0.05 solo por azar; salieron ${nf}. Solo cuenta como real p &lt; ${fp(bonf)} (rojo): ${nb2?`hay ${nb2}`:"ninguno lo logra"}. Toca una celda para ver su gráfica.</p>
+ <div class="sc"><table><tr><th>Dígito</th><th>Decena</th><th>Terminal</th></tr>${scan.map((r,dg)=>`<tr><th>${dg}</th>${cell(dg,"d",r[0])}${cell(dg,"t",r[1])}</tr>`).join("")}</table></div></div>`;
+}
+/* ======================= 7 · HISTORIAL DE PALOMITAS ======================= */
+const palKey=s=>s.replace(/\s*\(\d+ casos\)/,"").replace(/después del \d\d/,"después del último par").replace(/a la decena \d/,"a la decena anterior").replace(/al terminal \d/,"al terminal anterior").replace(/del (Domingo|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado)/,"del mismo día de la semana");
+function palView(){
+ const head=nxHead("pal","Historial de palomitas","¿Alguna estadística acierta más que el azar? Prueba honesta con intervalo de confianza");
+ const all=allDraw(),R=F3(),W=R.length,n=all.length,N=Math.min(NX.palN,n-30);
+ const chips=nxChips("palN",NX.palN,[100,200],v=>`Últimos ${v} sorteos`);
+ if(N<20)return head+`<div class="card">${chips}Faltan datos: se necesitan al menos 50 sorteos en este tipo de sorteo (hay ${n}).</div>`;
+ const sig="pal_"+hashRows(all)+"_"+W+"_"+N+"_"+$("#fDraw").value;let rows=CACHE[sig];
+ if(!rows){
+  const res=new Map();
+  for(let i=n-N;i<n;i++){
+   const T=all.slice(Math.max(0,i-(W-1)),i);if(T.length<20)continue;
+   p3Stats(T,all[i]).forEach(s=>{const k=palKey(s.name);let o=res.get(k);if(!o){o={name:k,n:0,h:0,e:0,v:0};res.set(k,o)}const pe=Math.min(1,Math.max(0,s.pe));o.n++;if(s.ok)o.h++;o.e+=pe;o.v+=pe*(1-pe)});
+  }
+  rows=[...res.values()].filter(o=>o.n>=10).map(o=>{const ci=wilson(o.h,o.n),ex=o.e/o.n,z=o.v>0?(o.h-o.e)/Math.sqrt(o.v):0;return{...o,rate:o.h/o.n,ex,ci,z,p:o.v>0?p2(z):1}});
+  CACHE[sig]=rows;
+ }
+ if(!rows.length)return head+`<div class="card">${chips}No hay suficientes sorteos previos para evaluar las estadísticas.</div>`;
+ const k=rows.length,bonf=0.05/k;
+ rows.forEach(o=>{o.l=o.p<bonf?(o.z>0?"ok":"rd"):o.p<0.05?"am":"gy"});
+ const nOk=rows.filter(o=>o.l==="ok").length,nAm=rows.filter(o=>o.l==="am").length;
+ const best=rows.slice().sort((a,b)=>a.p-b.p)[0];
+ const verd=nOk?`${nOk} estadística${nOk>1?"s superan":" supera"} al azar incluso tras la corrección (p &lt; ${fp(bonf)}). Es una señal que merece más datos antes de confiar en ella.`:`Ninguna estadística supera al azar de forma fiable tras la corrección por ${k} pruebas${nAm?`; ${nAm===1?"la marcada en ámbar (p &lt; 0.05) es":"las "+nAm+" marcadas en ámbar (p &lt; 0.05) son"} lo que se espera por casualidad`:""}.`;
+ const row=o=>{const lab={ok:"supera al azar",am:"parece, pero es probable casualidad",rd:"peor que el azar",gy:"indistinguible del azar"}[o.l];
+  return `<div class="stRow ${o.l==="gy"?"":o.l}">${LT(o.l)}<div class="tx"><b>${esc(o.name)}</b><span>${o.h} de ${o.n} · ${pc1(o.rate)} · esperado ${pc1(o.ex)} · IC 95% ${pc1(o.ci[0])}–${pc1(o.ci[1])}</span>
+  <div class="ci" title="Barra dorada: intervalo de confianza del acierto. Raya blanca: esperado por azar. Marca verde: acierto observado."><span class="ciR" style="left:${(o.ci[0]*100).toFixed(1)}%;width:${Math.max(.6,(o.ci[1]-o.ci[0])*100).toFixed(1)}%"></span><span class="ciE" style="left:${(o.ex*100).toFixed(1)}%"></span><span class="ciO" style="left:${(o.rate*100).toFixed(1)}%"></span></div></div><div class="res"><b>p = ${fp(o.p)}</b><br><span>${lab}</span></div></div>`};
+ return head+`<div class="card"><h2>Veredicto</h2>${chips}<div class="kpi4"><div><b>${N}</b>sorteos evaluados</div><div><b>${k}</b>estadísticas</div><div><b>${(k*0.05).toFixed(1)}</b>aparecerían buenas solo por azar</div><div><b>${nOk}</b>superan la corrección</div></div>
+ <p style="margin:10px 0 0">${verd}</p>
+ <p class="note">Para cada uno de los últimos ${N} sorteos se recalcularon las estadísticas con solo lo anterior (ventana de ${W>=n?"todo el historial":W+" sorteos"}, igual que el Resumen) y se anotó si la palomita habría salido. El esperado por azar es la probabilidad exacta de acertar de cada estadística según cuántos números o dígitos propone. Más cercano a la raya blanca = más parecido al azar.</p></div>
+ <div class="card"><h2>Acierto por estadística</h2><div class="legend"><span>${LT("ok")} supera tras la corrección</span><span>${LT("am")} p &lt; 0.05 (probable casualidad)</span><span>${LT("gy")} compatible con azar</span></div>${rows.map(row).join("")}
+ <p class="note warn" style="margin-top:10px">Mejor p-valor: <b>${esc(best.name)}</b> (${fp(best.p)}). Con ${k} estadísticas, que alguna llegue a p &lt; 0.05 es lo normal. Una estadística solo demuestra algo si sigue ganándole al azar en datos nuevos, no en los que ya la eligieron.</p></div>`;
+}
+/* ======================= 8 · CALIDAD DE DATOS ======================= */
+function validDate(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s));if(!m)return false;const d=new Date(+m[1],+m[2]-1,+m[3]);return d.getFullYear()===+m[1]&&d.getMonth()===+m[2]-1&&d.getDate()===+m[3]}
+function addDays(s,k){const [y,m,d]=s.split("-").map(Number),t=new Date(y,m-1,d+k);return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
+function todayStr(){const t=new Date();return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
+function dateRanges(list){const out=[];let a=null,b=null,c=0;list.forEach(d=>{if(a&&addDays(b,1)===d){b=d;c++}else{if(a)out.push([a,b,c]);a=b=d;c=1}});if(a)out.push([a,b,c]);return out}
+function listChips(items,max=12){const s=items.slice(0,max).map(x=>`<span class="chip chipn" style="padding:3px 8px;font-size:12px">${esc(x)}</span>`).join(" ");return `<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">${s}${items.length>max?`<span class="note">+${items.length-max} más</span>`:""}</div>`}
+function qualFor(rows,len,name){
+ const today=todayStr(),checks=[],bad=[],seen=new Map(),dups=[];
+ rows.forEach((x,i)=>{
+  if(!x||typeof x!=="object"){bad.push(`Registro ${i+1}: no es válido`);return}
+  const why=[];
+  if(!validDate(x.d))why.push("fecha inválida");else if(x.d>today)why.push("fecha futura");
+  if(x.t!=="M"&&x.t!=="E")why.push("sorteo no es Midday ni Evening");
+  if(!new RegExp(`^\\d{${len}}$`).test(String(x.n)))why.push(`no tiene ${len} dígitos`);
+  if(x.f!==""&&x.f!==undefined&&!/^\d$/.test(String(x.f)))why.push("Fireball no válido");
+  if(x.k!==x.d+x.t)why.push("clave interna no coincide");
+  if(why.length)bad.push(`${x.d||"?"} ${x.t||"?"} ${x.n||"?"}: ${why.join(", ")}`);
+  const key=(x.d||"")+(x.t||"");
+  if(seen.has(key))dups.push([seen.get(key),x]);else seen.set(key,x);
+ });
+ const good=rows.filter(x=>x&&validDate(x.d)&&(x.t==="M"||x.t==="E")).sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+ const conf=dups.filter(([a,b])=>a.n!==b.n);
+ checks.push({ok:!dups.length,t:"Sorteos duplicados",d:dups.length?`${dups.length} fecha/sorteo repetido${dups.length>1?"s":""}${conf.length?`, ${conf.length} con números distintos`:""}.`:"Cada fecha y sorteo aparece una sola vez.",items:dups.map(([a,b])=>`${a.d} ${a.t}: ${a.n} / ${b.n}`)});
+ checks.push({ok:!bad.length,t:"Formato de los registros",d:bad.length?`${bad.length} registro${bad.length>1?"s":""} con formato raro.`:`Todos tienen fecha válida, sorteo M/E y ${len} dígitos.`,items:bad});
+ /* fechas faltantes por sorteo */
+ const miss={},cov={};let info=[];
+ ["M","E"].forEach(t=>{
+  const L=good.filter(x=>x.t===t),nm=t==="M"?"Midday":"Evening";
+  if(L.length<5){info.push(`${nm}: ${L.length?"muy pocos datos ("+L.length+")":"sin datos cargados"}; no se pueden evaluar sus fechas.`);return}
+  const set=new Set(L.map(x=>x.d)),a=L[0].d,b=L[L.length-1].d,m=[];
+  for(let d=a;d<=b;d=addDays(d,1))if(!set.has(d))m.push(d);
+  miss[t]=m;cov[t]={a,b,have:set.size,span:set.size+m.length};
+  checks.push({ok:!m.length,t:`Fechas faltantes · ${nm}`,d:m.length?`${m.length} día${m.length>1?"s":""} sin dato entre ${a} y ${b} (cobertura ${(set.size/(set.size+m.length)*100).toFixed(1)}%).`:`Sin huecos entre ${a} y ${b}.`,items:dateRanges(m).map(([x,y,c])=>c>1?`${x} → ${y} (${c} días)`:x)});
+ });
+ /* mismo resultado repetido 3+ veces seguidas */
+ const rep=[];let i=0;
+ while(i<good.length){let j=i;while(j+1<good.length&&good[j+1].n===good[i].n&&good[j+1].t===good[i].t)j++;if(j-i>=2)rep.push(`${good[i].d} → ${good[j].d}: ${good[i].n} ×${j-i+1}`);i=j+1}
+ checks.push({ok:!rep.length,t:"Mismo resultado 3+ veces seguidas",d:rep.length?`${rep.length} racha${rep.length>1?"s":""} sospechosa${rep.length>1?"s":""} (posible copia por error).`:"Ninguna repetición sospechosa (probabilidad de azar ≈ 1 en un millón).",items:rep});
+ /* cobertura por mes */
+ const mon={};
+ good.forEach(x=>{const m=x.d.slice(0,7);(mon[m]=mon[m]||{M:new Set(),E:new Set()})[x.t].add(x.d)});
+ const months=Object.keys(mon).sort(),dim=m=>{const [y,mm]=m.split("-").map(Number);return new Date(y,mm,0).getDate()};
+ return{name,total:rows.length,checks,info,months:months.map(m=>({m,M:cov.M?mon[m].M.size/dim(m):null,E:cov.E?mon[m].E.size/dim(m):null})),span:good.length?`${good[0].d} → ${good[good.length-1].d}`:"—"};
+}
+function calView(){
+ const head=nxHead("cal","Calidad de datos","Duplicados, fechas faltantes y registros con formato raro, antes de confiar en cualquier conclusión");
+ const sets=[qualFor(ROWS,3,"Pick 3"),qualFor(ROWS4,4,"Pick 4")];
+ const probs=sets.reduce((a,s)=>a+s.checks.filter(c=>!c.ok).length,0);
+ const hard=sets.some(s=>s.checks.some(c=>!c.ok&&/duplicados|Formato|3\+/.test(c.t)));
+ const l=!probs?"ok":hard?"rd":"am";
+ const msg=!probs?"No se detectaron problemas: los análisis se apoyan en datos limpios.":hard?"Hay duplicados, formato raro o repeticiones sospechosas: corrígelos antes de interpretar las pruebas estadísticas.":"Solo hay fechas faltantes. No distorsionan las frecuencias, pero sí rachas, intervalos y atrasados.";
+ const cards=sets.map(s=>{
+  if(!s.total)return `<div class="card"><h2>${s.name}</h2><p class="note">Todavía no hay datos de ${s.name}.</p></div>`;
+  const cc=v=>v===null?"<td>—</td>":`<td style="background:rgba(${v>=.95?"34,197,94":v>=.6?"245,158,11":"239,68,68"},.22)">${Math.round(v*100)}%</td>`;
+  return `<div class="card"><h2>${s.name}</h2><p class="note">${s.total} registros · ${s.span}</p>
+  ${s.checks.map(c=>`<div class="stRow ${c.ok?"ok":"am"}">${LT(c.ok?"ok":"am")}<div class="tx"><b>${c.t}</b><span>${esc(c.d)}</span>${c.items.length?`<details><summary class="note" style="cursor:pointer">Ver detalle (${c.items.length})</summary>${listChips(c.items,40)}</details>`:""}</div></div>`).join("")}
+  ${s.info.length?`<p class="note">${s.info.map(esc).join("<br>")}</p>`:""}
+  ${s.months.length?`<details><summary style="cursor:pointer;font-weight:700">Cobertura por mes</summary><div class="sc"><table><tr><th>Mes</th><th>Midday</th><th>Evening</th></tr>${s.months.map(m=>`<tr><th>${m.m}</th>${cc(m.M)}${cc(m.E)}</tr>`).join("")}</table></div></details>`:""}</div>`;
+ }).join("");
+ return head+`<div class="card"><h2>Resumen</h2><div class="verd" style="margin:0">${LT(l)}<span>${msg}</span></div><p class="note">Revisa todos los datos guardados, sin importar los filtros de sorteo y rango. Los problemas encontrados: <b>${probs}</b>.</p></div>${cards}`;
+}
+/* ---- eventos de las secciones nuevas ---- */
+$("#view").addEventListener("click",e=>{
+ const c=e.target.closest("[data-nx]");
+ if(c){const [k,val]=c.dataset.nx.split(":");NX[k]=/^\d+$/.test(val)?+val:val;render();return}
+ const s=e.target.closest("[data-est]");
+ if(s){const [dg,ps]=s.dataset.est.split(":");NX.estD=+dg;NX.estP=ps;render();return}
+ if(e.target.closest("#mcgo")){mcCache=null;mcRun=null;render();return}
+});
+/* =================== fin ANÁLISIS ESTADÍSTICO =================== */
 $("#view").addEventListener("click",e=>{const b=e.target.closest("[data-seqx],[data-seqlag]");if(!b)return;if(b.dataset.seqx!==undefined)seqX=+b.dataset.seqx;if(b.dataset.seqlag!==undefined)seqLag=+b.dataset.seqlag;render()});
 $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");if(!b)return;tab=b.dataset.tab;render()});
 // El botón superior debe funcionar desde cualquier pestaña (no solo desde Datos).
