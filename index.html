@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#020512">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -148,9 +148,83 @@ details summary{padding:6px 0}
 .cellb.sel{outline:2px solid #e4b94f}
 .tdl{text-align:left!important}
 .verd{display:flex;gap:8px;align-items:flex-start;margin:8px 0 0;font-size:13px}
-</style></head><body><main>
-<h1 style="display:flex;align-items:center;gap:10px"><img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px">Sofist Corax Estadistics</h1>
-<p class="sub">Pick 3 Florida · últimos 2 dígitos</p>
+
+/* ===== Sofist Corax · identidad azul y negro (logo SC) ===== */
+:root,:root:not([data-theme="light"]),:root[data-theme="dark"]{color-scheme:dark;--bg:#05070d;--sf:#0b1020;--tx:#e8f0ff;--mu:#8fa3c9;--ac:#2f8dff;--ac2:#5ab0ff;--bd:#1c3366;--bar:#2f8dff;--gloss:linear-gradient(135deg,#0a2a7a 0%,#0b4fd6 55%,#2f8dff 100%)}
+html{background:linear-gradient(180deg,#020512 0,#020512 env(safe-area-inset-top,0px),#05070d env(safe-area-inset-top,0px))}
+body{background:radial-gradient(ellipse at 50% -10%,#0b2a6b 0%,#070d1d 38%,#05070d 70%) no-repeat;background-color:#05070d;color:var(--tx);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;min-height:100vh}
+main{max-width:1000px;padding:16px 16px 32px}
+h2{color:#f1f6ff;font-weight:700}
+a{color:#5ab0ff}
+/* cabecera brillante */
+.hero{position:relative;color:#fff;overflow:hidden;padding:16px 16px 20px;border-radius:0 0 26px 26px;background:radial-gradient(120% 140% at 85% -20%,rgba(47,141,255,.6) 0,rgba(47,141,255,0) 55%),linear-gradient(135deg,#020512 0%,#06205f 55%,#0b4fd6 135%);box-shadow:0 12px 32px rgba(0,0,0,.6),0 0 0 1px rgba(47,141,255,.35),inset 0 -2px 0 rgba(90,176,255,.35)}
+.hero::after{content:"";position:absolute;left:-10%;right:-10%;top:0;height:46%;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0));pointer-events:none}
+.heroIn{position:relative;z-index:1;max-width:968px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.brand img{flex:none;width:56px;height:56px;border:0;border-radius:14px;box-shadow:0 0 0 2px rgba(90,176,255,.8),0 0 20px rgba(47,141,255,.55)}
+.hero h1{margin:0;color:#fff;font-size:clamp(20px,4.2vw,28px);letter-spacing:.3px;text-shadow:0 0 18px rgba(47,141,255,.6)}
+.hero .sub{color:#a9c8ff;margin:2px 0 0}
+.hero #status{display:inline-block;margin:0;padding:3px 12px;border-radius:999px;font-size:12px;color:#d6e6ff;background:rgba(0,0,0,.35);border:1px solid rgba(90,176,255,.45)}
+.hero .syncrow{margin:14px 0 0}
+.hero button.p{background:linear-gradient(180deg,#4aa4ff,#0b4fd6);color:#fff;border:1px solid #7cc0ff;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 16px rgba(47,141,255,.5)}
+.hero button.p:hover{border-color:#fff;filter:brightness(1.08)}
+.hero .latestBox{background:rgba(0,0,0,.4);border:1px solid rgba(90,176,255,.45);backdrop-filter:blur(4px)}
+.hero .latestBox small{color:#8fb4f0}.hero .latestBox strong{color:#fff;text-shadow:0 0 12px rgba(47,141,255,.7)}.hero .latestBox em{color:#a9c8ff}
+.hero #syncStatus{color:rgba(214,230,255,.8)}
+/* tarjetas */
+.card{background:linear-gradient(145deg,#0e1424,#080b13);border:1px solid var(--bd);border-radius:16px;box-shadow:0 8px 26px rgba(0,0,0,.55),0 0 0 1px rgba(47,141,255,.06);margin-bottom:14px}
+.card.warn{padding:10px 14px}
+.note.warn,.warn{border-left-color:#2f8dff}
+.note.warn{background:rgba(47,141,255,.08);border-radius:0 8px 8px 0;padding:8px 10px}
+.sub{color:var(--mu)}
+/* controles */
+button,select,input,textarea{background:#0a1020;border:1px solid #24428a;color:var(--tx);border-radius:10px}
+select:focus,input:focus,textarea:focus,button:focus-visible{outline:2px solid #2f8dff;outline-offset:1px}
+button:hover{border-color:#5ab0ff}
+button.p{background:linear-gradient(180deg,#4aa4ff,#0b4fd6);border-color:#5ab0ff;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 14px rgba(47,141,255,.4)}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;padding:10px 12px}
+.toolbar label{flex:1;min-width:160px;display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mu)}
+.toolbar select{font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--tx)}
+.secLabel{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin:0 2px 8px}
+/* categorías */
+.catTile{background:linear-gradient(145deg,#101830,#090d19);border:1px solid #1f3d85;color:#cfe0ff}
+.catTile svg{stroke:#5ab0ff}
+.catTile:hover{border-color:#5ab0ff;box-shadow:0 0 14px rgba(47,141,255,.35)}
+.catTile.on{background:var(--gloss);border-color:#7cc0ff;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 18px rgba(47,141,255,.55)}
+.catTile.on svg{stroke:#fff}
+.catTile.sec{border-color:#2f5fc4;background:linear-gradient(145deg,#12224a,#0a1226)}
+.catTile.sec.on{background:var(--gloss);border-color:#7cc0ff}
+.chip.on,.tabs button.on{background:var(--gloss);border-color:#7cc0ff;color:#fff}
+.seqgrp{color:#5ab0ff}
+.p4ico{background:var(--gloss);border-color:#5ab0ff;box-shadow:0 0 14px rgba(47,141,255,.45)}
+.p4ico svg{stroke:#fff}
+/* datos */
+th{color:#8fb4f0}
+th,td{border-bottom-color:#16264d}
+.kpi div,.kpi4 div,.lgt{background:#070b16;border:1px solid #1c3366;color:var(--mu)}
+.kpi b,.kpi4 b,.lgt b{color:#fff}
+.pill{background:linear-gradient(180deg,#0f1a38,#080d1c);border:1px solid #1f4aa8}
+.pill b{color:#5ab0ff}
+.ball{background:linear-gradient(145deg,#5ab0ff,#0b4fd6);color:#fff}
+.fb{background:#55637f;color:#fff}
+.bar i,.ciR{background:linear-gradient(90deg,#0b4fd6,#5ab0ff)}
+.ci{background:#070b16}.ciE{background:#fff}.ciO{border-color:#05070d}
+.stRow{background:#0a0f1d;border-color:#1c3366}
+.stRow.ok{border-color:#1f7a45;background:rgba(34,197,94,.09)}
+.stRow.am{border-color:#b7791f;background:rgba(245,158,11,.09)}
+.stRow.rd{border-color:#b42318;background:rgba(239,68,68,.11)}
+.stRow .res{color:var(--mu)}.stRow .res b{color:#5ab0ff}
+.lt{background:#1b2540;border-color:#3a4d7a}
+.lt.ok{background:#16a34a;border-color:#4ade80}.lt.am{background:#d97706;border-color:#fbbf24}.lt.rd{background:#dc2626;border-color:#f87171}.lt.gy{background:#4b5a7a;border-color:#7d8aa8}
+.nokc{border-color:#2c3a5c}.nokc svg{stroke:#4b5a7a}
+.p4sum strong{color:#4ade80}
+.cellb.rd{background:#7f1d1d;border-color:#f87171;color:#fff}
+.cellb.am{background:#78450f;border-color:#fbbf24;color:#fff}
+.cellb.sel{outline:2px solid #5ab0ff}
+@media(max-width:520px){main{padding:12px 12px 28px}.hero{padding:14px 12px 18px}.brand img{width:48px;height:48px}}
+</style></head><body>
+<header class="hero"><div class="heroIn">
+<div class="brand"><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
 <p class="sub" id="status">Cargando datos…</p>
 <div class="syncrow">
  <button class="p" id="syncTop" type="button">↻ ACTUALIZAR RESULTADOS</button>
@@ -160,12 +234,11 @@ details summary{padding:6px 0}
  </div>
  <span id="syncStatus" role="status" aria-live="polite">Actualiza los sorteos Midday y Evening desde el archivo de resultados.</span>
 </div>
+</div></header>
+<main>
 <div class="card warn note">Se analizan solo los dos últimos dígitos (00–99). Los sorteos son aleatorios e independientes: ninguna estadística del pasado predice el próximo resultado. Esta herramienta describe lo que ha pasado; no garantiza nada.</div>
-<div class="row">
-<select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select>
-<select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select>
-</div>
-<div class="card"><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
+<div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select></label></div>
+<div class="card"><div class="secLabel">Categorías de análisis</div><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
 <div id="view"></div>
 <script>
 const $=s=>document.querySelector(s);
@@ -737,7 +810,7 @@ function resView(R){
 function parView(R){
  const c=cnt(R),mx=Math.max(1,...c);
  let t="<tr><th></th>"+[...Array(10).keys()].map(u=>`<th>${u}</th>`).join("")+"</tr>";
- for(let d=0;d<10;d++){t+=`<tr><th>${d}</th>`+[...Array(10).keys()].map(u=>{const v=c[d*10+u];return `<td style="background:rgba(245,158,11,${(v/mx*0.65).toFixed(2)})">${v}</td>`}).join("")+"</tr>"}
+ for(let d=0;d<10;d++){t+=`<tr><th>${d}</th>`+[...Array(10).keys()].map(u=>{const v=c[d*10+u];return `<td style="background:rgba(30,123,255,${(v/mx*0.65).toFixed(2)})">${v}</td>`}).join("")+"</tr>"}
  const chi2=chi(c);
  return `<div class="card"><h2>Los 100 números (00–99)</h2><p class="note">Fila = decena, columna = terminal. Más oscuro = salió más veces.</p><div class="sc"><table>${t}</table></div></div>
  <div class="card"><h2>¿Se desvía del azar?</h2><p class="note">Chi-cuadrado de los 100 números (99 g.l.): por encima de ~123 sería una desviación rara (5%).</p><p><b>${chi2.toFixed(1)}</b> ${chi2>123.2?"⚠️ por encima":"✓ compatible con azar"}</p></div>`;
@@ -757,7 +830,7 @@ function seqView(R){
  const fm=(M,i)=>{const t=sum(M[i]);return v=>t?`${v} (${(v/t*100).toFixed(1)}%)`:`${v}`};
  const lagTxt=lag===1?"en el siguiente sorteo":`${lag} sorteos después`;
  const chips=(attr,cur,vals,fmt)=>`<div class="chips">${vals.map(v=>`<button type="button" class="chip${v===cur?" on":""}" data-${attr}="${v}">${fmt?fmt(v):v}</button>`).join("")}</div>`;
- const mat=(M,title,og,nx)=>`<details><summary style="cursor:pointer;font-weight:700">${title}</summary><div class="sc"><table style="font-size:11px"><tr><th>${og}↓ ${nx}→</th>${L.map(i=>`<th>${i}</th>`).join("")}<th>n</th></tr>${M.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i}</th>${r.map(v=>`<td style="background:rgba(214,163,62,${(v/mx*.55).toFixed(2)})">${v}</td>`).join("")}<td>${sum(r)}</td></tr>`}).join("")}</table></div></details>`;
+ const mat=(M,title,og,nx)=>`<details><summary style="cursor:pointer;font-weight:700">${title}</summary><div class="sc"><table style="font-size:11px"><tr><th>${og}↓ ${nx}→</th>${L.map(i=>`<th>${i}</th>`).join("")}<th>n</th></tr>${M.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i}</th>${r.map(v=>`<td style="background:rgba(30,123,255,${(v/mx*.55).toFixed(2)})">${v}</td>`).join("")}<td>${sum(r)}</td></tr>`}).join("")}</table></div></details>`;
  return `<div class="card"><h2>Secuencias: qué viene después</h2>
  <p class="note">¿Cuántos sorteos después quieres mirar?</p>
  ${chips("seqlag",lag,[1,2,3],v=>v===1?"Siguiente":`+${v} sorteos`)}</div>
@@ -1325,7 +1398,7 @@ function p4Feat(x){
 function p4Freq(R){
  const n=R.length,L=[...Array(10).keys()],pos=[0,1,2,3].map(()=>Array(10).fill(0)),tot=Array(10).fill(0);
  R.forEach(x=>[...x.n].forEach((c,i)=>{pos[i][+c]++;tot[+c]++}));
- const hm=`<tr><th></th>${L.map(d=>`<th>${d}</th>`).join("")}</tr>`+pos.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i+1}.ª</th>${r.map(v=>`<td style="background:rgba(214,163,62,${(v/mx*.6).toFixed(2)})">${v}</td>`).join("")}</tr>`}).join("");
+ const hm=`<tr><th></th>${L.map(d=>`<th>${d}</th>`).join("")}</tr>`+pos.map((r,i)=>{const mx=Math.max(1,...r);return `<tr><th>${i+1}.ª</th>${r.map(v=>`<td style="background:rgba(30,123,255,${(v/mx*.6).toFixed(2)})">${v}</td>`).join("")}</tr>`}).join("");
  const mx=Math.max(...tot),mn=Math.min(...tot),dm=tot.indexOf(mx),dn=tot.indexOf(mn),pc=v=>`${v} (${(v/(n*4)*100).toFixed(1)}%)`;
  const F=R.map(p4Feat),t2=a=>{const t=topN(a,10);return bars(t.map(z=>z[1]),t.map(z=>z[0]))};
  const sums=topN(F.map(f=>f.sum),8),par=topN(F.map(f=>f.par),5),alt=topN(F.map(f=>f.alt),5);
