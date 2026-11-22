@@ -233,40 +233,67 @@ th,td{border-bottom-color:#16264d}
 @media(max-width:520px){.brand{gap:9px}.menuBtn{width:40px;height:40px}}
 
 
-/* ===== Acceso exclusivo ===== */
-body.locked .hero,body.locked main,body.locked .sideMenu,body.locked .menuShade,body.locked .modalShade{display:none!important}
-body:not(.locked) #authGate{display:none}
-.gate{position:fixed;inset:0;z-index:100;overflow:auto;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% -10%,#0b2a6b 0%,#070d1d 45%,#05070d 80%)}
-.gateCard{width:100%;max-width:400px;text-align:center;padding:26px 22px;border-radius:22px;background:linear-gradient(145deg,#0e1424,#080b13);border:1px solid #1f3d85;box-shadow:0 16px 48px rgba(0,0,0,.7),0 0 40px rgba(47,141,255,.18)}
-.gateCard img{width:72px;height:72px;border-radius:18px;box-shadow:0 0 0 2px rgba(90,176,255,.8),0 0 24px rgba(47,141,255,.6)}
-.gateCard h1{margin:12px 0 2px;font-size:22px;color:#fff;text-shadow:0 0 18px rgba(47,141,255,.6)}
-.gateCard form{text-align:left;margin-top:14px}
-.gateCard label{display:block;margin:10px 0 4px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mu)}
-.gateCard input{width:100%}
-.gateCard button.p{width:100%;margin-top:16px}
-.gateCard button:disabled{opacity:.6}
-.gateLinks,.gateVerify{display:flex;flex-direction:column;gap:6px;margin-top:12px}
-.gateLinks button,.gateVerify .lk{background:none;border:0;box-shadow:none;color:#5ab0ff;font-size:13px}
-.gateMsg{margin-top:12px;font-size:13px;text-align:left}
-.gateMsg.ok,.gateMsg.err{padding:9px 12px;border-radius:10px}
-.gateMsg.ok{background:rgba(34,197,94,.1);border:1px solid #1f7a45;color:#bbf7d0}
-.gateMsg.err{background:rgba(239,68,68,.12);border:1px solid #b42318;color:#fecaca}
-</style></head>
-<body class="locked">
-<div class="gate" id="authGate"><div class="gateCard">
-<img src="icon-192.png" alt="Sofist Corax" width="72" height="72"><h1>Sofist Corax Estadistics</h1>
-<p class="sub">Acceso exclusivo para usuarios registrados</p>
-<div id="gateMsg" class="gateMsg" role="status" aria-live="polite"></div>
-<p id="gateChecking" class="sub" style="margin-top:18px">Comprobando sesión…</p>
-<form id="gateForm" novalidate hidden>
-<label for="gName" id="gNameL" hidden>Nombre</label><input id="gName" type="text" autocomplete="name" placeholder="Tu nombre" hidden>
-<label for="gEmail">Correo electrónico</label><input id="gEmail" type="email" autocomplete="email" placeholder="tu@correo.com">
-<label for="gPass">Contraseña</label><input id="gPass" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
-<button class="p" type="submit" id="gSubmit">Iniciar sesión</button></form>
-<div class="gateLinks" id="gateLinks" hidden><button type="button" id="gToggle">¿No tienes cuenta? Regístrate</button><button type="button" id="gReset">Olvidé mi contraseña</button></div>
-<div class="gateVerify" id="gateVerify" hidden><p class="sub">Para entrar debes verificar tu correo<br><b id="gVerEmail"></b></p>
-<button class="p" type="button" id="gVerCheck">Ya verifiqué mi correo</button><button class="lk" type="button" id="gVerResend">Reenviar correo de verificación</button><button class="lk" type="button" id="gVerOut">Cerrar sesión</button></div>
-</div></div>
+/* Acceso obligatorio Sofist Corax */
+#scAuthGate{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 50% 0%,#0b2a6b 0%,#05070d 62%);overflow:auto}
+#scAuthGate[hidden]{display:none}
+.scAuthCard{width:min(100%,460px);padding:26px;background:linear-gradient(145deg,#0e1b36,#070c18);border:1px solid #2f65bd;border-radius:22px;box-shadow:0 22px 70px #000c;color:#e8f0ff}
+.scAuthBrand{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.scAuthBrand img{width:54px;height:54px;border-radius:14px;box-shadow:0 0 0 2px #397fe0}
+.scAuthBrand h1{margin:0;font-size:22px;color:#fff}
+.scAuthBrand p{margin:3px 0 0;color:#a9c8ff;font-size:12px}
+.scAuthCard h2{margin:8px 0;color:#fff;font-size:20px}
+.scAuthCard p{color:#a9bfdf;font-size:13px}
+.scAuthCard label{display:block;margin:12px 0 5px;color:#a9bfdf;font-size:12px}
+.scAuthCard input{width:100%;padding:12px;background:#0a1020;border:1px solid #24428a;border-radius:10px;color:#e8f0ff}
+.scAuthCard button{width:100%;padding:12px;margin-top:10px;border-radius:10px}
+.scAuthCard .scPrimary{background:linear-gradient(180deg,#4aa4ff,#0b4fd6);border:1px solid #7cc0ff;color:white;font-weight:800}
+.scAuthCard .scSecondary{background:#0a1020;border:1px solid #24428a;color:#d9e8ff}
+.scAuthMsg{min-height:20px;margin:10px 0;color:#8fc4ff;font-size:13px}
+.scAuthMsg.error{color:#ff8d96}
+.scAuthLinks{display:flex;gap:8px;margin-top:10px}
+.scAuthLinks button{font-size:12px;padding:9px 6px}
+#scUserBar{display:none;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;color:#b9d3ff;font-size:12px}
+#scUserBar button{padding:7px 11px}
+body.sc-locked{overflow:hidden}
+
+
+.scAuthDivider{display:flex;align-items:center;gap:12px;margin:14px 0;color:#8298bb;font-size:12px}.scAuthDivider:before,.scAuthDivider:after{content:"";height:1px;background:#263b5f;flex:1}.scGoogleButton{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:11px;border-radius:10px;border:1px solid #45618c;background:#f7f9fc;color:#17243a;font-weight:700;cursor:pointer}.scGoogleMark{font-weight:900;font-size:18px;color:#4285f4}.scCommunityPage{position:fixed;inset:0;z-index:1200;background:#070d1a;color:#e8f0ff;overflow:auto;padding:16px}.scCommunityShell{max-width:900px;min-height:calc(100vh - 32px);margin:0 auto;display:flex;flex-direction:column;gap:12px}.scCommunityHead{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid #243a60}.scCommunityHead h2{margin:0;color:#fff}.scCommunityHead p{margin:4px 0 0;color:#9bb2d7;font-size:13px}.scCommunityNotice{color:#9fc7ff;font-size:13px;padding:8px 10px;background:#102342;border-radius:8px}.scCommunityMessages{flex:1;min-height:240px;max-height:calc(100vh - 300px);overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px}.scCommunityMessage{background:#101d33;border:1px solid #263e65;border-radius:12px;padding:12px}.scCommunityMessage.reply{margin-left:24px;border-left:3px solid #3e91ff}.scCommunityMeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:#8fb4e8;font-size:12px;margin-bottom:7px}.scCommunityMeta strong{color:#dceaff}.scCommunityText{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45}.scCommunityReply{margin-top:9px;background:transparent;border:0;color:#69b5ff;cursor:pointer;padding:4px 0}.scCommunityComposer{position:sticky;bottom:0;background:#0b1425;border:1px solid #2b4772;border-radius:12px;padding:12px}.scCommunityComposer textarea{width:100%;resize:vertical;min-height:70px;background:#080f1d;color:#fff;border:1px solid #304b74;border-radius:8px;padding:10px}.scCommunityComposer>div{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}.scCommunityComposer small,.scReplyingTo{color:#91a9cc;font-size:12px}.scReplyingTo{padding:8px 10px;background:#142747;border-radius:8px}.scCommunityEmpty{color:#91a9cc;text-align:center;padding:32px 12px}
+</style></head><body>
+
+<div id="scAuthGate" role="dialog" aria-modal="true" aria-labelledby="scGateTitle">
+ <section class="scAuthCard">
+  <div class="scAuthBrand"><img src="icon-192.png" alt="Sofist Corax"><div><h1>Sofist Corax Estadistics</h1><p>Acceso privado · Estadísticas protegidas</p></div></div>
+  <div id="scGateAuth">
+   <h2 id="scGateTitle">Bienvenido</h2>
+   <p>Inicia sesión o crea una cuenta para acceder a las herramientas estadísticas.</p>
+   <form id="scGateForm">
+    <label for="scGateName" id="scGateNameLabel" hidden>Nombre</label>
+    <input id="scGateName" type="text" autocomplete="name" placeholder="Tu nombre" hidden>
+    <label for="scGateEmail">Correo electrónico</label>
+    <input id="scGateEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required>
+    <label for="scGatePassword">Contraseña</label>
+    <input id="scGatePassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required>
+    <button class="scPrimary" id="scGateSubmit" type="submit">Iniciar sesión</button>
+   </form>
+   <div class="scAuthDivider">o también</div>
+   <button class="scGoogleButton" id="scGoogleSignIn" type="button"><span class="scGoogleMark">G</span> Continuar con Google</button>
+   <div class="scAuthLinks">
+    <button class="scSecondary" id="scGateToggle" type="button">Crear cuenta</button>
+    <button class="scSecondary" id="scGateReset" type="button">Recuperar contraseña</button>
+   </div>
+  </div>
+  <div id="scGateVerify" hidden>
+   <h2>Verifica tu correo</h2>
+   <p id="scVerifyText">Tu cuenta necesita verificar el correo electrónico antes de entrar.</p>
+   <button class="scPrimary" id="scResendVerify" type="button">Reenviar correo de verificación</button>
+   <button class="scSecondary" id="scCheckVerify" type="button">Ya verifiqué mi correo · Comprobar</button>
+   <button class="scSecondary" id="scVerifyLogout" type="button">Cerrar sesión</button>
+  </div>
+  <div id="scGateMessage" class="scAuthMsg" role="status" aria-live="polite"></div>
+  <p>El acceso requiere una cuenta y un correo verificado. Tus credenciales se gestionan mediante Firebase Authentication.</p>
+ </section>
+</div>
+
 <header class="hero"><div class="heroIn">
 <div class="brand"><button class="menuBtn" id="menuOpen" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
 <p class="sub" id="status">Cargando datos…</p>
@@ -278,13 +305,13 @@ body:not(.locked) #authGate{display:none}
  </div>
  <span id="syncStatus" role="status" aria-live="polite">Actualiza los sorteos Midday y Evening desde el archivo de resultados.</span>
 </div>
+<div id="scUserBar"><span id="scUserLabel"></span><button class="p" id="scHeaderLogout" type="button">Cerrar sesión</button></div>
 </div></header>
 <div class="menuShade" id="menuShade" hidden></div>
 <aside class="sideMenu" id="sideMenu" aria-label="Menú principal" aria-hidden="true">
  <div class="menuHead"><div><b>SOFIST CORAX</b><small>Estadísticas avanzadas</small></div><button id="menuClose" type="button" aria-label="Cerrar menú">×</button></div>
- <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b id="authMenuTitle">Cuenta / Registrarse</b><small id="authMenuDesc">Crear una cuenta o iniciar sesión</small></span><i>›</i></button>
- <button class="menuItem" type="button" id="menuAdmin" style="display:none"><span>★</span><span><b>Panel de administrador</b><small>Gestionar usuarios</small></span><i>›</i></button>
- <button class="menuItem" type="button" id="menuLogout"><span>⎋</span><span><b>Cerrar sesión</b><small id="menuLogoutMail"></small></span><i>›</i></button>
+ <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b id="authMenuTitle">Mi cuenta</b><small id="authMenuDesc">Cuenta y sesión</small></span><i>›</i></button>
+ <button class="menuItem" type="button" data-menu="community"><span>◉</span><span><b>Comunidad</b><small>Debates y chat de estadísticas</small></span><i>›</i></button>
  <a class="menuItem" href="mailto:sofistcorax@gmail.com?subject=Contacto%20-%20Sofist%20Corax"><span>✉</span><span><b>Contacto con el programador</b><small>sofistcorax@gmail.com</small></span><i>›</i></a>
  <button class="menuItem" type="button" data-menu="language"><span>文</span><span><b>Idioma</b><small>Seleccionar idioma</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="about"><span>ⓘ</span><span><b>Acerca de la app</b><small>Información de Sofist Corax</small></span><i>›</i></button>
@@ -292,12 +319,21 @@ body:not(.locked) #authGate{display:none}
  <div class="menuFoot">Sofist Corax Estadistics</div>
 </aside>
 <div class="modalShade" id="menuModal" hidden><section class="menuModal" role="dialog" aria-modal="true" aria-labelledby="menuModalTitle"><button class="modalX" id="modalClose" type="button" aria-label="Cerrar">×</button><h2 id="menuModalTitle"></h2><div id="menuModalBody"></div></section></div>
+<div id="scCommunityPage" class="scCommunityPage" hidden>
+ <div class="scCommunityShell">
+  <header class="scCommunityHead"><button id="scCommunityBack" type="button" class="scSecondary">← Volver</button><div><h2>Comunidad Sofist Corax</h2><p>Debates sobre estadísticas, patrones y resultados</p></div></header>
+  <div id="scCommunityNotice" class="scCommunityNotice" role="status">Conectando con la comunidad…</div>
+  <div id="scCommunityMessages" class="scCommunityMessages" aria-live="polite"></div>
+  <div id="scReplyingTo" class="scReplyingTo" hidden></div>
+  <form id="scCommunityForm" class="scCommunityComposer"><textarea id="scCommunityText" maxlength="2000" rows="3" placeholder="Comparte tu análisis o responde a la comunidad…" required></textarea><div><small>Máximo 2.000 caracteres. Mantén el respeto.</small><button id="scCommunitySend" class="scPrimary" type="submit">Publicar</button></div></form>
+ </div>
+</div>
 <main>
 <div class="card warn note">Se analizan solo los dos últimos dígitos (00–99). Los sorteos son aleatorios e independientes: ninguna estadística del pasado predice el próximo resultado. Esta herramienta describe lo que ha pasado; no garantiza nada.</div>
 <div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select></label></div>
 <div class="card"><div class="secLabel">Categorías de análisis</div><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
 <div id="view"></div>
-<script type="text/plain" id="appCode">
+<script>
 const $=s=>document.querySelector(s);
 const SEED=`2025-11-18 E 2 6 8
 2025-11-19 E 1 3 7
@@ -2057,8 +2093,9 @@ const menuPanel=$("#sideMenu"),menuShade=$("#menuShade"),menuModal=$("#menuModal
 function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("aria-hidden","true");$("#menuOpen").setAttribute("aria-expanded","false");menuShade.hidden=true}
 function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria-hidden","false");$("#menuOpen").setAttribute("aria-expanded","true");menuShade.hidden=false}
 function closeModal(){menuModal.hidden=true}
+function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");
- if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
+ if(type==="register"){title.textContent="Mi cuenta";const email=window.__scCurrentEmail||"";body.innerHTML=`<p class="scAccountEmail">${escapeHtml(email)}</p><button class="scPrimary" id="scAccountRemove" type="button">Quitar cuenta</button><button class="scSecondary" id="scAccountAccept" type="button" style="width:100%;margin-top:9px">Aceptar</button>`;}
  else if(type==="language"){title.textContent="Idioma";body.innerHTML='<p>Selecciona el idioma de la aplicación.</p><label for="appLanguage">Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Guardar preferencia</button><p class="note">La preferencia se guardará en este dispositivo. La traducción completa de todas las secciones se incorporará en una actualización posterior.</p>';}
  else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>Sofist Corax Estadistics</b></p><p>Herramienta de análisis estadístico de resultados de lotería, con historiales, frecuencias, patrones y otras métricas.</p><p>Versión de diseño: azul y negro.</p><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>';}
  else{return} menuModal.hidden=false;
@@ -2066,224 +2103,334 @@ function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModal
  const lang=$("#appLanguage");if(lang)lang.value=localStorage.getItem("sc-language")||"es";
 }
 $("#menuOpen").addEventListener("click",openMenu);$("#menuClose").addEventListener("click",closeMenu);menuShade.addEventListener("click",closeMenu);$("#modalClose").addEventListener("click",closeModal);menuModal.addEventListener("click",e=>{if(e.target===menuModal)closeModal()});
-menuPanel.addEventListener("click",async e=>{const b=e.target.closest("[data-menu]");if(!b)return;const action=b.dataset.menu;closeMenu();if(action==="share"){const url=location.href;try{if(navigator.share)await navigator.share({title:"Sofist Corax Estadistics",text:"Consulta Sofist Corax Estadistics",url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);alert("Enlace copiado para compartir.")}else alert("Enlace de la aplicación: "+url)}catch(err){if(err.name!=="AbortError")alert("No se pudo compartir desde este dispositivo.")}return}showMenuModal(action)});
+menuPanel.addEventListener("click",async e=>{const b=e.target.closest("[data-menu]");if(!b)return;const action=b.dataset.menu;closeMenu();if(action==="community"){window.dispatchEvent(new Event("sc-open-community"));return}if(action==="share"){const url=location.href;try{if(navigator.share)await navigator.share({title:"Sofist Corax Estadistics",text:"Consulta Sofist Corax Estadistics",url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);alert("Enlace copiado para compartir.")}else alert("Enlace de la aplicación: "+url)}catch(err){if(err.name!=="AbortError")alert("No se pudo compartir desde este dispositivo.")}return}showMenuModal(action)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();closeModal()}});
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
 import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged
+ getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+ sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged,
+ reload, GoogleAuthProvider, signInWithPopup
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import {
+ getFirestore, doc, setDoc, serverTimestamp, getDoc,
+ collection, addDoc, query, orderBy, limit, onSnapshot
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js";
 
+/* Configuración existente del proyecto: se conserva sin sustituir sus valores. */
 const firebaseConfig = {
-  apiKey: "AIzaSyDb85L__Q4Jwhf5H5CEr-luPdDIVcTSd1A",
-  authDomain: "sofist-corax.firebaseapp.com",
-  projectId: "sofist-corax",
-  storageBucket: "sofist-corax.firebasestorage.app",
-  messagingSenderId: "157685922098",
-  appId: "1:157685922098:web:40b4aa956eda97e760ff2b",
-  measurementId: "G-1P2698Z50Z"
+ apiKey: "AIzaSyDb85L__Q4Jwhf5H5CEr-luPdDIVcTSd1A",
+ authDomain: "sofist-corax.firebaseapp.com",
+ projectId: "sofist-corax",
+ storageBucket: "sofist-corax.firebasestorage.app",
+ messagingSenderId: "157685922098",
+ appId: "1:157685922098:web:40b4aa956eda97e760ff2b",
+ measurementId: "G-1P2698Z50Z"
 };
-
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-let currentUser = null;
-const authBody = document.getElementById("menuModalBody");
-const authTitle = document.getElementById("authMenuTitle");
-const authDesc = document.getElementById("authMenuDesc");
+const dbProfile = getFirestore(firebaseApp);
+const functions = getFunctions(firebaseApp);
+const ensureAdminClaim = httpsCallable(functions, "ensureAdminClaim");
+const ADMIN_EMAIL = "sofistcorax@gmail.com";
 
-function authMessage(message, isError=false) {
-  const box = document.getElementById("authMessage");
-  if (!box) return;
-  box.textContent = message;
-  box.style.color = isError ? "#ff8d96" : "#8fc4ff";
+let currentUser = null;
+let currentRole = "user";
+let gateMode = "login";
+let authReady = false;
+
+const $id = id => document.getElementById(id);
+const gate = $id("scAuthGate");
+const gateMsg = $id("scGateMessage");
+const authBody = $id("menuModalBody");
+const authTitle = $id("authMenuTitle");
+const authDesc = $id("authMenuDesc");
+
+function gateMessage(message, error=false) {
+ if (!gateMsg) return;
+ gateMsg.textContent = message || "";
+ gateMsg.classList.toggle("error", !!error);
+}
+function authMessage(message, error=false) {
+ const box = $id("authMessage");
+ if (!box) return;
+ box.textContent = message;
+ box.style.color = error ? "#ff8d96" : "#8fc4ff";
 }
 function friendlyAuthError(error) {
-  const code = error?.code || "";
-  const messages = {
-    "auth/email-already-in-use": "Ese correo ya tiene una cuenta. Intenta iniciar sesión.",
-    "auth/invalid-email": "El correo electrónico no tiene un formato válido.",
-    "auth/weak-password": "La contraseña es demasiado débil. Usa al menos 6 caracteres.",
-    "auth/invalid-credential": "Correo o contraseña incorrectos.",
-    "auth/user-not-found": "No existe una cuenta con ese correo.",
-    "auth/wrong-password": "La contraseña es incorrecta.",
-    "auth/too-many-requests": "Hubo demasiados intentos. Espera un momento e inténtalo de nuevo.",
-    "auth/network-request-failed": "No se pudo conectar. Comprueba tu conexión a Internet.",
-    "auth/operation-not-allowed": "El registro por correo no está habilitado en Firebase.",
-    "auth/unauthorized-domain": "Este dominio no está autorizado en Firebase Authentication."
-  };
-  return messages[code] || `No se pudo completar la operación (${code || "error"}).`;
+ const code = error?.code || "";
+ const messages = {
+  "auth/email-already-in-use":"Ese correo ya tiene una cuenta. Inicia sesión.",
+  "auth/invalid-email":"El correo electrónico no tiene un formato válido.",
+  "auth/weak-password":"La contraseña es demasiado débil. Usa al menos 6 caracteres.",
+  "auth/invalid-credential":"Correo o contraseña incorrectos.",
+  "auth/user-not-found":"No existe una cuenta con ese correo.",
+  "auth/wrong-password":"La contraseña es incorrecta.",
+  "auth/too-many-requests":"Hubo demasiados intentos. Espera un momento.",
+  "auth/network-request-failed":"No se pudo conectar. Comprueba tu conexión.",
+  "auth/operation-not-allowed":"El registro por correo no está habilitado en Firebase.",
+  "auth/unauthorized-domain":"Este dominio no está autorizado en Firebase Authentication.",
+  "permission-denied":"Firebase rechazó el acceso. Comprueba las reglas de Firestore.",
+  "functions/permission-denied":"No tienes autorización para esta operación.",
+  "functions/unavailable":"No se pudo contactar con la función administrativa. Inténtalo de nuevo."
+ };
+ return messages[code] || `No se pudo completar la operación (${code || "error"}).`;
 }
-
-function syncAuthModalState() {
-  const user = currentUser;
-  if (authTitle && authDesc) {
-    authTitle.textContent = user ? "Mi cuenta" : "Registrarse / Iniciar sesión";
-    authDesc.textContent = user ? user.email : "Crear una cuenta con correo electrónico";
+function setGateMode(mode) {
+ gateMode = mode;
+ const registering = mode === "register";
+ $id("scGateTitle").textContent = registering ? "Crear cuenta" : "Bienvenido";
+ $id("scGateNameLabel").hidden = !registering;
+ $id("scGateName").hidden = !registering;
+ $id("scGateName").required = registering;
+ $id("scGateSubmit").textContent = registering ? "Crear cuenta y verificar correo" : "Iniciar sesión";
+ $id("scGateToggle").textContent = registering ? "Ya tengo cuenta" : "Crear cuenta";
+ $id("scGatePassword").autocomplete = registering ? "new-password" : "current-password";
+ gateMessage("");
+}
+function showGate(show) {
+ if (!gate) return;
+ gate.hidden = !show;
+ document.body.classList.toggle("sc-locked", show);
+}
+function syncLegacyAccount() {
+ const user = currentUser;
+ if (authTitle && authDesc) {
+  authTitle.textContent = user ? "Mi cuenta" : "Registrarse / Iniciar sesión";
+  authDesc.textContent = user ? user.email : "Crear una cuenta con correo electrónico";
+ }
+ const signed = $id("authSignedIn"), form = $id("authForm"), emailLabel = $id("authUserEmail");
+ if (signed) signed.hidden = !user;
+ if (form) form.hidden = !!user;
+ if (emailLabel && user) emailLabel.textContent = `Sesión iniciada como ${user.email}${user.emailVerified ? " · Correo verificado" : " · Correo pendiente de verificación"}`;
+}
+function syncUserBar() {
+ const bar = $id("scUserBar");
+ if (!bar) return;
+ bar.style.display = currentUser && currentUser.emailVerified ? "flex" : "none";
+ const label = $id("scUserLabel");
+ if (label) label.textContent = `${currentUser?.displayName || currentUser?.email || ""} · ${currentRole === "admin" ? "Administrador" : "Usuario verificado"}`;
+}
+async function saveUserProfile(user, role) {
+ const profileRef = doc(dbProfile, "users", user.uid);
+ const snap = await getDoc(profileRef);
+ const profile = {
+  uid: user.uid,
+  email: user.email || "",
+  displayName: user.displayName || "",
+  emailVerified: !!user.emailVerified,
+  role: role === "admin" ? "admin" : "user"
+ };
+ if (!snap.exists()) {
+  await setDoc(profileRef, {...profile, createdAt: serverTimestamp(), updatedAt: serverTimestamp()});
+ } else {
+  // El rol y la fecha de creación nunca se actualizan desde el navegador.
+  await setDoc(profileRef, {
+   displayName: profile.displayName,
+   emailVerified: profile.emailVerified,
+   updatedAt: serverTimestamp()
+  }, {merge:true});
+ }
+}
+async function establishVerifiedSession(user) {
+ await reload(user);
+ if (!user.emailVerified) {
+  $id("scGateAuth").hidden = true;
+  $id("scGateVerify").hidden = false;
+  $id("scVerifyText").textContent = `La cuenta ${user.email} todavía no tiene el correo verificado. Abre el enlace que te enviamos y luego pulsa «Ya verifiqué mi correo».`;
+  gateMessage("Acceso bloqueado hasta verificar el correo.", true);
+  showGate(true);
+  return false;
+ }
+ let token = await user.getIdTokenResult(true);
+ // Elevación administrativa únicamente mediante Cloud Function/Admin SDK.
+ if ((user.email || "").toLowerCase() === ADMIN_EMAIL) {
+  try {
+   await ensureAdminClaim({});
+   token = await user.getIdTokenResult(true);
+  } catch (error) {
+   console.error("No se pudo comprobar el rol administrativo:", error);
+   // No conceder privilegios por correo en el cliente. La función debe confirmar el claim.
   }
-  const signed = document.getElementById("authSignedIn");
-  const form = document.getElementById("authForm");
-  const emailLabel = document.getElementById("authUserEmail");
-  if (signed) signed.hidden = !user;
-  if (form) form.hidden = !!user;
-  if (emailLabel && user) emailLabel.textContent = `Sesión iniciada como ${user.email}${user.emailVerified ? " · Correo verificado" : " · Correo pendiente de verificación"}`;
+ }
+ currentRole = token.claims.role === "admin" ? "admin" : "user";
+ try { await saveUserProfile(user, currentRole); }
+ catch (profileError) { console.warn("No se pudo actualizar el perfil; se conserva la sesión autenticada:", profileError); }
+ if (auth.currentUser?.uid !== user.uid) return false;
+ currentUser = user;
+ window.__scCurrentEmail = user.email || "";
+ syncLegacyAccount();
+ syncUserBar();
+ $id("scGateAuth").hidden = false;
+ $id("scGateVerify").hidden = true;
+ gateMessage("");
+ showGate(false);
+ return true;
 }
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-  syncAuthModalState();
-  if (!user) { if (started) { location.reload(); return; } gview("form"); return; }
-  if (!busy) enter(user);
-});
 
-/* ===== Acceso exclusivo: pantalla de entrada, perfiles (Firestore) y panel de administrador ===== */
-const $g = id => document.getElementById(id);
-const db = getFirestore(firebaseApp), fns = getFunctions(firebaseApp, "us-central1");
-let mode = "login", busy = false, started = false, isAdmin = false;
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
-const eh = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-function gmsg(t, err) { const b = $g("gateMsg"); b.textContent = t || ""; b.className = "gateMsg" + (t ? (err ? " err" : " ok") : ""); }
-function gview(v) {
-  $g("gateChecking").hidden = v !== "checking"; $g("gateForm").hidden = v !== "form";
-  $g("gateLinks").hidden = v !== "form"; $g("gateVerify").hidden = v !== "verify";
-}
-function setMode(m) {
-  mode = m; const r = m === "register";
-  $g("gName").hidden = $g("gNameL").hidden = !r;
-  $g("gSubmit").textContent = r ? "Crear cuenta" : "Iniciar sesión";
-  $g("gToggle").textContent = r ? "¿Ya tienes cuenta? Inicia sesión" : "¿No tienes cuenta? Regístrate";
-  $g("gPass").autocomplete = r ? "new-password" : "current-password"; gmsg("");
-}
-async function saveProfile(user, nombre) {
-  const ref = doc(db, "users", user.uid), snap = await getDoc(ref);
-  if (!snap.exists()) {
-    await setDoc(ref, { nombre: nombre || user.email.split("@")[0], email: user.email, uid: user.uid, fechaRegistro: serverTimestamp(), emailVerificado: user.emailVerified, rol: "user" });
-  } else if (snap.data().emailVerificado !== user.emailVerified) {
-    await updateDoc(ref, { emailVerificado: user.emailVerified });
+let authEventVersion = 0;
+onAuthStateChanged(auth, async user => {
+ const eventVersion = ++authEventVersion;
+ currentUser = user;
+ window.__scCurrentEmail = user?.email || "";
+ authReady = true;
+ syncLegacyAccount();
+ if (!user) {
+  currentRole = "user";
+  syncUserBar();
+  $id("scGateAuth").hidden = false;
+  $id("scGateVerify").hidden = true;
+  setGateMode("login");
+  gateMessage("Inicia sesión o regístrate para continuar.");
+  showGate(true);
+  return;
+ }
+ showGate(true);
+ gateMessage("Comprobando sesión y verificación de correo…");
+ try {
+  await establishVerifiedSession(user);
+  if (eventVersion !== authEventVersion || auth.currentUser?.uid !== user.uid) return;
+ } catch (error) {
+  if (eventVersion !== authEventVersion || auth.currentUser?.uid !== user.uid) return;
+  console.error("Error preparando perfil:", error);
+  currentRole = "user";
+  syncUserBar();
+  gateMessage(`No se pudo preparar tu perfil: ${friendlyAuthError(error)}`, true);
+  showGate(true);
+ }
+});
+if (authBody) new MutationObserver(syncLegacyAccount).observe(authBody, {childList:true,subtree:true});
+
+$id("scGateToggle").addEventListener("click", () => setGateMode(gateMode === "login" ? "register" : "login"));
+$id("scGateForm").addEventListener("submit", async event => {
+ event.preventDefault();
+ const email = $id("scGateEmail").value.trim();
+ const password = $id("scGatePassword").value;
+ const name = $id("scGateName").value.trim();
+ const submit = $id("scGateSubmit");
+ submit.disabled = true;
+ gateMessage(gateMode === "register" ? "Creando tu cuenta…" : "Iniciando sesión…");
+ try {
+  if (gateMode === "register") {
+   const credential = await createUserWithEmailAndPassword(auth, email, password);
+   if (name) await (await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js")).updateProfile(credential.user, {displayName:name});
+   await sendEmailVerification(credential.user);
+   await signOut(auth);
+   setGateMode("login");
+   gateMessage("Cuenta creada. Te enviamos un enlace de verificación. Confirma tu correo y después inicia sesión.");
+  } else {
+   await signInWithEmailAndPassword(auth, email, password);
+   gateMessage("Credenciales correctas. Comprobando verificación…");
   }
-}
-function startApp(user) {
-  if (!started) { started = true; const s = document.createElement("script"); s.textContent = $g("appCode").textContent; document.body.appendChild(s); }
-  document.body.classList.remove("locked");
-  $g("menuLogoutMail").textContent = user.email;
-  $g("menuAdmin").style.display = isAdmin ? "" : "none";
-}
-async function enter(user, manual) {
-  try {
-    await user.reload(); await user.getIdToken(true);
-    if (!user.emailVerified) { $g("gVerEmail").textContent = user.email; gview("verify"); if (manual) gmsg("Tu correo todavía no aparece como verificado. Abre el enlace del correo y vuelve a pulsar el botón.", true); return; }
-    try { await saveProfile(user); } catch (e) { console.warn("Perfil no guardado:", e); }
-    isAdmin = (await user.getIdTokenResult()).claims.admin === true;
-    gmsg(""); startApp(user);
-  } catch (e) { gview("form"); gmsg(friendlyAuthError(e), true); }
-}
-setMode("login"); gview("checking");
-$g("gToggle").addEventListener("click", () => setMode(mode === "login" ? "register" : "login"));
-$g("gateForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const email = $g("gEmail").value.trim(), pass = $g("gPass").value, name = $g("gName").value.trim(), reg = mode === "register";
-  if (!email || !pass) { gmsg("Escribe tu correo y tu contraseña.", true); return; }
-  if (reg && name.length < 2) { gmsg("Escribe tu nombre.", true); return; }
-  busy = true; $g("gSubmit").disabled = true; gmsg(reg ? "Creando tu cuenta…" : "Comprobando tus datos…");
-  try {
-    if (reg) {
-      const c = await createUserWithEmailAndPassword(auth, email, pass);
-      try { await saveProfile(c.user, name); } catch (x) { console.warn(x); }
-      await sendEmailVerification(c.user);
-      busy = false; await enter(c.user); gmsg("¡Cuenta creada! Te enviamos un correo de verificación. Revisa también spam.");
-    } else { await signInWithEmailAndPassword(auth, email, pass); busy = false; await enter(auth.currentUser); }
-  } catch (err) { busy = false; gmsg(friendlyAuthError(err), true); }
-  $g("gSubmit").disabled = false;
+ } catch (error) {
+  gateMessage(friendlyAuthError(error), true);
+ } finally {
+  submit.disabled = false;
+ }
 });
-$g("gReset").addEventListener("click", async () => {
-  const email = $g("gEmail").value.trim();
-  if (!email) { gmsg("Escribe tu correo y vuelve a pulsar «Olvidé mi contraseña».", true); return; }
-  try { await sendPasswordResetEmail(auth, email); gmsg("Si existe una cuenta con ese correo, recibirás un enlace para cambiar la contraseña. Revisa spam."); }
-  catch (err) { gmsg(friendlyAuthError(err), true); }
+$id("scGateReset").addEventListener("click", async () => {
+ const email = $id("scGateEmail").value.trim();
+ if (!email) { gateMessage("Escribe tu correo para enviarte el enlace de recuperación.", true); return; }
+ try {
+  await sendPasswordResetEmail(auth, email);
+  gateMessage("Si existe una cuenta con ese correo, recibirás un enlace de recuperación. Revisa spam.");
+ } catch (error) { gateMessage(friendlyAuthError(error), true); }
 });
-$g("gVerCheck").addEventListener("click", () => enter(auth.currentUser, true));
-$g("gVerResend").addEventListener("click", async () => {
-  try { await sendEmailVerification(auth.currentUser); gmsg("Te enviamos otro correo de verificación."); } catch (err) { gmsg(friendlyAuthError(err), true); }
+$id("scResendVerify").addEventListener("click", async () => {
+ if (!auth.currentUser) return;
+ try { await sendEmailVerification(auth.currentUser); gateMessage("Correo de verificación reenviado. Revisa también spam."); }
+ catch (error) { gateMessage(friendlyAuthError(error), true); }
 });
-$g("gVerOut").addEventListener("click", () => signOut(auth));
-$g("menuLogout").addEventListener("click", () => signOut(auth));
-async function openAdmin() {
-  if (window.closeMenu) closeMenu();
-  $g("menuModalTitle").textContent = "Administración de usuarios";
-  const b = $g("menuModalBody"); b.innerHTML = "<p>Cargando usuarios…</p>"; $g("menuModal").hidden = false;
-  try {
-    const s = await getDocs(query(collection(db, "users"), orderBy("fechaRegistro", "desc")));
-    const rows = s.docs.map(d => { const u = d.data(), a = u.rol === "admin"; return `<tr><td>${eh(u.nombre)}</td><td>${eh(u.email)}</td><td>${u.emailVerificado ? "✓" : "—"}</td><td>${eh(u.rol)}</td><td>${u.fechaRegistro?.toDate ? u.fechaRegistro.toDate().toLocaleDateString("es") : ""}</td><td><button type="button" data-uid="${eh(d.id)}" data-role="${a ? "user" : "admin"}">${a ? "Quitar admin" : "Hacer admin"}</button></td></tr>`; }).join("");
-    b.innerHTML = `<p>${s.size} usuario(s) registrados.</p><div id="admMsg" class="note" role="status"></div><div class="sc"><table><tr><th>Nombre</th><th>Correo</th><th>Verif.</th><th>Rol</th><th>Alta</th><th></th></tr>${rows}</table></div>`;
-    b.onclick = async ev => {
-      const btn = ev.target.closest("[data-uid]"); if (!btn || !confirm("¿Cambiar el rol de este usuario?")) return;
-      try { await httpsCallable(fns, "setUserRole")({ uid: btn.dataset.uid, role: btn.dataset.role }); openAdmin(); }
-      catch (err) { $g("admMsg").textContent = err.code === "functions/permission-denied" ? "No tienes permiso." : "No se pudo cambiar el rol: " + (err.message || err.code); }
-    };
-  } catch (err) { b.innerHTML = `<p class="note">No se pudieron cargar los usuarios (${eh(err.code || err.message)}). Comprueba que las reglas de Firestore estén publicadas y que tu cuenta tenga el rol de administrador.</p>`; }
-}
-$g("menuAdmin").addEventListener("click", openAdmin);
-// El formulario se crea dinámicamente al abrir el menú; sincroniza su estado al aparecer.
-new MutationObserver(syncAuthModalState).observe(authBody, { childList: true, subtree: true });
+$id("scCheckVerify").addEventListener("click", async () => {
+ if (!auth.currentUser) return;
+ try {
+  await reload(auth.currentUser);
+  if (!auth.currentUser.emailVerified) { gateMessage("Todavía no aparece como verificado. Abre el enlace del correo y vuelve a comprobar.", true); return; }
+  await establishVerifiedSession(auth.currentUser);
+ } catch (error) { gateMessage(friendlyAuthError(error), true); }
+});
+$id("scVerifyLogout").addEventListener("click", async () => { try { await signOut(auth); } catch(error) { gateMessage(friendlyAuthError(error),true); } });
+$id("scHeaderLogout")?.addEventListener("click", async () => { try { await signOut(auth); } catch(error) { alert(friendlyAuthError(error)); } });
 
-if (authBody) {
-  authBody.addEventListener("submit", async event => {
-    if (event.target.id !== "authForm") return;
-    event.preventDefault();
-    const email = document.getElementById("authEmail")?.value.trim();
-    const password = document.getElementById("authPassword")?.value || "";
-    authMessage("Conectando con Firebase…");
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      if (!auth.currentUser.emailVerified) {
-        await sendEmailVerification(auth.currentUser);
-        await signOut(auth);
-        authMessage("Tu cuenta todavía no está verificada. Te enviamos otro correo de verificación; confirma tu dirección y vuelve a iniciar sesión.", true);
-        return;
-      }
-      authMessage("Sesión iniciada correctamente.");
-    } catch (error) {
-      authMessage(friendlyAuthError(error), true);
-    }
-  });
+// Acceso con Google: Google verifica el correo de la cuenta y evita el flujo de contraseña.
+$id("scGoogleSignIn").addEventListener("click", async () => {
+ const button = $id("scGoogleSignIn"); button.disabled = true;
+ gateMessage("Abriendo acceso con Google…");
+ try {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({prompt:"select_account"});
+  const credential = await signInWithPopup(auth, provider);
+  if (!credential.user.emailVerified) { gateMessage("Google no confirmó el correo. Verifica la dirección antes de continuar.", true); await signOut(auth); return; }
+  gateMessage("Acceso con Google correcto. Preparando tu sesión…");
+ } catch (error) { gateMessage(friendlyAuthError(error), true); }
+ finally { button.disabled = false; }
+});
 
-  authBody.addEventListener("click", async event => {
-    const create = event.target.closest("#authCreate");
-    const reset = event.target.closest("#authReset");
-    const logout = event.target.closest("#authSignOut");
-    if (!create && !reset && !logout) return;
-    if (create) {
-      const email = document.getElementById("authEmail")?.value.trim();
-      const password = document.getElementById("authPassword")?.value || "";
-      if (!email || !password) { authMessage("Escribe primero tu correo y una contraseña de al menos 6 caracteres.", true); return; }
-      authMessage("Creando tu cuenta…");
-      try {
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-        await sendEmailVerification(credential.user);
-        await signOut(auth);
-        authMessage("¡Cuenta creada! Te enviamos un correo para verificar tu dirección. Confírmalo antes de iniciar sesión. Revisa también spam.");
-      } catch (error) {
-        authMessage(friendlyAuthError(error), true);
-      }
-    }
-    if (reset) {
-      const email = document.getElementById("authEmail")?.value.trim();
-      if (!email) { authMessage("Escribe tu correo electrónico y vuelve a pulsar «Olvidé mi contraseña».", true); return; }
-      authMessage("Enviando enlace de recuperación…");
-      try {
-        await sendPasswordResetEmail(auth, email);
-        authMessage("Si existe una cuenta con ese correo, recibirás un enlace para cambiar la contraseña. Revisa spam.");
-      } catch (error) {
-        authMessage(friendlyAuthError(error), true);
-      }
-    }
-    if (logout) {
-      try { await signOut(auth); authMessage("Has cerrado sesión."); }
-      catch (error) { authMessage(friendlyAuthError(error), true); }
-    }
-  });
+// Mi cuenta: muestra solo el correo y dos acciones. Quitar cuenta cierra la sesión local;
+// no elimina la cuenta de Firebase ni sus datos.
+if (authBody) authBody.addEventListener("click", async event => {
+ if (event.target.closest("#scAccountAccept")) { $id("menuModal").hidden = true; return; }
+ if (event.target.closest("#scAccountRemove")) {
+  try { await signOut(auth); $id("menuModal").hidden = true; }
+  catch (error) { alert(friendlyAuthError(error)); }
+ }
+});
+
+// Comunidad en tiempo real: mensajes y respuestas se guardan como documentos relacionados.
+const communityPage = $id("scCommunityPage");
+const communityMessages = $id("scCommunityMessages");
+const communityNotice = $id("scCommunityNotice");
+const communityForm = $id("scCommunityForm");
+const communityText = $id("scCommunityText");
+const replyingBox = $id("scReplyingTo");
+let communityUnsubscribe = null;
+let replyTarget = null;
+function openCommunity() {
+ if (!currentUser || !currentUser.emailVerified) { gateMessage("Inicia sesión y verifica tu correo para entrar a la comunidad.", true); showGate(true); return; }
+ communityPage.hidden = false;
+ if (!communityUnsubscribe) {
+  const q = query(collection(dbProfile,"communityMessages"), orderBy("createdAt","desc"), limit(100));
+  communityUnsubscribe = onSnapshot(q, snapshot => {
+   const docs = snapshot.docs.map(d=>({id:d.id,...d.data()})).reverse();
+   communityMessages.replaceChildren();
+   if (!docs.length) { const empty=document.createElement("div"); empty.className="scCommunityEmpty"; empty.textContent="Todavía no hay debates. ¡Inicia la conversación!"; communityMessages.append(empty); }
+   const byId = new Map(docs.map(m=>[m.id,m]));
+   for (const msg of docs) {
+    const card=document.createElement("article"); card.className="scCommunityMessage"+(msg.parentId?" reply":"");
+    const meta=document.createElement("div"); meta.className="scCommunityMeta";
+    const author=document.createElement("strong"); author.textContent=msg.displayName||msg.authorEmail||"Usuario";
+    const date=document.createElement("span"); date.textContent=msg.createdAt?.toDate?msg.createdAt.toDate().toLocaleString():"Enviando…";
+    meta.append(author,date); card.append(meta);
+    if(msg.parentId && byId.has(msg.parentId)){const ref=document.createElement("div");ref.className="scCommunityMeta";ref.textContent="↳ Respuesta a "+(byId.get(msg.parentId).displayName||byId.get(msg.parentId).authorEmail||"un usuario");card.append(ref);}
+    const text=document.createElement("div"); text.className="scCommunityText"; text.textContent=msg.text||""; card.append(text);
+    if(!msg.parentId){const reply=document.createElement("button");reply.type="button";reply.className="scCommunityReply";reply.textContent="Responder";reply.addEventListener("click",()=>{replyTarget={id:msg.id,label:msg.displayName||msg.authorEmail||"usuario"};replyingBox.hidden=false;replyingBox.textContent="Respondiendo a "+replyTarget.label+" · ";communityText.focus();});card.append(reply);}
+    communityMessages.append(card);
+   }
+   communityMessages.scrollTop=communityMessages.scrollHeight;
+   communityNotice.textContent="Conectado · mostrando los últimos "+docs.length+" mensajes";
+  }, error=>{communityNotice.textContent="No se pudo cargar el chat: "+friendlyAuthError(error);});
+ }
 }
+window.addEventListener("sc-open-community",openCommunity);
+$id("scCommunityBack").addEventListener("click",()=>{communityPage.hidden=true;});
+replyingBox.addEventListener("click",()=>{replyTarget=null;replyingBox.hidden=true;replyingBox.textContent="";});
+communityForm.addEventListener("submit",async event=>{
+ event.preventDefault();
+ const text=communityText.value.trim();
+ if(!text || !currentUser || !currentUser.emailVerified)return;
+ const send=$id("scCommunitySend");send.disabled=true;communityNotice.textContent="Publicando…";
+ try {
+  await addDoc(collection(dbProfile,"communityMessages"),{
+   authorUid:currentUser.uid, authorEmail:currentUser.email||"",
+   displayName:currentUser.displayName||currentUser.email||"Usuario",
+   text, parentId:replyTarget?.id||null, createdAt:serverTimestamp()
+  });
+  communityText.value="";replyTarget=null;replyingBox.hidden=true;replyingBox.textContent="";
+ } catch(error) { communityNotice.textContent="No se pudo publicar: "+friendlyAuthError(error); }
+ finally { send.disabled=false; }
+});
+
 </script></main></body></html>
