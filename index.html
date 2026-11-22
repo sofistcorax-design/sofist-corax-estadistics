@@ -248,7 +248,7 @@ th,td{border-bottom-color:#16264d}
 <div class="menuShade" id="menuShade" hidden></div>
 <aside class="sideMenu" id="sideMenu" aria-label="Menú principal" aria-hidden="true">
  <div class="menuHead"><div><b>SOFIST CORAX</b><small>Estadísticas avanzadas</small></div><button id="menuClose" type="button" aria-label="Cerrar menú">×</button></div>
- <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b>Registrarse</b><small>Crear una cuenta con correo electrónico</small></span><i>›</i></button>
+ <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b id="authMenuTitle">Cuenta / Registrarse</b><small id="authMenuDesc">Crear una cuenta o iniciar sesión</small></span><i>›</i></button>
  <a class="menuItem" href="mailto:sofistcorax@gmail.com?subject=Contacto%20-%20Sofist%20Corax"><span>✉</span><span><b>Contacto con el programador</b><small>sofistcorax@gmail.com</small></span><i>›</i></a>
  <button class="menuItem" type="button" data-menu="language"><span>文</span><span><b>Idioma</b><small>Seleccionar idioma</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="about"><span>ⓘ</span><span><b>Acerca de la app</b><small>Información de Sofist Corax</small></span><i>›</i></button>
@@ -2022,11 +2022,10 @@ function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("
 function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria-hidden","false");$("#menuOpen").setAttribute("aria-expanded","true");menuShade.hidden=false}
 function closeModal(){menuModal.hidden=true}
 function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");
- if(type==="register"){title.textContent="Crear cuenta";body.innerHTML='<p>El registro permitirá crear una cuenta personal en Sofist Corax.</p><form id="registerForm"><label for="regEmail">Correo electrónico</label><input id="regEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="regPass">Contraseña</label><input id="regPass" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo 8 caracteres" required><button class="p" type="submit">Continuar</button></form><p class="note">La pantalla está preparada, pero el registro real requiere conectar un servicio seguro de autenticación. No se guardará tu contraseña en esta versión.</p>';}
+ if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
  else if(type==="language"){title.textContent="Idioma";body.innerHTML='<p>Selecciona el idioma de la aplicación.</p><label for="appLanguage">Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Guardar preferencia</button><p class="note">La preferencia se guardará en este dispositivo. La traducción completa de todas las secciones se incorporará en una actualización posterior.</p>';}
  else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>Sofist Corax Estadistics</b></p><p>Herramienta de análisis estadístico de resultados de lotería, con historiales, frecuencias, patrones y otras métricas.</p><p>Versión de diseño: azul y negro.</p><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>';}
  else{return} menuModal.hidden=false;
- const form=$("#registerForm");if(form)form.addEventListener("submit",e=>{e.preventDefault();alert("El registro todavía no está conectado. Para habilitar cuentas reales debemos configurar un servicio de autenticación.")});
  const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{localStorage.setItem("sc-language",$("#appLanguage").value);alert("Preferencia de idioma guardada en este dispositivo.")});
  const lang=$("#appLanguage");if(lang)lang.value=localStorage.getItem("sc-language")||"es";
 }
@@ -2034,4 +2033,129 @@ $("#menuOpen").addEventListener("click",openMenu);$("#menuClose").addEventListen
 menuPanel.addEventListener("click",async e=>{const b=e.target.closest("[data-menu]");if(!b)return;const action=b.dataset.menu;closeMenu();if(action==="share"){const url=location.href;try{if(navigator.share)await navigator.share({title:"Sofist Corax Estadistics",text:"Consulta Sofist Corax Estadistics",url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);alert("Enlace copiado para compartir.")}else alert("Enlace de la aplicación: "+url)}catch(err){if(err.name!=="AbortError")alert("No se pudo compartir desde este dispositivo.")}return}showMenuModal(action)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();closeModal()}});
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDb85L__Q4Jwhf5H5CEr-luPdDIVcTSd1A",
+  authDomain: "sofist-corax.firebaseapp.com",
+  projectId: "sofist-corax",
+  storageBucket: "sofist-corax.firebasestorage.app",
+  messagingSenderId: "157685922098",
+  appId: "1:157685922098:web:40b4aa956eda97e760ff2b",
+  measurementId: "G-1P2698Z50Z"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+let currentUser = null;
+const authBody = document.getElementById("menuModalBody");
+const authTitle = document.getElementById("authMenuTitle");
+const authDesc = document.getElementById("authMenuDesc");
+
+function authMessage(message, isError=false) {
+  const box = document.getElementById("authMessage");
+  if (!box) return;
+  box.textContent = message;
+  box.style.color = isError ? "#ff8d96" : "#8fc4ff";
+}
+function friendlyAuthError(error) {
+  const code = error?.code || "";
+  const messages = {
+    "auth/email-already-in-use": "Ese correo ya tiene una cuenta. Intenta iniciar sesión.",
+    "auth/invalid-email": "El correo electrónico no tiene un formato válido.",
+    "auth/weak-password": "La contraseña es demasiado débil. Usa al menos 6 caracteres.",
+    "auth/invalid-credential": "Correo o contraseña incorrectos.",
+    "auth/user-not-found": "No existe una cuenta con ese correo.",
+    "auth/wrong-password": "La contraseña es incorrecta.",
+    "auth/too-many-requests": "Hubo demasiados intentos. Espera un momento e inténtalo de nuevo.",
+    "auth/network-request-failed": "No se pudo conectar. Comprueba tu conexión a Internet.",
+    "auth/operation-not-allowed": "El registro por correo no está habilitado en Firebase.",
+    "auth/unauthorized-domain": "Este dominio no está autorizado en Firebase Authentication."
+  };
+  return messages[code] || `No se pudo completar la operación (${code || "error"}).`;
+}
+
+function syncAuthModalState() {
+  const user = currentUser;
+  if (authTitle && authDesc) {
+    authTitle.textContent = user ? "Mi cuenta" : "Registrarse / Iniciar sesión";
+    authDesc.textContent = user ? user.email : "Crear una cuenta con correo electrónico";
+  }
+  const signed = document.getElementById("authSignedIn");
+  const form = document.getElementById("authForm");
+  const emailLabel = document.getElementById("authUserEmail");
+  if (signed) signed.hidden = !user;
+  if (form) form.hidden = !!user;
+  if (emailLabel && user) emailLabel.textContent = `Sesión iniciada como ${user.email}${user.emailVerified ? " · Correo verificado" : " · Correo pendiente de verificación"}`;
+}
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  syncAuthModalState();
+});
+// El formulario se crea dinámicamente al abrir el menú; sincroniza su estado al aparecer.
+new MutationObserver(syncAuthModalState).observe(authBody, { childList: true, subtree: true });
+
+if (authBody) {
+  authBody.addEventListener("submit", async event => {
+    if (event.target.id !== "authForm") return;
+    event.preventDefault();
+    const email = document.getElementById("authEmail")?.value.trim();
+    const password = document.getElementById("authPassword")?.value || "";
+    authMessage("Conectando con Firebase…");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      if (!auth.currentUser.emailVerified) {
+        await sendEmailVerification(auth.currentUser);
+        await signOut(auth);
+        authMessage("Tu cuenta todavía no está verificada. Te enviamos otro correo de verificación; confirma tu dirección y vuelve a iniciar sesión.", true);
+        return;
+      }
+      authMessage("Sesión iniciada correctamente.");
+    } catch (error) {
+      authMessage(friendlyAuthError(error), true);
+    }
+  });
+
+  authBody.addEventListener("click", async event => {
+    const create = event.target.closest("#authCreate");
+    const reset = event.target.closest("#authReset");
+    const logout = event.target.closest("#authSignOut");
+    if (!create && !reset && !logout) return;
+    if (create) {
+      const email = document.getElementById("authEmail")?.value.trim();
+      const password = document.getElementById("authPassword")?.value || "";
+      if (!email || !password) { authMessage("Escribe primero tu correo y una contraseña de al menos 6 caracteres.", true); return; }
+      authMessage("Creando tu cuenta…");
+      try {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(credential.user);
+        await signOut(auth);
+        authMessage("¡Cuenta creada! Te enviamos un correo para verificar tu dirección. Confírmalo antes de iniciar sesión. Revisa también spam.");
+      } catch (error) {
+        authMessage(friendlyAuthError(error), true);
+      }
+    }
+    if (reset) {
+      const email = document.getElementById("authEmail")?.value.trim();
+      if (!email) { authMessage("Escribe tu correo electrónico y vuelve a pulsar «Olvidé mi contraseña».", true); return; }
+      authMessage("Enviando enlace de recuperación…");
+      try {
+        await sendPasswordResetEmail(auth, email);
+        authMessage("Si existe una cuenta con ese correo, recibirás un enlace para cambiar la contraseña. Revisa spam.");
+      } catch (error) {
+        authMessage(friendlyAuthError(error), true);
+      }
+    }
+    if (logout) {
+      try { await signOut(auth); authMessage("Has cerrado sesión."); }
+      catch (error) { authMessage(friendlyAuthError(error), true); }
+    }
+  });
+}
 </script></main></body></html>
