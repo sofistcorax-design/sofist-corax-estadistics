@@ -222,9 +222,19 @@ th,td{border-bottom-color:#16264d}
 .cellb.am{background:#78450f;border-color:#fbbf24;color:#fff}
 .cellb.sel{outline:2px solid #5ab0ff}
 @media(max-width:520px){main{padding:12px 12px 28px}.hero{padding:14px 12px 18px}.brand img{width:48px;height:48px}}
+
+/* Menú lateral azul y negro */
+.brand{gap:12px}.menuBtn{width:44px;height:44px;flex:none;padding:0;border:1px solid rgba(124,192,255,.65);border-radius:12px;background:rgba(2,10,28,.72);color:#fff;font-size:25px;line-height:1;box-shadow:0 0 16px rgba(47,141,255,.25)}
+.menuShade,.modalShade{position:fixed;inset:0;background:rgba(0,4,14,.72);backdrop-filter:blur(3px);z-index:1000}
+.menuShade[hidden],.modalShade[hidden]{display:none}
+.sideMenu{position:fixed;z-index:1001;left:0;top:0;bottom:0;width:min(340px,88vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(18px + env(safe-area-inset-bottom,0px));background:linear-gradient(160deg,#0c1d42,#050914 65%);border-right:1px solid #2856a5;box-shadow:18px 0 45px #0009;transform:translateX(-110%);transition:transform .24s ease;display:flex;flex-direction:column;gap:8px}
+.sideMenu.open{transform:translateX(0)}.menuHead{display:flex;align-items:center;justify-content:space-between;padding:8px 5px 18px;border-bottom:1px solid #1c3366;margin-bottom:6px}.menuHead b{display:block;color:#fff;letter-spacing:1.2px}.menuHead small,.menuItem small{display:block;color:#8fa3c9;font-size:11px;margin-top:3px}.menuHead button,.modalX{width:36px;height:36px;padding:0;font-size:24px;border-radius:10px}.menuItem{display:flex;align-items:center;gap:12px;width:100%;padding:12px 10px;text-align:left;text-decoration:none;border:1px solid transparent;border-radius:12px;background:rgba(13,29,62,.72);color:#e8f0ff}.menuItem>span:first-child{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:10px;background:#102e68;color:#72baff;font-size:19px}.menuItem>span:nth-child(2){flex:1;min-width:0}.menuItem b{font-size:13px}.menuItem i{font-style:normal;color:#70b6ff;font-size:22px}.menuItem:hover{border-color:#397fe0;background:#10234b}.menuFoot{margin-top:auto;padding:14px 6px 4px;color:#5877aa;font-size:11px;text-align:center;border-top:1px solid #1c3366}
+.menuModal{position:relative;width:min(420px,calc(100vw - 32px));margin:18vh auto 0;padding:22px;background:linear-gradient(145deg,#0e1b36,#070c18);border:1px solid #2f65bd;border-radius:18px;box-shadow:0 18px 55px #000b;color:#e8f0ff}.menuModal h2{padding-right:34px;color:#fff}.modalX{position:absolute;right:12px;top:12px}.menuModal p{color:#a9bfdf;font-size:13px}.menuModal input,.menuModal select{width:100%;margin:6px 0 12px}.menuModal .p{width:100%;padding:11px}.menuModal label{display:block;font-size:12px;color:#a9bfdf}
+@media(max-width:520px){.brand{gap:9px}.menuBtn{width:40px;height:40px}}
+
 </style></head><body>
 <header class="hero"><div class="heroIn">
-<div class="brand"><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
+<div class="brand"><button class="menuBtn" id="menuOpen" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
 <p class="sub" id="status">Cargando datos…</p>
 <div class="syncrow">
  <button class="p" id="syncTop" type="button">↻ ACTUALIZAR RESULTADOS</button>
@@ -235,6 +245,17 @@ th,td{border-bottom-color:#16264d}
  <span id="syncStatus" role="status" aria-live="polite">Actualiza los sorteos Midday y Evening desde el archivo de resultados.</span>
 </div>
 </div></header>
+<div class="menuShade" id="menuShade" hidden></div>
+<aside class="sideMenu" id="sideMenu" aria-label="Menú principal" aria-hidden="true">
+ <div class="menuHead"><div><b>SOFIST CORAX</b><small>Estadísticas avanzadas</small></div><button id="menuClose" type="button" aria-label="Cerrar menú">×</button></div>
+ <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b>Registrarse</b><small>Crear una cuenta con correo electrónico</small></span><i>›</i></button>
+ <a class="menuItem" href="mailto:sofistcorax@gmail.com?subject=Contacto%20-%20Sofist%20Corax"><span>✉</span><span><b>Contacto con el programador</b><small>sofistcorax@gmail.com</small></span><i>›</i></a>
+ <button class="menuItem" type="button" data-menu="language"><span>文</span><span><b>Idioma</b><small>Seleccionar idioma</small></span><i>›</i></button>
+ <button class="menuItem" type="button" data-menu="about"><span>ⓘ</span><span><b>Acerca de la app</b><small>Información de Sofist Corax</small></span><i>›</i></button>
+ <button class="menuItem" type="button" data-menu="share"><span>↗</span><span><b>Compartir aplicación</b><small>Enviar enlace de la aplicación</small></span><i>›</i></button>
+ <div class="menuFoot">Sofist Corax Estadistics</div>
+</aside>
+<div class="modalShade" id="menuModal" hidden><section class="menuModal" role="dialog" aria-modal="true" aria-labelledby="menuModalTitle"><button class="modalX" id="modalClose" type="button" aria-label="Cerrar">×</button><h2 id="menuModalTitle"></h2><div id="menuModalBody"></div></section></div>
 <main>
 <div class="card warn note">Se analizan solo los dos últimos dígitos (00–99). Los sorteos son aleatorios e independientes: ninguna estadística del pasado predice el próximo resultado. Esta herramienta describe lo que ha pasado; no garantiza nada.</div>
 <div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select></label></div>
@@ -1995,5 +2016,22 @@ $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");
 $("#syncTop").addEventListener("click",updateResults);
 $("#fDraw").onchange=$("#fRange").onchange=render;
 load();render();showLatest();
+// Menú principal y acciones
+const menuPanel=$("#sideMenu"),menuShade=$("#menuShade"),menuModal=$("#menuModal");
+function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("aria-hidden","true");$("#menuOpen").setAttribute("aria-expanded","false");menuShade.hidden=true}
+function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria-hidden","false");$("#menuOpen").setAttribute("aria-expanded","true");menuShade.hidden=false}
+function closeModal(){menuModal.hidden=true}
+function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");
+ if(type==="register"){title.textContent="Crear cuenta";body.innerHTML='<p>El registro permitirá crear una cuenta personal en Sofist Corax.</p><form id="registerForm"><label for="regEmail">Correo electrónico</label><input id="regEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="regPass">Contraseña</label><input id="regPass" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo 8 caracteres" required><button class="p" type="submit">Continuar</button></form><p class="note">La pantalla está preparada, pero el registro real requiere conectar un servicio seguro de autenticación. No se guardará tu contraseña en esta versión.</p>';}
+ else if(type==="language"){title.textContent="Idioma";body.innerHTML='<p>Selecciona el idioma de la aplicación.</p><label for="appLanguage">Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Guardar preferencia</button><p class="note">La preferencia se guardará en este dispositivo. La traducción completa de todas las secciones se incorporará en una actualización posterior.</p>';}
+ else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>Sofist Corax Estadistics</b></p><p>Herramienta de análisis estadístico de resultados de lotería, con historiales, frecuencias, patrones y otras métricas.</p><p>Versión de diseño: azul y negro.</p><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>';}
+ else{return} menuModal.hidden=false;
+ const form=$("#registerForm");if(form)form.addEventListener("submit",e=>{e.preventDefault();alert("El registro todavía no está conectado. Para habilitar cuentas reales debemos configurar un servicio de autenticación.")});
+ const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{localStorage.setItem("sc-language",$("#appLanguage").value);alert("Preferencia de idioma guardada en este dispositivo.")});
+ const lang=$("#appLanguage");if(lang)lang.value=localStorage.getItem("sc-language")||"es";
+}
+$("#menuOpen").addEventListener("click",openMenu);$("#menuClose").addEventListener("click",closeMenu);menuShade.addEventListener("click",closeMenu);$("#modalClose").addEventListener("click",closeModal);menuModal.addEventListener("click",e=>{if(e.target===menuModal)closeModal()});
+menuPanel.addEventListener("click",async e=>{const b=e.target.closest("[data-menu]");if(!b)return;const action=b.dataset.menu;closeMenu();if(action==="share"){const url=location.href;try{if(navigator.share)await navigator.share({title:"Sofist Corax Estadistics",text:"Consulta Sofist Corax Estadistics",url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);alert("Enlace copiado para compartir.")}else alert("Enlace de la aplicación: "+url)}catch(err){if(err.name!=="AbortError")alert("No se pudo compartir desde este dispositivo.")}return}showMenuModal(action)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();closeModal()}});
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script></main></body></html>
