@@ -64,6 +64,7 @@ th{color:#d5bd83}
 a{color:#efc45d}
 .note.warn,.warn{border-left-color:#d6a43e}
 #syncTop{white-space:nowrap}
+.drawQuick{white-space:nowrap;padding:11px 14px;border:1px solid #9a762f;border-radius:10px;background:linear-gradient(145deg,#17130c,#282014);color:#f3d47e;font-weight:800}.drawQuick.active{background:linear-gradient(135deg,#8f651c,#e0b54e);color:#15110a;border-color:#f0c865}
 .syncrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0 16px}
 .syncrow button{padding:11px 16px}
 #syncStatus{font-size:12px;color:var(--mu)}
@@ -302,6 +303,8 @@ body.sc-locked{overflow:hidden}
 <p class="sub" id="status">Cargando datos…</p>
 <div class="syncrow">
  <button class="p" id="syncTop" type="button">↻ ACTUALIZAR RESULTADOS</button>
+ <button class="drawQuick" id="quickMidday" type="button" aria-label="Filtrar Midday">☀️ Midday</button>
+ <button class="drawQuick" id="quickEvening" type="button" aria-label="Filtrar Evening">🌙 Evening</button>
  <div class="latestResults" aria-label="Últimos resultados">
   <div class="latestBox"><small>Último Midday</small><strong id="latestM">---</strong><em id="latestMDate">Sin datos</em></div>
   <div class="latestBox"><small>Último Evening</small><strong id="latestE">---</strong><em id="latestEDate">Sin datos</em></div>
@@ -2087,21 +2090,36 @@ function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria
 function closeModal(){menuModal.hidden=true}
 function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");
  if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
- else if(type==="language"){title.textContent="Idioma";body.innerHTML='<p>Selecciona el idioma de la aplicación.</p><label for="appLanguage">Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Guardar preferencia</button><p class="note">La preferencia se guardará en este dispositivo. La traducción completa de todas las secciones se incorporará en una actualización posterior.</p>';}
- else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>Sofist Corax Estadistics</b></p><p>Herramienta de análisis estadístico de resultados de lotería, con historiales, frecuencias, patrones y otras métricas.</p><p>Versión de diseño: azul y negro.</p><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>';}
+ else if(type==="language"){title.textContent="Language / Idioma";body.innerHTML='<p id="languageIntro">Choose the application language / Selecciona el idioma de la aplicación.</p><label for="appLanguage">Language / Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Apply language / Aplicar idioma</button><p class="note">The preference is saved on this device / La preferencia se guarda en este dispositivo.</p>'; }
+ else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>SOFIST CORAX ESTADISTICS</b></p><p>Aplicación de análisis estadístico de resultados de lotería: historiales, frecuencias, patrones y métricas.</p><p><b>Contacto:</b> <a href="mailto:sofistcorax@gmail.com">sofistcorax@gmail.com</a></p><p><b>Software y recursos utilizados</b></p><ul><li>HTML5, CSS3 y JavaScript (módulos ES)</li><li>Firebase Authentication para cuentas y acceso</li><li>Cloud Firestore para perfiles y datos en la nube</li><li>Cloud Functions para operaciones protegidas del servidor</li><li>Google Sign-In como proveedor de acceso</li><li>GitHub Pages para publicar la aplicación</li><li>Service Worker y Web App Manifest para funciones PWA</li><li>LocalStorage para preferencias y datos locales</li></ul><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>'; }
  else{return} menuModal.hidden=false;
- const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{localStorage.setItem("sc-language",$("#appLanguage").value);alert("Preferencia de idioma guardada en este dispositivo.")});
+ const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{const language=$("#appLanguage").value;localStorage.setItem("sc-language",language);applyAppLanguage(language);alert(language==="en"?"Language preference applied.":"Preferencia de idioma aplicada.");closeModal()});
  const lang=$("#appLanguage");if(lang)lang.value=localStorage.getItem("sc-language")||"es";
 }
+const LANGUAGE_PAIRS={
+ "Sofist Corax Estadistics":"Sofist Corax Statistics","Pick 3 Florida · últimos 2 dígitos":"Florida Pick 3 · last 2 digits","↻ ACTUALIZAR RESULTADOS":"↻ UPDATE RESULTS","Último Midday":"Latest Midday","Último Evening":"Latest Evening","Sin datos":"No data","Estadísticas avanzadas":"Advanced statistics","Contacto con el programador":"Contact the developer","Seleccionar idioma":"Select language","Acerca de la app":"About the app","Información de Sofist Corax":"Sofist Corax information","Compartir aplicación":"Share application","Enviar enlace de la aplicación":"Send application link","Categorías de análisis":"Analysis categories","Sorteo":"Draw","Rango":"Range","Todo el historial":"All history","Últimos 365":"Last 365","Últimos 180":"Last 180","Últimos 90":"Last 90","Últimos 30":"Last 30","Solo Midday":"Midday only","Solo Evening":"Evening only","Cuenta / Registrarse":"Account / Sign up","Crear una cuenta o iniciar sesión":"Create an account or sign in","Idioma":"Language","Contacto":"Contact","Cargando datos…":"Loading data…"
+};
+function applyAppLanguage(language){
+ const en=language==="en";document.documentElement.lang=en?"en":"es";
+ const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
+ while((node=walker.nextNode())){const raw=node.nodeValue.trim();if(!raw)continue;let translated=null;for(const [es,eng] of Object.entries(LANGUAGE_PAIRS)){if(raw===es){translated=en?eng:es;break}if(raw===eng){translated=en?eng:es;break}}if(translated!==null)node.nodeValue=node.nodeValue.replace(raw,translated);}
+ document.querySelectorAll("#fDraw option").forEach(o=>{if(o.value==="M")o.textContent=en?"Midday only":"Solo Midday";if(o.value==="E")o.textContent=en?"Evening only":"Solo Evening";if(o.value==="A")o.textContent="Midday + Evening";});
+ const sync=document.getElementById("syncTop");if(sync)sync.textContent=en?"↻ UPDATE RESULTS":"↻ ACTUALIZAR RESULTADOS";
+}
+
+applyAppLanguage(localStorage.getItem("sc-language")||"es");
 $("#menuOpen").addEventListener("click",openMenu);$("#menuClose").addEventListener("click",closeMenu);menuShade.addEventListener("click",closeMenu);$("#modalClose").addEventListener("click",closeModal);menuModal.addEventListener("click",e=>{if(e.target===menuModal)closeModal()});
 menuPanel.addEventListener("click",async e=>{const b=e.target.closest("[data-menu]");if(!b)return;const action=b.dataset.menu;closeMenu();if(action==="share"){const url=location.href;try{if(navigator.share)await navigator.share({title:"Sofist Corax Estadistics",text:"Consulta Sofist Corax Estadistics",url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);alert("Enlace copiado para compartir.")}else alert("Enlace de la aplicación: "+url)}catch(err){if(err.name!=="AbortError")alert("No se pudo compartir desde este dispositivo.")}return}showMenuModal(action)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();closeModal()}});
+function setQuickDraw(which){const f=document.getElementById("fDraw");if(!f)return;f.value=which;f.dispatchEvent(new Event("change",{bubbles:true}));document.getElementById("quickMidday")?.classList.toggle("active",which==="M");document.getElementById("quickEvening")?.classList.toggle("active",which==="E");}
+document.getElementById("quickMidday")?.addEventListener("click",()=>setQuickDraw("M"));
+document.getElementById("quickEvening")?.addEventListener("click",()=>setQuickDraw("E"));
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
 import {
- getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+ getAuth, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword,
  sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged,
  reload, GoogleAuthProvider, signInWithPopup
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
@@ -2122,6 +2140,8 @@ const firebaseConfig = {
 };
 const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
+// Mantiene la sesión en este navegador incluso después de actualizar o cerrar y reabrir la página.
+await setPersistence(auth, browserLocalPersistence);
 const dbProfile = getFirestore(firebaseApp);
 const functions = getFunctions(firebaseApp);
 const ensureAdminClaim = httpsCallable(functions, "ensureAdminClaim");
