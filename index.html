@@ -232,7 +232,41 @@ th,td{border-bottom-color:#16264d}
 .menuModal{position:relative;width:min(420px,calc(100vw - 32px));margin:18vh auto 0;padding:22px;background:linear-gradient(145deg,#0e1b36,#070c18);border:1px solid #2f65bd;border-radius:18px;box-shadow:0 18px 55px #000b;color:#e8f0ff}.menuModal h2{padding-right:34px;color:#fff}.modalX{position:absolute;right:12px;top:12px}.menuModal p{color:#a9bfdf;font-size:13px}.menuModal input,.menuModal select{width:100%;margin:6px 0 12px}.menuModal .p{width:100%;padding:11px}.menuModal label{display:block;font-size:12px;color:#a9bfdf}
 @media(max-width:520px){.brand{gap:9px}.menuBtn{width:40px;height:40px}}
 
-</style></head><body>
+
+/* ===== Acceso exclusivo ===== */
+body.locked .hero,body.locked main,body.locked .sideMenu,body.locked .menuShade,body.locked .modalShade{display:none!important}
+body:not(.locked) #authGate{display:none}
+.gate{position:fixed;inset:0;z-index:100;overflow:auto;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% -10%,#0b2a6b 0%,#070d1d 45%,#05070d 80%)}
+.gateCard{width:100%;max-width:400px;text-align:center;padding:26px 22px;border-radius:22px;background:linear-gradient(145deg,#0e1424,#080b13);border:1px solid #1f3d85;box-shadow:0 16px 48px rgba(0,0,0,.7),0 0 40px rgba(47,141,255,.18)}
+.gateCard img{width:72px;height:72px;border-radius:18px;box-shadow:0 0 0 2px rgba(90,176,255,.8),0 0 24px rgba(47,141,255,.6)}
+.gateCard h1{margin:12px 0 2px;font-size:22px;color:#fff;text-shadow:0 0 18px rgba(47,141,255,.6)}
+.gateCard form{text-align:left;margin-top:14px}
+.gateCard label{display:block;margin:10px 0 4px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mu)}
+.gateCard input{width:100%}
+.gateCard button.p{width:100%;margin-top:16px}
+.gateCard button:disabled{opacity:.6}
+.gateLinks,.gateVerify{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.gateLinks button,.gateVerify .lk{background:none;border:0;box-shadow:none;color:#5ab0ff;font-size:13px}
+.gateMsg{margin-top:12px;font-size:13px;text-align:left}
+.gateMsg.ok,.gateMsg.err{padding:9px 12px;border-radius:10px}
+.gateMsg.ok{background:rgba(34,197,94,.1);border:1px solid #1f7a45;color:#bbf7d0}
+.gateMsg.err{background:rgba(239,68,68,.12);border:1px solid #b42318;color:#fecaca}
+</style></head>
+<body class="locked">
+<div class="gate" id="authGate"><div class="gateCard">
+<img src="icon-192.png" alt="Sofist Corax" width="72" height="72"><h1>Sofist Corax Estadistics</h1>
+<p class="sub">Acceso exclusivo para usuarios registrados</p>
+<div id="gateMsg" class="gateMsg" role="status" aria-live="polite"></div>
+<p id="gateChecking" class="sub" style="margin-top:18px">Comprobando sesión…</p>
+<form id="gateForm" novalidate hidden>
+<label for="gName" id="gNameL" hidden>Nombre</label><input id="gName" type="text" autocomplete="name" placeholder="Tu nombre" hidden>
+<label for="gEmail">Correo electrónico</label><input id="gEmail" type="email" autocomplete="email" placeholder="tu@correo.com">
+<label for="gPass">Contraseña</label><input id="gPass" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres">
+<button class="p" type="submit" id="gSubmit">Iniciar sesión</button></form>
+<div class="gateLinks" id="gateLinks" hidden><button type="button" id="gToggle">¿No tienes cuenta? Regístrate</button><button type="button" id="gReset">Olvidé mi contraseña</button></div>
+<div class="gateVerify" id="gateVerify" hidden><p class="sub">Para entrar debes verificar tu correo<br><b id="gVerEmail"></b></p>
+<button class="p" type="button" id="gVerCheck">Ya verifiqué mi correo</button><button class="lk" type="button" id="gVerResend">Reenviar correo de verificación</button><button class="lk" type="button" id="gVerOut">Cerrar sesión</button></div>
+</div></div>
 <header class="hero"><div class="heroIn">
 <div class="brand"><button class="menuBtn" id="menuOpen" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
 <p class="sub" id="status">Cargando datos…</p>
@@ -249,6 +283,8 @@ th,td{border-bottom-color:#16264d}
 <aside class="sideMenu" id="sideMenu" aria-label="Menú principal" aria-hidden="true">
  <div class="menuHead"><div><b>SOFIST CORAX</b><small>Estadísticas avanzadas</small></div><button id="menuClose" type="button" aria-label="Cerrar menú">×</button></div>
  <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b id="authMenuTitle">Cuenta / Registrarse</b><small id="authMenuDesc">Crear una cuenta o iniciar sesión</small></span><i>›</i></button>
+ <button class="menuItem" type="button" id="menuAdmin" style="display:none"><span>★</span><span><b>Panel de administrador</b><small>Gestionar usuarios</small></span><i>›</i></button>
+ <button class="menuItem" type="button" id="menuLogout"><span>⎋</span><span><b>Cerrar sesión</b><small id="menuLogoutMail"></small></span><i>›</i></button>
  <a class="menuItem" href="mailto:sofistcorax@gmail.com?subject=Contacto%20-%20Sofist%20Corax"><span>✉</span><span><b>Contacto con el programador</b><small>sofistcorax@gmail.com</small></span><i>›</i></a>
  <button class="menuItem" type="button" data-menu="language"><span>文</span><span><b>Idioma</b><small>Seleccionar idioma</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="about"><span>ⓘ</span><span><b>Acerca de la app</b><small>Información de Sofist Corax</small></span><i>›</i></button>
@@ -261,7 +297,7 @@ th,td{border-bottom-color:#16264d}
 <div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select></label></div>
 <div class="card"><div class="secLabel">Categorías de análisis</div><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
 <div id="view"></div>
-<script>
+<script type="text/plain" id="appCode">
 const $=s=>document.querySelector(s);
 const SEED=`2025-11-18 E 2 6 8
 2025-11-19 E 1 3 7
@@ -2040,6 +2076,8 @@ import {
   getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
   sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDb85L__Q4Jwhf5H5CEr-luPdDIVcTSd1A",
@@ -2097,7 +2135,97 @@ function syncAuthModalState() {
 onAuthStateChanged(auth, user => {
   currentUser = user;
   syncAuthModalState();
+  if (!user) { if (started) { location.reload(); return; } gview("form"); return; }
+  if (!busy) enter(user);
 });
+
+/* ===== Acceso exclusivo: pantalla de entrada, perfiles (Firestore) y panel de administrador ===== */
+const $g = id => document.getElementById(id);
+const db = getFirestore(firebaseApp), fns = getFunctions(firebaseApp, "us-central1");
+let mode = "login", busy = false, started = false, isAdmin = false;
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+const eh = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function gmsg(t, err) { const b = $g("gateMsg"); b.textContent = t || ""; b.className = "gateMsg" + (t ? (err ? " err" : " ok") : ""); }
+function gview(v) {
+  $g("gateChecking").hidden = v !== "checking"; $g("gateForm").hidden = v !== "form";
+  $g("gateLinks").hidden = v !== "form"; $g("gateVerify").hidden = v !== "verify";
+}
+function setMode(m) {
+  mode = m; const r = m === "register";
+  $g("gName").hidden = $g("gNameL").hidden = !r;
+  $g("gSubmit").textContent = r ? "Crear cuenta" : "Iniciar sesión";
+  $g("gToggle").textContent = r ? "¿Ya tienes cuenta? Inicia sesión" : "¿No tienes cuenta? Regístrate";
+  $g("gPass").autocomplete = r ? "new-password" : "current-password"; gmsg("");
+}
+async function saveProfile(user, nombre) {
+  const ref = doc(db, "users", user.uid), snap = await getDoc(ref);
+  if (!snap.exists()) {
+    await setDoc(ref, { nombre: nombre || user.email.split("@")[0], email: user.email, uid: user.uid, fechaRegistro: serverTimestamp(), emailVerificado: user.emailVerified, rol: "user" });
+  } else if (snap.data().emailVerificado !== user.emailVerified) {
+    await updateDoc(ref, { emailVerificado: user.emailVerified });
+  }
+}
+function startApp(user) {
+  if (!started) { started = true; const s = document.createElement("script"); s.textContent = $g("appCode").textContent; document.body.appendChild(s); }
+  document.body.classList.remove("locked");
+  $g("menuLogoutMail").textContent = user.email;
+  $g("menuAdmin").style.display = isAdmin ? "" : "none";
+}
+async function enter(user, manual) {
+  try {
+    await user.reload(); await user.getIdToken(true);
+    if (!user.emailVerified) { $g("gVerEmail").textContent = user.email; gview("verify"); if (manual) gmsg("Tu correo todavía no aparece como verificado. Abre el enlace del correo y vuelve a pulsar el botón.", true); return; }
+    try { await saveProfile(user); } catch (e) { console.warn("Perfil no guardado:", e); }
+    isAdmin = (await user.getIdTokenResult()).claims.admin === true;
+    gmsg(""); startApp(user);
+  } catch (e) { gview("form"); gmsg(friendlyAuthError(e), true); }
+}
+setMode("login"); gview("checking");
+$g("gToggle").addEventListener("click", () => setMode(mode === "login" ? "register" : "login"));
+$g("gateForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = $g("gEmail").value.trim(), pass = $g("gPass").value, name = $g("gName").value.trim(), reg = mode === "register";
+  if (!email || !pass) { gmsg("Escribe tu correo y tu contraseña.", true); return; }
+  if (reg && name.length < 2) { gmsg("Escribe tu nombre.", true); return; }
+  busy = true; $g("gSubmit").disabled = true; gmsg(reg ? "Creando tu cuenta…" : "Comprobando tus datos…");
+  try {
+    if (reg) {
+      const c = await createUserWithEmailAndPassword(auth, email, pass);
+      try { await saveProfile(c.user, name); } catch (x) { console.warn(x); }
+      await sendEmailVerification(c.user);
+      busy = false; await enter(c.user); gmsg("¡Cuenta creada! Te enviamos un correo de verificación. Revisa también spam.");
+    } else { await signInWithEmailAndPassword(auth, email, pass); busy = false; await enter(auth.currentUser); }
+  } catch (err) { busy = false; gmsg(friendlyAuthError(err), true); }
+  $g("gSubmit").disabled = false;
+});
+$g("gReset").addEventListener("click", async () => {
+  const email = $g("gEmail").value.trim();
+  if (!email) { gmsg("Escribe tu correo y vuelve a pulsar «Olvidé mi contraseña».", true); return; }
+  try { await sendPasswordResetEmail(auth, email); gmsg("Si existe una cuenta con ese correo, recibirás un enlace para cambiar la contraseña. Revisa spam."); }
+  catch (err) { gmsg(friendlyAuthError(err), true); }
+});
+$g("gVerCheck").addEventListener("click", () => enter(auth.currentUser, true));
+$g("gVerResend").addEventListener("click", async () => {
+  try { await sendEmailVerification(auth.currentUser); gmsg("Te enviamos otro correo de verificación."); } catch (err) { gmsg(friendlyAuthError(err), true); }
+});
+$g("gVerOut").addEventListener("click", () => signOut(auth));
+$g("menuLogout").addEventListener("click", () => signOut(auth));
+async function openAdmin() {
+  if (window.closeMenu) closeMenu();
+  $g("menuModalTitle").textContent = "Administración de usuarios";
+  const b = $g("menuModalBody"); b.innerHTML = "<p>Cargando usuarios…</p>"; $g("menuModal").hidden = false;
+  try {
+    const s = await getDocs(query(collection(db, "users"), orderBy("fechaRegistro", "desc")));
+    const rows = s.docs.map(d => { const u = d.data(), a = u.rol === "admin"; return `<tr><td>${eh(u.nombre)}</td><td>${eh(u.email)}</td><td>${u.emailVerificado ? "✓" : "—"}</td><td>${eh(u.rol)}</td><td>${u.fechaRegistro?.toDate ? u.fechaRegistro.toDate().toLocaleDateString("es") : ""}</td><td><button type="button" data-uid="${eh(d.id)}" data-role="${a ? "user" : "admin"}">${a ? "Quitar admin" : "Hacer admin"}</button></td></tr>`; }).join("");
+    b.innerHTML = `<p>${s.size} usuario(s) registrados.</p><div id="admMsg" class="note" role="status"></div><div class="sc"><table><tr><th>Nombre</th><th>Correo</th><th>Verif.</th><th>Rol</th><th>Alta</th><th></th></tr>${rows}</table></div>`;
+    b.onclick = async ev => {
+      const btn = ev.target.closest("[data-uid]"); if (!btn || !confirm("¿Cambiar el rol de este usuario?")) return;
+      try { await httpsCallable(fns, "setUserRole")({ uid: btn.dataset.uid, role: btn.dataset.role }); openAdmin(); }
+      catch (err) { $g("admMsg").textContent = err.code === "functions/permission-denied" ? "No tienes permiso." : "No se pudo cambiar el rol: " + (err.message || err.code); }
+    };
+  } catch (err) { b.innerHTML = `<p class="note">No se pudieron cargar los usuarios (${eh(err.code || err.message)}). Comprueba que las reglas de Firestore estén publicadas y que tu cuenta tenga el rol de administrador.</p>`; }
+}
+$g("menuAdmin").addEventListener("click", openAdmin);
 // El formulario se crea dinámicamente al abrir el menú; sincroniza su estado al aparecer.
 new MutationObserver(syncAuthModalState).observe(authBody, { childList: true, subtree: true });
 
