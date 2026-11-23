@@ -260,6 +260,36 @@ th,td{border-bottom-color:#16264d}
 #scUserBar button{padding:7px 11px}
 body.sc-locked{overflow:hidden}
 
+
+/* Comunidad y Plan VIP Premium */
+.sideMenu{overflow-y:auto}
+.menuVip{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:auto;padding:15px 12px;border:1px solid #fff1a8;border-radius:14px;background:linear-gradient(110deg,#8a5a0c,#f6d56a 35%,#fff1a8 50%,#d4a017 70%,#8a5a0c);background-size:200% 100%;color:#2a1b00;font-weight:900;font-size:15px;letter-spacing:.6px;box-shadow:0 0 18px rgba(246,213,106,.45),inset 0 1px 0 rgba(255,255,255,.55);animation:scShine 3.5s ease-in-out infinite alternate}
+.menuVip:hover{filter:brightness(1.08);border-color:#fff1a8}
+.menuVip+.menuFoot{margin-top:0}
+@keyframes scShine{to{background-position:100% 0}}
+@media(prefers-reduced-motion:reduce){.menuVip{animation:none}}
+.menuModal.wide{width:min(560px,calc(100vw - 24px));margin:5vh auto 0;max-height:90vh;max-height:90dvh;display:flex;flex-direction:column}
+.menuModal.wide #menuModalBody{min-height:0;overflow-y:auto}
+.scChatList{height:min(48vh,440px);overflow-y:auto;padding:8px;border:1px solid #1c3366;border-radius:12px;background:#060d1e}
+.scMsg{margin:0 0 8px;padding:8px 10px;border-radius:12px;background:#0d1f45;max-width:92%}
+.scMsg.mine{margin-left:auto;background:#12326b}
+.scMsgHead{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}.scMsgHead b{color:#9fd0ff;font-size:13px}.scMsgHead small{color:#7f95bd;font-size:11px}
+.scBadge{font-size:10px;padding:1px 6px;border-radius:8px;background:#f6d56a;color:#2a1b00;font-weight:800}
+.scMsgText{margin:4px 0;color:#e8f0ff;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.scQuote{margin:4px 0;padding:4px 8px;border-left:3px solid #2f8dff;background:#08142e;border-radius:6px;font-size:12px;color:#a9bfdf;cursor:pointer}.scQuote b{display:block;color:#72baff}
+.scLink{background:none;border:0;padding:2px 4px;color:#72baff;font-size:12px;text-decoration:underline;cursor:pointer}
+.scMsg.flash{outline:2px solid #f6d56a}
+.scChatReply{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:8px;padding:6px 10px;border-left:3px solid #2f8dff;background:#08142e;border-radius:6px;font-size:12px;color:#a9bfdf}
+.scChatReply button{width:28px;height:28px;padding:0;flex:none}
+.scChatForm{display:flex;gap:8px;margin-top:8px}
+.menuModal .scChatForm input{margin:0;flex:1}.menuModal .scChatForm .p{width:auto;padding:0 16px}
+.scPlans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.scPlan{display:flex;flex-direction:column;gap:2px;padding:10px 6px;text-align:center;background:#0d1f45;border:1px solid #2f65bd;border-radius:12px;color:#e8f0ff}.scPlan span{font-size:11px;color:#8fa3c9}.scPlan strong{color:#f6d56a}
+.scPlan.on{border-color:#f6d56a;box-shadow:0 0 14px rgba(246,213,106,.35)}
+.scPay{padding:12px;border:1px solid #1c3366;border-radius:12px;background:#060d1e}.scPay h3{margin:0 0 6px;font-size:15px;color:#fff}.scSteps{margin:0 0 10px;padding-left:18px;color:#a9bfdf;font-size:13px}
+.scRow{display:flex;align-items:center;gap:8px;margin:6px 0}.scRow small{width:62px;color:#8fa3c9}.scRow b{flex:1;color:#fff;overflow-wrap:anywhere}
+.scPay .p{margin-top:2px}.scPay a.scLink{display:block;margin-top:10px;text-align:center}
+@media(max-width:520px){.scPlans{grid-template-columns:1fr}}
 </style></head><body>
 
 <div id="scAuthGate" role="dialog" aria-modal="true" aria-labelledby="scGateTitle">
@@ -317,9 +347,11 @@ body.sc-locked{overflow:hidden}
  <div class="menuHead"><div><b>SOFIST CORAX</b><small>Estadísticas avanzadas</small></div><button id="menuClose" type="button" aria-label="Cerrar menú">×</button></div>
  <button class="menuItem" type="button" data-menu="register"><span>＋</span><span><b id="authMenuTitle">Cuenta / Registrarse</b><small id="authMenuDesc">Crear una cuenta o iniciar sesión</small></span><i>›</i></button>
  <a class="menuItem" href="mailto:sofistcorax@gmail.com?subject=Contacto%20-%20Sofist%20Corax"><span>✉</span><span><b>Contacto con el programador</b><small>sofistcorax@gmail.com</small></span><i>›</i></a>
+ <button class="menuItem" type="button" data-menu="community"><span>💬</span><span><b>Comunidad</b><small>Chatea y debate en línea</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="language"><span>文</span><span><b>Idioma</b><small>Seleccionar idioma</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="about"><span>ⓘ</span><span><b>Acerca de la app</b><small>Información de Sofist Corax</small></span><i>›</i></button>
  <button class="menuItem" type="button" data-menu="share"><span>↗</span><span><b>Compartir aplicación</b><small>Enviar enlace de la aplicación</small></span><i>›</i></button>
+ <button class="menuVip" type="button" data-menu="vip"><span aria-hidden="true">👑</span><b>Plan VIP Premium</b></button>
  <div class="menuFoot">Sofist Corax Estadistics</div>
 </aside>
 <div class="modalShade" id="menuModal" hidden><section class="menuModal" role="dialog" aria-modal="true" aria-labelledby="menuModalTitle"><button class="modalX" id="modalClose" type="button" aria-label="Cerrar">×</button><h2 id="menuModalTitle"></h2><div id="menuModalBody"></div></section></div>
@@ -2088,16 +2120,18 @@ const menuPanel=$("#sideMenu"),menuShade=$("#menuShade"),menuModal=$("#menuModal
 function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("aria-hidden","true");$("#menuOpen").setAttribute("aria-expanded","false");menuShade.hidden=true}
 function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria-hidden","false");$("#menuOpen").setAttribute("aria-expanded","true");menuShade.hidden=false}
 function closeModal(){menuModal.hidden=true}
-function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");
+function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");menuModal.firstElementChild.classList.toggle("wide",type==="community"||type==="vip");
  if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
  else if(type==="language"){title.textContent="Language / Idioma";body.innerHTML='<p id="languageIntro">Choose the application language / Selecciona el idioma de la aplicación.</p><label for="appLanguage">Language / Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Apply language / Aplicar idioma</button><p class="note">The preference is saved on this device / La preferencia se guarda en este dispositivo.</p>'; }
  else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>SOFIST CORAX ESTADISTICS</b></p><p>Aplicación de análisis estadístico de resultados de lotería: historiales, frecuencias, patrones y métricas.</p><p><b>Contacto:</b> <a href="mailto:sofistcorax@gmail.com">sofistcorax@gmail.com</a></p><p><b>Software y recursos utilizados</b></p><ul><li>HTML5, CSS3 y JavaScript (módulos ES)</li><li>Firebase Authentication para cuentas y acceso</li><li>Cloud Firestore para perfiles y datos en la nube</li><li>Cloud Functions para operaciones protegidas del servidor</li><li>Google Sign-In como proveedor de acceso</li><li>GitHub Pages para publicar la aplicación</li><li>Service Worker y Web App Manifest para funciones PWA</li><li>LocalStorage para preferencias y datos locales</li></ul><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>'; }
- else{return} menuModal.hidden=false;
+ else if(type==="community"){title.textContent="Comunidad Sofist Corax";body.innerHTML='<p>Chatea y debate con otros usuarios en tiempo real. Respeta a los demás.</p><div id="scChatList" class="scChatList" role="log" aria-live="polite"><p class="note">Cargando mensajes…</p></div><div id="scChatReply" class="scChatReply" hidden><span id="scChatReplyText"></span><button type="button" id="scChatReplyX" aria-label="Cancelar respuesta">×</button></div><form id="scChatForm" class="scChatForm"><input id="scChatInput" type="text" maxlength="500" autocomplete="off" placeholder="Escribe un mensaje…" required><button class="p" type="submit">Enviar</button></form><div id="scChatMsg" class="note" role="status"></div>';}
+ else if(type==="vip"){title.textContent="Plan VIP Premium";body.innerHTML='<div id="scVip"></div>';}
+ else{return} menuModal.hidden=false;document.dispatchEvent(new CustomEvent("sc:modal",{detail:type}));
  const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{const language=$("#appLanguage").value;localStorage.setItem("sc-language",language);applyAppLanguage(language);alert(language==="en"?"Language preference applied.":"Preferencia de idioma aplicada.");closeModal()});
  const lang=$("#appLanguage");if(lang)lang.value=localStorage.getItem("sc-language")||"es";
 }
 const LANGUAGE_PAIRS={
- "Sofist Corax Estadistics":"Sofist Corax Statistics","Pick 3 Florida · últimos 2 dígitos":"Florida Pick 3 · last 2 digits","↻ ACTUALIZAR RESULTADOS":"↻ UPDATE RESULTS","Último Midday":"Latest Midday","Último Evening":"Latest Evening","Sin datos":"No data","Estadísticas avanzadas":"Advanced statistics","Contacto con el programador":"Contact the developer","Seleccionar idioma":"Select language","Acerca de la app":"About the app","Información de Sofist Corax":"Sofist Corax information","Compartir aplicación":"Share application","Enviar enlace de la aplicación":"Send application link","Categorías de análisis":"Analysis categories","Sorteo":"Draw","Rango":"Range","Todo el historial":"All history","Últimos 365":"Last 365","Últimos 180":"Last 180","Últimos 90":"Last 90","Últimos 30":"Last 30","Solo Midday":"Midday only","Solo Evening":"Evening only","Cuenta / Registrarse":"Account / Sign up","Crear una cuenta o iniciar sesión":"Create an account or sign in","Idioma":"Language","Contacto":"Contact","Cargando datos…":"Loading data…"
+ "Sofist Corax Estadistics":"Sofist Corax Statistics","Pick 3 Florida · últimos 2 dígitos":"Florida Pick 3 · last 2 digits","↻ ACTUALIZAR RESULTADOS":"↻ UPDATE RESULTS","Último Midday":"Latest Midday","Último Evening":"Latest Evening","Sin datos":"No data","Estadísticas avanzadas":"Advanced statistics","Contacto con el programador":"Contact the developer","Seleccionar idioma":"Select language","Acerca de la app":"About the app","Información de Sofist Corax":"Sofist Corax information","Compartir aplicación":"Share application","Enviar enlace de la aplicación":"Send application link","Categorías de análisis":"Analysis categories","Sorteo":"Draw","Rango":"Range","Todo el historial":"All history","Últimos 365":"Last 365","Últimos 180":"Last 180","Últimos 90":"Last 90","Últimos 30":"Last 30","Solo Midday":"Midday only","Solo Evening":"Evening only","Cuenta / Registrarse":"Account / Sign up","Crear una cuenta o iniciar sesión":"Create an account or sign in","Idioma":"Language","Contacto":"Contact","Cargando datos…":"Loading data…","Comunidad":"Community","Chatea y debate en línea":"Chat and debate online","Plan VIP Premium":"VIP Premium Plan"
 };
 function applyAppLanguage(language){
  const en=language==="en";document.documentElement.lang=en?"en":"es";
@@ -2124,7 +2158,8 @@ import {
  reload, GoogleAuthProvider, signInWithPopup
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
 import {
- getFirestore, doc, setDoc, serverTimestamp, getDoc
+ getFirestore, doc, setDoc, serverTimestamp, getDoc,
+ collection, addDoc, deleteDoc, query, orderBy, limit, onSnapshot
 } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js";
 
@@ -2421,5 +2456,108 @@ if (authBody) {
    catch (error) { authMessage(friendlyAuthError(error),true); }
   }
  });
+}
+
+/* ===== Comunidad (chat en tiempo real) y Plan VIP Premium ===== */
+// EDITA AQUÍ los datos de Transfermóvil y los precios de los planes.
+const VIP_CONFIG = {
+ moneda:"CUP", titular:"NOMBRE DEL TITULAR", tarjeta:"XXXX XXXX XXXX XXXX",
+ planes:[{id:"mensual",nombre:"Mensual",detalle:"1 mes",precio:500},{id:"trimestral",nombre:"Trimestral",detalle:"3 meses",precio:1300},{id:"anual",nombre:"Anual",detalle:"12 meses",precio:4500}]
+};
+const scModal = $id("menuModal");
+let scCleanup = null;
+new MutationObserver(() => { if (scModal.hidden && scCleanup) { scCleanup(); scCleanup = null; } }).observe(scModal, {attributes:true, attributeFilter:["hidden"]});
+const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
+const fmtT = d => d ? new Intl.DateTimeFormat("es", {day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit"}).format(d) : "";
+document.addEventListener("sc:modal", e => {
+ if (scCleanup) { scCleanup(); scCleanup = null; }
+ if (e.detail === "community") startCommunity(); else if (e.detail === "vip") startVip();
+});
+
+function startCommunity() {
+ const list = $id("scChatList"), form = $id("scChatForm"), input = $id("scChatInput"), say = $id("scChatMsg"), rBox = $id("scChatReply"), rTxt = $id("scChatReplyText"), user = currentUser;
+ let replyTo = null, lastSent = 0, first = true;
+ if (!user || !user.emailVerified) { list.textContent = "Inicia sesión con un correo verificado para entrar a la comunidad."; form.hidden = true; return; }
+ const myName = (user.displayName || (user.email || "usuario").split("@")[0]).slice(0, 40);
+ const setReply = m => { replyTo = {id:m.id, name:m.name || "Usuario", text:(m.text || "").slice(0, 120)}; rTxt.textContent = "↩ " + replyTo.name + ": " + replyTo.text; rBox.hidden = false; input.focus(); };
+ const clearReply = () => { replyTo = null; rBox.hidden = true; };
+ $id("scChatReplyX").onclick = clearReply;
+ const render = m => {
+  const w = mk("div", "scMsg" + (m.uid === user.uid ? " mine" : "")); w.dataset.id = m.id;
+  const h = mk("div", "scMsgHead"); h.append(mk("b", "", m.name || "Usuario"));
+  if (m.role === "admin") h.append(mk("span", "scBadge", "Admin"));
+  h.append(mk("small", "", fmtT(m.createdAt))); w.append(h);
+  if (m.replyTo) {
+   const q = mk("blockquote", "scQuote"); q.append(mk("b", "", m.replyTo.name || "Usuario"), mk("span", "", m.replyTo.text || ""));
+   q.onclick = () => { const t = [...list.children].find(c => c.dataset.id === m.replyTo.id); if (t) { t.scrollIntoView({block:"center", behavior:"smooth"}); t.classList.add("flash"); setTimeout(() => t.classList.remove("flash"), 1200); } };
+   w.append(q);
+  }
+  w.append(mk("p", "scMsgText", m.text || ""));
+  const a = mk("div", "scMsgActions"), rb = mk("button", "scLink", "↩ Responder"); rb.type = "button"; rb.onclick = () => setReply(m); a.append(rb);
+  if (m.uid === user.uid || currentRole === "admin") {
+   const d = mk("button", "scLink", "Eliminar"); d.type = "button";
+   d.onclick = async () => { if (!confirm("¿Eliminar este mensaje?")) return; try { await deleteDoc(doc(dbProfile, "community_messages", m.id)); } catch (err) { say.textContent = friendlyAuthError(err); } };
+   a.append(d);
+  }
+  w.append(a); return w;
+ };
+ scCleanup = onSnapshot(query(collection(dbProfile, "community_messages"), orderBy("createdAt", "desc"), limit(100)), snap => {
+  const stick = first || list.scrollHeight - list.scrollTop - list.clientHeight < 80; first = false;
+  const items = snap.docs.map(d => { const x = d.data({serverTimestamps:"estimate"}); return {...x, id:d.id, createdAt:x.createdAt?.toDate?.()}; }).reverse();
+  list.textContent = "";
+  if (!items.length) list.append(mk("p", "note", "Aún no hay mensajes. ¡Escribe el primero!"));
+  items.forEach(m => list.append(render(m)));
+  if (stick) list.scrollTop = list.scrollHeight;
+ }, err => { list.textContent = friendlyAuthError(err); });
+ form.onsubmit = async e => {
+  e.preventDefault();
+  const text = input.value.trim(); if (!text) return;
+  if (Date.now() - lastSent < 1500) { say.textContent = "Espera un momento antes de enviar otro mensaje."; return; }
+  lastSent = Date.now(); say.textContent = ""; input.value = ""; const rt = replyTo; clearReply();
+  try { await addDoc(collection(dbProfile, "community_messages"), {uid:user.uid, name:myName, role:currentRole === "admin" ? "admin" : "user", text:text.slice(0, 500), replyTo:rt, createdAt:serverTimestamp()}); }
+  catch (err) { input.value = text; say.textContent = friendlyAuthError(err); }
+ };
+}
+
+function startVip() {
+ const root = $id("scVip"), cfg = VIP_CONFIG, user = currentUser;
+ let plan = cfg.planes[0];
+ const plans = mk("div", "scPlans");
+ const row = (label, copyFn) => {
+  const r = mk("div", "scRow"), v = mk("b"), c = mk("button", "scLink", "Copiar"); c.type = "button";
+  c.onclick = async () => { try { await navigator.clipboard.writeText(copyFn()); c.textContent = "Copiado ✓"; setTimeout(() => c.textContent = "Copiar", 1500); } catch { c.textContent = "No se pudo"; } };
+  r.append(mk("small", "", label), v, c); return {r, v};
+ };
+ const card = row("Tarjeta", () => cfg.tarjeta.replace(/\s/g, "")); card.v.textContent = cfg.tarjeta;
+ const holder = mk("div", "scRow"); holder.append(mk("small", "", "Titular"), mk("b", "", cfg.titular));
+ const amt = row("Monto", () => String(plan.precio));
+ const tx = document.createElement("input"); tx.placeholder = "Número de transacción de Transfermóvil"; tx.maxLength = 40; tx.autocomplete = "off";
+ const send = mk("button", "p", "Ya pagué · Enviar solicitud"); send.type = "button";
+ const mail = mk("a", "scLink", "o envía el comprobante por correo");
+ const msg = mk("div", "note"); msg.setAttribute("role", "status");
+ const steps = mk("ol", "scSteps");
+ ["Abre Transfermóvil y transfiere el monto exacto a esta tarjeta.", "Guarda el número de transacción del comprobante.", "Escríbelo aquí y envía la solicitud."].forEach(t => steps.append(mk("li", "", t)));
+ const pay = mk("div", "scPay"); pay.append(mk("h3", "", "Pagar con Transfermóvil"), steps, card.r, holder, amt.r, tx, send, msg, mail);
+ const paint = () => {
+  plans.textContent = "";
+  cfg.planes.forEach(p => {
+   const b = mk("button", "scPlan" + (p === plan ? " on" : "")); b.type = "button";
+   b.append(mk("b", "", p.nombre), mk("span", "", p.detalle), mk("strong", "", p.precio + " " + cfg.moneda));
+   b.onclick = () => { plan = p; paint(); }; plans.append(b);
+  });
+  amt.v.textContent = plan.precio + " " + cfg.moneda;
+  mail.href = "mailto:" + ADMIN_EMAIL + "?subject=" + encodeURIComponent("Pago Plan VIP Premium - " + plan.nombre) + "&body=" + encodeURIComponent("Cuenta: " + (user?.email || "") + "\nPlan: " + plan.nombre + " (" + plan.precio + " " + cfg.moneda + ")\nNúmero de transacción: ");
+ };
+ send.onclick = async () => {
+  const t = tx.value.trim();
+  if (!user) { msg.textContent = "Inicia sesión para solicitar el plan."; return; }
+  if (t.length < 4) { msg.textContent = "Escribe el número de transacción que te da Transfermóvil."; return; }
+  send.disabled = true; msg.textContent = "Enviando…";
+  try {
+   await addDoc(collection(dbProfile, "vip_requests"), {uid:user.uid, email:user.email || "", plan:plan.id, amount:plan.precio, currency:cfg.moneda, method:"transfermovil", transactionId:t, status:"pendiente", createdAt:serverTimestamp()});
+   msg.textContent = "Solicitud enviada. Verificaremos tu pago y activaremos tu plan."; tx.disabled = true;
+  } catch (err) { send.disabled = false; msg.textContent = friendlyAuthError(err); }
+ };
+ root.append(mk("p", "", "Elige tu plan y paga con Transfermóvil."), plans, pay); paint();
 }
 </script></main></body></html>
