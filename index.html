@@ -2115,6 +2115,8 @@ $("#view").addEventListener("click",e=>{const b=e.target.closest("[data-seqx],[d
 $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");if(!b)return;tab=b.dataset.tab;render()});
 // El botón superior debe funcionar desde cualquier pestaña (no solo desde Datos).
 $("#syncTop").addEventListener("click",updateResults);
+// Al recargar (con sesión ya validada) se ejecuta solo ↻ ACTUALIZAR RESULTADOS, una vez por carga.
+window.addEventListener("sc-session-ready",()=>{if(window.__scAutoSync)return;window.__scAutoSync=true;setTimeout(()=>$("#syncTop")?.click(),300)});
 $("#fDraw").onchange=$("#fRange").onchange=render;
 load();render();showLatest();
 // Menú principal y acciones
@@ -2318,6 +2320,7 @@ async function establishVerifiedSession(user) {
  $id("scGateVerify").hidden = true;
  gateMessage("");
  showGate(false);
+ window.dispatchEvent(new Event("sc-session-ready"));
  return true;
 }
 
@@ -2351,6 +2354,7 @@ onAuthStateChanged(auth, async user => {
    $id("scGateVerify").hidden = true;
    gateMessage("");
    showGate(false);
+   window.dispatchEvent(new Event("sc-session-ready"));
    return;
   }
   syncUserBar();
