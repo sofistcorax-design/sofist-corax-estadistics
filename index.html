@@ -282,6 +282,7 @@ body.sc-locked{overflow:hidden}
 .scChatReply{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:8px;padding:6px 10px;border-left:3px solid #2f8dff;background:#08142e;border-radius:6px;font-size:12px;color:#a9bfdf}
 .scChatReply button{width:28px;height:28px;padding:0;flex:none}
 .scChatForm{display:flex;gap:8px;margin-top:8px}
+.scChatForm[hidden],.scChatReply[hidden]{display:none}
 .menuModal .scChatForm input{margin:0;flex:1}.menuModal .scChatForm .p{width:auto;padding:0 16px}
 .scPlans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .scPlan{display:flex;flex-direction:column;gap:2px;padding:10px 6px;text-align:center;background:#0d1f45;border:1px solid #2f65bd;border-radius:12px;color:#e8f0ff}.scPlan span{font-size:11px;color:#8fa3c9}.scPlan strong{color:#f6d56a}
@@ -295,7 +296,7 @@ body.sc-locked{overflow:hidden}
 <div id="scAuthGate" role="dialog" aria-modal="true" aria-labelledby="scGateTitle">
  <section class="scAuthCard">
   <div class="scAuthBrand"><img src="icon-192.png" alt="Sofist Corax"><div><h1>Sofist Corax Estadistics</h1><p>Acceso privado · Estadísticas protegidas</p></div></div>
-  <div id="scGateAuth">
+  <div id="scGateAuth" hidden>
    <h2 id="scGateTitle">Bienvenido</h2>
    <p>Inicia sesión o crea una cuenta para acceder a las herramientas estadísticas.</p>
    <form id="scGateForm">
@@ -323,7 +324,7 @@ body.sc-locked{overflow:hidden}
    <button class="scSecondary" id="scCheckVerify" type="button">Ya verifiqué mi correo · Comprobar</button>
    <button class="scSecondary" id="scVerifyLogout" type="button">Cerrar sesión</button>
   </div>
-  <div id="scGateMessage" class="scAuthMsg" role="status" aria-live="polite"></div>
+  <div id="scGateMessage" class="scAuthMsg" role="status" aria-live="polite">Comprobando sesión…</div>
   <p>El acceso requiere una cuenta y un correo verificado. Tus credenciales se gestionan mediante Firebase Authentication.</p>
  </section>
 </div>
@@ -331,6 +332,7 @@ body.sc-locked{overflow:hidden}
 <header class="hero"><div class="heroIn">
 <div class="brand"><button class="menuBtn" id="menuOpen" type="button" aria-label="Abrir menú" aria-expanded="false">☰</button><img src="icon-192.png" alt="Sofist Corax" width="56" height="56"><div class="brandT"><h1>Sofist Corax Estadistics</h1><p class="sub">Pick 3 Florida · últimos 2 dígitos</p></div></div>
 <p class="sub" id="status">Cargando datos…</p>
+<div id="scUserBar"><span id="scUserLabel"></span><button id="scHeaderLogout" type="button">Cerrar sesión</button></div>
 <div class="syncrow">
  <button class="p" id="syncTop" type="button">↻ ACTUALIZAR RESULTADOS</button>
  <button class="drawQuick" id="quickMidday" type="button" aria-label="Filtrar Midday">☀️ Midday</button>
@@ -2121,10 +2123,10 @@ function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("
 function openMenu(){menuPanel.classList.add("open");menuPanel.setAttribute("aria-hidden","false");$("#menuOpen").setAttribute("aria-expanded","true");menuShade.hidden=false}
 function closeModal(){menuModal.hidden=true}
 function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");menuModal.firstElementChild.classList.toggle("wide",type==="community"||type==="vip");
- if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
+ if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm" onsubmit="return false"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
  else if(type==="language"){title.textContent="Language / Idioma";body.innerHTML='<p id="languageIntro">Choose the application language / Selecciona el idioma de la aplicación.</p><label for="appLanguage">Language / Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Apply language / Aplicar idioma</button><p class="note">The preference is saved on this device / La preferencia se guarda en este dispositivo.</p>'; }
  else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>SOFIST CORAX ESTADISTICS</b></p><p>Aplicación de análisis estadístico de resultados de lotería: historiales, frecuencias, patrones y métricas.</p><p><b>Contacto:</b> <a href="mailto:sofistcorax@gmail.com">sofistcorax@gmail.com</a></p><p><b>Software y recursos utilizados</b></p><ul><li>HTML5, CSS3 y JavaScript (módulos ES)</li><li>Firebase Authentication para cuentas y acceso</li><li>Cloud Firestore para perfiles y datos en la nube</li><li>Cloud Functions para operaciones protegidas del servidor</li><li>Google Sign-In como proveedor de acceso</li><li>GitHub Pages para publicar la aplicación</li><li>Service Worker y Web App Manifest para funciones PWA</li><li>LocalStorage para preferencias y datos locales</li></ul><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>'; }
- else if(type==="community"){title.textContent="Comunidad Sofist Corax";body.innerHTML='<p>Chatea y debate con otros usuarios en tiempo real. Respeta a los demás.</p><div id="scChatList" class="scChatList" role="log" aria-live="polite"><p class="note">Cargando mensajes…</p></div><div id="scChatReply" class="scChatReply" hidden><span id="scChatReplyText"></span><button type="button" id="scChatReplyX" aria-label="Cancelar respuesta">×</button></div><form id="scChatForm" class="scChatForm"><input id="scChatInput" type="text" maxlength="500" autocomplete="off" placeholder="Escribe un mensaje…" required><button class="p" type="submit">Enviar</button></form><div id="scChatMsg" class="note" role="status"></div>';}
+ else if(type==="community"){title.textContent="Comunidad Sofist Corax";body.innerHTML='<p>Chatea y debate con otros usuarios en tiempo real. Respeta a los demás.</p><div id="scChatList" class="scChatList" role="log" aria-live="polite"><p class="note">Cargando mensajes…</p></div><div id="scChatReply" class="scChatReply" hidden><span id="scChatReplyText"></span><button type="button" id="scChatReplyX" aria-label="Cancelar respuesta">×</button></div><form id="scChatForm" class="scChatForm" onsubmit="return false"><input id="scChatInput" type="text" maxlength="500" autocomplete="off" placeholder="Escribe un mensaje…" required><button class="p" type="submit">Enviar</button></form><div id="scChatMsg" class="note" role="status"></div>';}
  else if(type==="vip"){title.textContent="Plan VIP Premium";body.innerHTML='<div id="scVip"></div>';}
  else{return} menuModal.hidden=false;document.dispatchEvent(new CustomEvent("sc:modal",{detail:type}));
  const save=$("#saveLanguage");if(save)save.addEventListener("click",()=>{const language=$("#appLanguage").value;localStorage.setItem("sc-language",language);applyAppLanguage(language);alert(language==="en"?"Language preference applied.":"Preferencia de idioma aplicada.");closeModal()});
@@ -2148,7 +2150,11 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeMenu();closeMo
 function setQuickDraw(which){const f=document.getElementById("fDraw");if(!f)return;f.value=which;f.dispatchEvent(new Event("change",{bubbles:true}));document.getElementById("quickMidday")?.classList.toggle("active",which==="M");document.getElementById("quickEvening")?.classList.toggle("active",which==="E");}
 document.getElementById("quickMidday")?.addEventListener("click",()=>setQuickDraw("M"));
 document.getElementById("quickEvening")?.addEventListener("click",()=>setQuickDraw("E"));
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+if("serviceWorker" in navigator){
+ let swReloaded=false;
+ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(swReloaded)return;swReloaded=true;location.reload()});
+ window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+}
 </script>
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
@@ -2176,7 +2182,7 @@ const firebaseConfig = {
 const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 // Mantiene la sesión en este navegador incluso después de actualizar o cerrar y reabrir la página.
-await setPersistence(auth, browserLocalPersistence);
+try { await setPersistence(auth, browserLocalPersistence); } catch (error) { console.warn("No se pudo fijar la persistencia local:", error); }
 const dbProfile = getFirestore(firebaseApp);
 const functions = getFunctions(firebaseApp);
 const ensureAdminClaim = httpsCallable(functions, "ensureAdminClaim");
@@ -2250,7 +2256,7 @@ function syncLegacyAccount() {
  const signed = $id("authSignedIn"), form = $id("authForm"), emailLabel = $id("authUserEmail");
  if (signed) signed.hidden = !user;
  if (form) form.hidden = !!user;
- if (emailLabel && user) emailLabel.textContent = `Sesión iniciada como ${user.email}${user.emailVerified ? " · Correo verificado" : " · Correo pendiente de verificación"}`;
+ if (emailLabel && user) { const txt = `Sesión iniciada como ${user.email}${user.emailVerified ? " · Correo verificado" : " · Correo pendiente de verificación"}`; if (emailLabel.textContent !== txt) emailLabel.textContent = txt; }
 }
 function syncUserBar() {
  const bar = $id("scUserBar");
@@ -2282,7 +2288,7 @@ async function saveUserProfile(user, role) {
  }
 }
 async function establishVerifiedSession(user) {
- await reload(user);
+ try { await reload(user); } catch (error) { console.warn("No se pudo recargar el usuario; se usa el estado guardado:", error); }
  if (!user.emailVerified) {
   $id("scGateAuth").hidden = true;
   $id("scGateVerify").hidden = false;
@@ -2291,7 +2297,8 @@ async function establishVerifiedSession(user) {
   showGate(true);
   return false;
  }
- let token = await user.getIdTokenResult(true);
+ let token;
+ try { token = await user.getIdTokenResult(true); } catch (error) { console.warn("No se pudo renovar el token; se usa el actual:", error); token = await user.getIdTokenResult(); }
  // Elevación administrativa únicamente mediante Cloud Function/Admin SDK.
  if ((user.email || "").toLowerCase() === ADMIN_EMAIL) {
   try {
@@ -2303,7 +2310,7 @@ async function establishVerifiedSession(user) {
   }
  }
  currentRole = token.claims.role === "admin" ? "admin" : "user";
- await saveUserProfile(user, currentRole);
+ try { await saveUserProfile(user, currentRole); } catch (error) { console.warn("No se pudo guardar el perfil (no bloquea el acceso):", error); }
  currentUser = user;
  syncLegacyAccount();
  syncUserBar();
@@ -2335,15 +2342,28 @@ onAuthStateChanged(auth, async user => {
  } catch (error) {
   console.error("Error preparando perfil:", error);
   currentRole = "user";
+  if (user.emailVerified) {
+   // Sesión válida: se deja entrar aunque falle una comprobación secundaria.
+   currentUser = user;
+   syncLegacyAccount();
+   syncUserBar();
+   $id("scGateAuth").hidden = false;
+   $id("scGateVerify").hidden = true;
+   gateMessage("");
+   showGate(false);
+   return;
+  }
   syncUserBar();
+  $id("scGateAuth").hidden = false;
   gateMessage(`No se pudo preparar tu perfil: ${friendlyAuthError(error)}`, true);
   showGate(true);
  }
 });
+setTimeout(() => { if (!authReady) { $id("scGateAuth").hidden = false; gateMessage("No se pudo comprobar la sesión. Revisa tu conexión e inténtalo de nuevo.", true); } }, 12000);
 if (authBody) new MutationObserver(syncLegacyAccount).observe(authBody, {childList:true,subtree:true});
 
-$id("scGateToggle").addEventListener("click", () => setGateMode(gateMode === "login" ? "register" : "login"));
-$id("scGoogleSignIn").addEventListener("click", async () => {
+$id("scGateToggle")?.addEventListener("click", () => setGateMode(gateMode === "login" ? "register" : "login"));
+$id("scGoogleSignIn")?.addEventListener("click", async () => {
  const button = $id("scGoogleSignIn");
  button.disabled = true;
  gateMessage("Conectando con Google…");
@@ -2359,7 +2379,7 @@ $id("scGoogleSignIn").addEventListener("click", async () => {
   else gateMessage(friendlyAuthError(error), true);
  } finally { button.disabled = false; }
 });
-$id("scGateForm").addEventListener("submit", async event => {
+$id("scGateForm")?.addEventListener("submit", async event => {
  event.preventDefault();
  const email = $id("scGateEmail").value.trim();
  const password = $id("scGatePassword").value;
@@ -2385,7 +2405,7 @@ $id("scGateForm").addEventListener("submit", async event => {
   submit.disabled = false;
  }
 });
-$id("scGateReset").addEventListener("click", async () => {
+$id("scGateReset")?.addEventListener("click", async () => {
  const email = $id("scGateEmail").value.trim();
  if (!email) { gateMessage("Escribe tu correo para enviarte el enlace de recuperación.", true); return; }
  try {
@@ -2393,12 +2413,12 @@ $id("scGateReset").addEventListener("click", async () => {
   gateMessage("Si existe una cuenta con ese correo, recibirás un enlace de recuperación. Revisa spam.");
  } catch (error) { gateMessage(friendlyAuthError(error), true); }
 });
-$id("scResendVerify").addEventListener("click", async () => {
+$id("scResendVerify")?.addEventListener("click", async () => {
  if (!auth.currentUser) return;
  try { await sendEmailVerification(auth.currentUser); gateMessage("Correo de verificación reenviado. Revisa también spam."); }
  catch (error) { gateMessage(friendlyAuthError(error), true); }
 });
-$id("scCheckVerify").addEventListener("click", async () => {
+$id("scCheckVerify")?.addEventListener("click", async () => {
  if (!auth.currentUser) return;
  try {
   await reload(auth.currentUser);
@@ -2406,8 +2426,8 @@ $id("scCheckVerify").addEventListener("click", async () => {
   await establishVerifiedSession(auth.currentUser);
  } catch (error) { gateMessage(friendlyAuthError(error), true); }
 });
-$id("scVerifyLogout").addEventListener("click", async () => { try { await signOut(auth); } catch(error) { gateMessage(friendlyAuthError(error),true); } });
-$id("scHeaderLogout").addEventListener("click", async () => { try { await signOut(auth); } catch(error) { alert(friendlyAuthError(error)); } });
+$id("scVerifyLogout")?.addEventListener("click", async () => { try { await signOut(auth); } catch(error) { gateMessage(friendlyAuthError(error),true); } });
+$id("scHeaderLogout")?.addEventListener("click", async () => { try { await signOut(auth); } catch(error) { alert(friendlyAuthError(error)); } });
 
 /* Compatibilidad con el menú Cuenta existente: registro, login, reset y logout siguen disponibles. */
 if (authBody) {
@@ -2461,8 +2481,12 @@ if (authBody) {
 /* ===== Comunidad (chat en tiempo real) y Plan VIP Premium ===== */
 // EDITA AQUÍ los datos de Transfermóvil y los precios de los planes.
 const VIP_CONFIG = {
- moneda:"CUP", titular:"NOMBRE DEL TITULAR", tarjeta:"XXXX XXXX XXXX XXXX",
- planes:[{id:"mensual",nombre:"Mensual",detalle:"1 mes",precio:500},{id:"trimestral",nombre:"Trimestral",detalle:"3 meses",precio:1300},{id:"anual",nombre:"Anual",detalle:"12 meses",precio:4500}]
+ moneda:"CUP", titular:"", tarjeta:"9238 9598 7057 2049",
+ planes:[
+  {id:"semanal",nombre:"1 semana",detalle:"7 días",precio:1500},
+  {id:"mensual",nombre:"30 días",detalle:"1 mes",precio:2000},
+  {id:"trimestral",nombre:"90 días",detalle:"3 meses",precio:3000}
+ ]
 };
 const scModal = $id("menuModal");
 let scCleanup = null;
@@ -2520,44 +2544,54 @@ function startCommunity() {
 }
 
 function startVip() {
- const root = $id("scVip"), cfg = VIP_CONFIG, user = currentUser;
- let plan = cfg.planes[0];
- const plans = mk("div", "scPlans");
- const row = (label, copyFn) => {
-  const r = mk("div", "scRow"), v = mk("b"), c = mk("button", "scLink", "Copiar"); c.type = "button";
-  c.onclick = async () => { try { await navigator.clipboard.writeText(copyFn()); c.textContent = "Copiado ✓"; setTimeout(() => c.textContent = "Copiar", 1500); } catch { c.textContent = "No se pudo"; } };
-  r.append(mk("small", "", label), v, c); return {r, v};
+ const root = $id("scVip"), cfg = VIP_CONFIG;
+ const fmt = p => p.precio + " " + cfg.moneda;
+ const copyRow = (label, shown, copyText) => {
+  const r = mk("div", "scRow"), c = mk("button", "scLink", "Copiar"); c.type = "button";
+  c.onclick = async () => { try { await navigator.clipboard.writeText(copyText); c.textContent = "Copiado ✓"; setTimeout(() => c.textContent = "Copiar", 1500); } catch { c.textContent = "No se pudo"; } };
+  r.append(mk("small", "", label), mk("b", "", shown), c); return r;
  };
- const card = row("Tarjeta", () => cfg.tarjeta.replace(/\s/g, "")); card.v.textContent = cfg.tarjeta;
- const holder = mk("div", "scRow"); holder.append(mk("small", "", "Titular"), mk("b", "", cfg.titular));
- const amt = row("Monto", () => String(plan.precio));
- const tx = document.createElement("input"); tx.placeholder = "Número de transacción de Transfermóvil"; tx.maxLength = 40; tx.autocomplete = "off";
- const send = mk("button", "p", "Ya pagué · Enviar solicitud"); send.type = "button";
- const mail = mk("a", "scLink", "o envía el comprobante por correo");
- const msg = mk("div", "note"); msg.setAttribute("role", "status");
- const steps = mk("ol", "scSteps");
- ["Abre Transfermóvil y transfiere el monto exacto a esta tarjeta.", "Guarda el número de transacción del comprobante.", "Escríbelo aquí y envía la solicitud."].forEach(t => steps.append(mk("li", "", t)));
- const pay = mk("div", "scPay"); pay.append(mk("h3", "", "Pagar con Transfermóvil"), steps, card.r, holder, amt.r, tx, send, msg, mail);
- const paint = () => {
-  plans.textContent = "";
+ const showPlans = () => {
+  root.textContent = "";
+  const plans = mk("div", "scPlans");
   cfg.planes.forEach(p => {
-   const b = mk("button", "scPlan" + (p === plan ? " on" : "")); b.type = "button";
-   b.append(mk("b", "", p.nombre), mk("span", "", p.detalle), mk("strong", "", p.precio + " " + cfg.moneda));
-   b.onclick = () => { plan = p; paint(); }; plans.append(b);
+   const b = mk("button", "scPlan"); b.type = "button";
+   b.append(mk("b", "", p.nombre), mk("span", "", p.detalle), mk("strong", "", fmt(p)));
+   b.onclick = () => showPay(p); plans.append(b);
   });
-  amt.v.textContent = plan.precio + " " + cfg.moneda;
-  mail.href = "mailto:" + ADMIN_EMAIL + "?subject=" + encodeURIComponent("Pago Plan VIP Premium - " + plan.nombre) + "&body=" + encodeURIComponent("Cuenta: " + (user?.email || "") + "\nPlan: " + plan.nombre + " (" + plan.precio + " " + cfg.moneda + ")\nNúmero de transacción: ");
+  root.append(mk("p", "", "Elige tu plan. Al tocarlo pasas al pago con Transfermóvil."), plans);
  };
- send.onclick = async () => {
-  const t = tx.value.trim();
-  if (!user) { msg.textContent = "Inicia sesión para solicitar el plan."; return; }
-  if (t.length < 4) { msg.textContent = "Escribe el número de transacción que te da Transfermóvil."; return; }
-  send.disabled = true; msg.textContent = "Enviando…";
-  try {
-   await addDoc(collection(dbProfile, "vip_requests"), {uid:user.uid, email:user.email || "", plan:plan.id, amount:plan.precio, currency:cfg.moneda, method:"transfermovil", transactionId:t, status:"pendiente", createdAt:serverTimestamp()});
-   msg.textContent = "Solicitud enviada. Verificaremos tu pago y activaremos tu plan."; tx.disabled = true;
-  } catch (err) { send.disabled = false; msg.textContent = friendlyAuthError(err); }
+ const showPay = plan => {
+  root.textContent = "";
+  const back = mk("button", "scLink", "← Cambiar de plan"); back.type = "button"; back.onclick = showPlans;
+  const steps = mk("ol", "scSteps");
+  ["Abre Transfermóvil y transfiere el monto exacto a esta tarjeta.", "Guarda el número de transacción del comprobante.", "Escríbelo aquí y envía la solicitud."].forEach(t => steps.append(mk("li", "", t)));
+  const msg = mk("div", "note"); msg.setAttribute("role", "status");
+  const open = mk("button", "", "Abrir Transfermóvil"); open.type = "button"; open.style.marginBottom = "8px";
+  open.onclick = () => {
+   msg.textContent = "Si Transfermóvil no se abre solo, ábrelo manualmente y usa los datos de arriba.";
+   const a = document.createElement("a"); a.href = "intent://#Intent;package=cu.etecsa.cubacel.tr.tm;end"; document.body.append(a); a.click(); a.remove();
+  };
+  const tx = document.createElement("input"); tx.placeholder = "Número de transacción de Transfermóvil"; tx.maxLength = 40; tx.autocomplete = "off";
+  const send = mk("button", "p", "Ya pagué · Enviar solicitud"); send.type = "button";
+  const mail = mk("a", "scLink", "o envía el comprobante por correo");
+  const u0 = currentUser;
+  mail.href = "mailto:" + ADMIN_EMAIL + "?subject=" + encodeURIComponent("Pago Plan VIP Premium - " + plan.nombre) + "&body=" + encodeURIComponent("Cuenta: " + (u0?.email || "") + "\nPlan: " + plan.nombre + " (" + fmt(plan) + ")\nNúmero de transacción: ");
+  send.onclick = async () => {
+   const user = currentUser, t = tx.value.trim();
+   if (!user) { msg.textContent = "Inicia sesión para solicitar el plan."; return; }
+   if (t.length < 4) { msg.textContent = "Escribe el número de transacción que te da Transfermóvil."; return; }
+   send.disabled = true; msg.textContent = "Enviando…";
+   try {
+    await addDoc(collection(dbProfile, "vip_requests"), {uid:user.uid, email:user.email || "", plan:plan.id, amount:plan.precio, currency:cfg.moneda, method:"transfermovil", transactionId:t, status:"pendiente", createdAt:serverTimestamp()});
+    msg.textContent = "Solicitud enviada. Verificaremos tu pago y activaremos tu plan."; tx.disabled = true;
+   } catch (err) { send.disabled = false; msg.textContent = friendlyAuthError(err); }
+  };
+  const pay = mk("div", "scPay"); pay.append(mk("h3", "", "Pagar con Transfermóvil · Plan " + plan.nombre), steps, copyRow("Tarjeta", cfg.tarjeta, cfg.tarjeta.replace(/\s/g, "")));
+  if (cfg.titular) { const holder = mk("div", "scRow"); holder.append(mk("small", "", "Titular"), mk("b", "", cfg.titular)); pay.append(holder); }
+  pay.append(copyRow("Monto", fmt(plan), String(plan.precio)), open, tx, send, msg, mail);
+  root.append(back, pay);
  };
- root.append(mk("p", "", "Elige tu plan y paga con Transfermóvil."), plans, pay); paint();
+ showPlans();
 }
 </script></main></body></html>
