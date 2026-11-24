@@ -291,9 +291,68 @@ body.sc-locked{overflow:hidden}
 .scRow{display:flex;align-items:center;gap:8px;margin:6px 0}.scRow small{width:62px;color:#8fa3c9}.scRow b{flex:1;color:#fff;overflow-wrap:anywhere}
 .scPay .p{margin-top:2px}.scPay a.scLink{display:block;margin-top:10px;text-align:center}
 @media(max-width:520px){.scPlans{grid-template-columns:1fr}}
-</style></head><body>
 
-<div id="scAuthGate" role="dialog" aria-modal="true" aria-labelledby="scGateTitle">
+/* ===== Tema dorado y negro: solo cuando el sorteo es "Solo Midday" ===== */
+body.gold{--bg:#08090c;--sf:#141519;--tx:#f3f1eb;--mu:#b9ad8f;--ac:#c9962e;--ac2:#e4b94f;--bd:#4a3d22;--bar:#d7a638;--gloss:linear-gradient(135deg,#8f651c 0%,#c9962e 55%,#edc65e 100%)}
+body.gold{background:radial-gradient(ellipse at 50% -10%,#3a2c12 0%,#14100a 38%,#08090c 70%) no-repeat;background-color:#08090c}
+html.gold{background:#08090c}
+body.gold h2{color:#fbf1d3}body.gold a{color:#efc45d}
+body.gold .hero{background:radial-gradient(120% 140% at 85% -20%,rgba(228,185,79,.5) 0,rgba(228,185,79,0) 55%),linear-gradient(135deg,#050403 0%,#3a2a0c 55%,#a87518 135%);box-shadow:0 12px 32px rgba(0,0,0,.6),0 0 0 1px rgba(228,185,79,.35),inset 0 -2px 0 rgba(237,198,94,.35)}
+body.gold .brand img{box-shadow:0 0 0 2px rgba(228,185,79,.85),0 0 20px rgba(228,185,79,.5)}
+body.gold .hero h1{text-shadow:0 0 18px rgba(228,185,79,.6)}
+body.gold .hero .sub,body.gold .hero .latestBox em{color:#e9d6a3}
+body.gold .hero #status{color:#f3e2b0;border-color:rgba(228,185,79,.45)}
+body.gold .hero #syncStatus{color:rgba(243,226,176,.85)}
+body.gold .hero .latestBox{border-color:rgba(228,185,79,.5)}
+body.gold .hero .latestBox small{color:#d5bd83}
+body.gold .hero .latestBox strong{text-shadow:0 0 12px rgba(228,185,79,.7)}
+body.gold .hero button.p,body.gold button.p{background:linear-gradient(135deg,#a87518,#edc65e);border-color:#f0c865;color:#17120a;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 16px rgba(228,185,79,.4)}
+body.gold .hero button.p:hover{border-color:#fff}
+body.gold .card{background:linear-gradient(145deg,#191a1f,#101115);border-color:#514126;box-shadow:0 8px 26px rgba(0,0,0,.6),0 0 0 1px rgba(228,185,79,.06)}
+body.gold button,body.gold select,body.gold input,body.gold textarea{background:#1b1b1d;border-color:#66512b;color:#f5e8c5}
+body.gold select:focus,body.gold input:focus,body.gold textarea:focus,body.gold button:focus-visible{outline-color:#e4b94f}
+body.gold button:hover{border-color:#e5b84b}
+body.gold .note.warn,body.gold .warn{border-left-color:#d6a43e}
+body.gold .note.warn{background:rgba(228,185,79,.08)}
+body.gold .catTile{background:linear-gradient(145deg,#1d1e23,#111216);border-color:#5a4727;color:#e9d6a3}
+body.gold .catTile svg{stroke:#e4b94f}
+body.gold .catTile:hover{border-color:#e5b84b;box-shadow:0 0 14px rgba(228,185,79,.3)}
+body.gold .catTile.on,body.gold .catTile.sec.on{background:var(--gloss);border-color:#f0c865;color:#15110a;box-shadow:0 0 16px rgba(214,163,59,.45)}
+body.gold .catTile.on svg{stroke:#15110a}
+body.gold .catTile.sec{border-color:#8f7330;background:linear-gradient(145deg,#2a2112,#14120c)}
+body.gold .chip.on,body.gold .tabs button.on{background:var(--gloss);border-color:#f0c865;color:#15110a}
+body.gold .seqgrp,body.gold th{color:#d5bd83}
+body.gold th,body.gold td{border-bottom-color:#2e2614}
+body.gold .p4ico{background:linear-gradient(145deg,#2a2112,#14120c);border-color:#8f7330;box-shadow:0 0 14px rgba(228,185,79,.35)}
+body.gold .p4ico svg{stroke:#e4b94f}
+body.gold .kpi div,body.gold .kpi4 div,body.gold .lgt{background:#0d0e11;border-color:#443821}
+body.gold .pill{background:linear-gradient(180deg,#1a160d,#0d0b07);border-color:#7a5f2a}
+body.gold .pill b,body.gold .stRow .res b{color:#f0c65d}
+body.gold .ball{background:linear-gradient(145deg,#f1cb69,#a8791e);color:#16110a}
+body.gold .fb{background:#777;color:#fff}
+body.gold .bar i,body.gold .ciR{background:linear-gradient(90deg,#9a6b1c,#f0c65d)}
+body.gold .ci{background:#0d0e11}
+body.gold .stRow{background:#0d0e11;border-color:#443821}
+body.gold .stRow.ok{border-color:#1f7a45;background:rgba(34,197,94,.09)}
+body.gold .stRow.am{border-color:#b7791f;background:rgba(245,158,11,.09)}
+body.gold .stRow.rd{border-color:#b42318;background:rgba(239,68,68,.11)}
+body.gold .stRow .res{color:var(--mu)}
+body.gold .lt{background:#2a2a2a;border-color:#4b4535}
+body.gold .lt.ok{background:#16a34a;border-color:#4ade80}body.gold .lt.am{background:#d97706;border-color:#fbbf24}body.gold .lt.rd{background:#dc2626;border-color:#f87171}body.gold .lt.gy{background:#4b4b4b;border-color:#777}
+body.gold .cellb.sel{outline-color:#e4b94f}
+body.gold td[style*="30,123,255"]{filter:hue-rotate(185deg) saturate(1.2)}
+body.gold .sideMenu{background:linear-gradient(160deg,#241a09,#08090c 65%);border-right-color:#7a5f2a}
+body.gold .menuHead{border-bottom-color:#443821}body.gold .menuFoot{border-top-color:#443821;color:#9a8a60}
+body.gold .menuItem{background:rgba(40,30,12,.75)}body.gold .menuItem:hover{border-color:#e4b94f;background:#2a2012}
+body.gold .menuItem>span:first-child{background:#4a3712;color:#f0c65d}body.gold .menuItem i{color:#e4b94f}
+body.gold .menuModal{background:linear-gradient(145deg,#1d1608,#0a0907);border-color:#8f7330}
+body.gold .menuHead small,body.gold .menuItem small{color:#b9ad8f}
+body.sc-boot>header,body.sc-boot>main,body.sc-boot>aside{visibility:hidden}
+</style></head><body class="sc-boot">
+<script>try{if(localStorage.getItem("sc-ok")==="1")document.body.classList.remove("sc-boot")}catch(e){}
+setTimeout(function(){var b=document.body;if(b.classList.contains("sc-boot")){b.classList.remove("sc-boot");var g=document.getElementById("scAuthGate"),a=document.getElementById("scGateAuth");if(g){g.hidden=false;b.classList.add("sc-locked")}if(a)a.hidden=false}},15000);</script>
+
+<div id="scAuthGate" hidden role="dialog" aria-modal="true" aria-labelledby="scGateTitle">
  <section class="scAuthCard">
   <div class="scAuthBrand"><img src="icon-192.png" alt="Sofist Corax"><div><h1>Sofist Corax Estadistics</h1><p>Acceso privado · Estadísticas protegidas</p></div></div>
   <div id="scGateAuth" hidden>
@@ -2117,7 +2176,9 @@ $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");
 $("#syncTop").addEventListener("click",updateResults);
 // Al recargar (con sesión ya validada) se ejecuta solo ↻ ACTUALIZAR RESULTADOS, una vez por carga.
 window.addEventListener("sc-session-ready",()=>{if(window.__scAutoSync)return;window.__scAutoSync=true;setTimeout(()=>$("#syncTop")?.click(),300)});
-$("#fDraw").onchange=$("#fRange").onchange=render;
+function applyTheme(){const g=$("#fDraw").value==="M";document.body.classList.toggle("gold",g);document.documentElement.classList.toggle("gold",g);const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=g?"#08090c":"#020512"}
+$("#fDraw").onchange=$("#fRange").onchange=()=>{applyTheme();render()};
+applyTheme();
 load();render();showLatest();
 // Menú principal y acciones
 const menuPanel=$("#sideMenu"),menuShade=$("#menuShade"),menuModal=$("#menuModal");
@@ -2247,6 +2308,7 @@ function setGateMode(mode) {
 function showGate(show) {
  if (!gate) return;
  gate.hidden = !show;
+ document.body.classList.remove("sc-boot");
  document.body.classList.toggle("sc-locked", show);
 }
 function syncLegacyAccount() {
@@ -2294,6 +2356,7 @@ async function establishVerifiedSession(user) {
  if (!user.emailVerified) {
   $id("scGateAuth").hidden = true;
   $id("scGateVerify").hidden = false;
+  try{localStorage.removeItem("sc-ok")}catch(e){}
   $id("scVerifyText").textContent = `La cuenta ${user.email} todavía no tiene el correo verificado. Abre el enlace que te enviamos y luego pulsa «Ya verifiqué mi correo».`;
   gateMessage("Acceso bloqueado hasta verificar el correo.", true);
   showGate(true);
@@ -2319,6 +2382,7 @@ async function establishVerifiedSession(user) {
  $id("scGateAuth").hidden = false;
  $id("scGateVerify").hidden = true;
  gateMessage("");
+ try{localStorage.setItem("sc-ok","1")}catch(e){}
  showGate(false);
  window.dispatchEvent(new Event("sc-session-ready"));
  return true;
@@ -2333,12 +2397,12 @@ onAuthStateChanged(auth, async user => {
   syncUserBar();
   $id("scGateAuth").hidden = false;
   $id("scGateVerify").hidden = true;
+  try{localStorage.removeItem("sc-ok")}catch(e){}
   setGateMode("login");
   gateMessage("Inicia sesión o regístrate para continuar.");
   showGate(true);
   return;
  }
- showGate(true);
  gateMessage("Comprobando sesión y verificación de correo…");
  try {
   await establishVerifiedSession(user);
@@ -2363,7 +2427,7 @@ onAuthStateChanged(auth, async user => {
   showGate(true);
  }
 });
-setTimeout(() => { if (!authReady) { $id("scGateAuth").hidden = false; gateMessage("No se pudo comprobar la sesión. Revisa tu conexión e inténtalo de nuevo.", true); } }, 12000);
+setTimeout(() => { if (!authReady) { $id("scGateAuth").hidden = false; showGate(true); gateMessage("No se pudo comprobar la sesión. Revisa tu conexión e inténtalo de nuevo.", true); } }, 12000);
 if (authBody) new MutationObserver(syncLegacyAccount).observe(authBody, {childList:true,subtree:true});
 
 $id("scGateToggle")?.addEventListener("click", () => setGateMode(gateMode === "login" ? "register" : "login"));
