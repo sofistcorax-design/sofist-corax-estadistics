@@ -35,6 +35,22 @@ th{color:var(--mu);font-weight:600}
 .fb{background:var(--mu)}
 .note{font-size:13px;color:var(--mu)}
 .warn{border-left:4px solid var(--ac);padding-left:10px}
+.accBar{--c:#64748b;border-left:6px solid var(--c);padding:12px 14px;cursor:pointer}
+.accBar.r{--c:#ef4444}.accBar.y{--c:#facc15}.accBar.g{--c:#22c55e}
+.accBar .accTop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px}
+.accBar .accPct{font-size:32px;font-weight:800;color:var(--c);line-height:1;min-width:64px}
+.accBar .accTrack{height:10px;border-radius:6px;background:rgba(148,163,184,.22);margin-top:10px;overflow:hidden}
+.accBar .accFill{height:100%;background:var(--c);border-radius:6px;transition:width .6s ease}
+.accc.r{color:#ef4444}.accc.y{color:#facc15}.accc.g{color:#22c55e}
+.punGrid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:8px 0}
+.punCell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5px 0;border-radius:8px;border:1px solid transparent;cursor:pointer;color:inherit;font:inherit;min-width:0}
+.punCell b{font-size:13px}.punCell small{font-size:9px;opacity:.85}
+.punCell.r{background:rgba(239,68,68,.22);border-color:#ef4444}.punCell.y{background:rgba(250,204,21,.22);border-color:#facc15}.punCell.g{background:rgba(34,197,94,.25);border-color:#22c55e}
+.punCell.sel{outline:2px solid #fff;outline-offset:1px}
+.punLeg{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:12px;margin:8px 0}
+.punDot{display:inline-block;width:12px;height:12px;border-radius:3px}.punDot.r{background:#ef4444}.punDot.y{background:#facc15}.punDot.g{background:#22c55e}
+@media(max-width:520px){.punCell b{font-size:11px}.punCell small{font-size:8px}}
+
 .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .kpi div{background:var(--bg);border-radius:8px;padding:8px;text-align:center}
 .kpi b{display:block;font-size:20px}
@@ -417,8 +433,8 @@ setTimeout(function(){var b=document.body;if(b.classList.contains("sc-boot")){b.
 </aside>
 <div class="modalShade" id="menuModal" hidden><section class="menuModal" role="dialog" aria-modal="true" aria-labelledby="menuModalTitle"><button class="modalX" id="modalClose" type="button" aria-label="Cerrar">×</button><h2 id="menuModalTitle"></h2><div id="menuModalBody"></div></section></div>
 <main>
-<div class="card warn note">Se analizan solo los dos últimos dígitos (00–99). Los sorteos son aleatorios e independientes: ninguna estadística del pasado predice el próximo resultado. Esta herramienta describe lo que ha pasado; no garantiza nada.</div>
-<div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="365">Últimos 365</option><option value="180">Últimos 180</option><option value="90" selected>Últimos 90</option><option value="30">Últimos 30</option></select></label></div>
+<div class="card accBar" id="accBar" role="button" tabindex="0" title="Toca para ver el detalle en Resumen"></div>
+<div class="card toolbar"><label><span>Sorteo</span><select id="fDraw"><option value="A">Midday + Evening</option><option value="M">Solo Midday</option><option value="E">Solo Evening</option></select></label><label><span>Rango</span><select id="fRange"><option value="0">Todo el historial</option><option value="730">Últimos 2 años</option><option value="365">Últimos 365 días</option><option value="180">Últimos 180</option><option value="100" selected>Últimos 100</option><option value="30">Últimos 30</option><option value="15">Últimos 15</option><option value="7">Últimos 7 días</option></select></label></div>
 <div class="card"><div class="secLabel">Categorías de análisis</div><div class="catGrid" id="catGrid" role="tablist" aria-label="Categorías"></div></div>
 <div id="view"></div>
 <script>
@@ -809,9 +825,13 @@ const ICONS={
  pal:'<circle cx="12" cy="12" r="9"/><path d="M7.5 12.5l3 3 6-6.5"/>',
  cal:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
  des:'<path d="M4 6h10M4 12h10M4 18h10"/><circle cx="18" cy="12" r="3.5"/><path d="M15.6 14.4l4.8-4.8"/>',
- que:'<path d="M4 6h6M4 12h6M4 18h6"/><path d="M13.5 12.5l3 3 5-6"/>'
+ que:'<path d="M4 6h6M4 12h6M4 18h6"/><path d="M13.5 12.5l3 3 5-6"/>',
+ rng:'<path d="M3 12h18M3 7v10M9 8v8M15 8v8M21 7v10"/>',
+ pk4:'<circle cx="5" cy="12" r="2.5"/><path d="M8 12h9M14 8l4 4-4 4"/><path d="M20 8v8" opacity=".6"/>',
+ pun:'<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>',
+ tbl:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>'
 };
-const TABS=[["res","Resumen"],["par","00–99"],["dig","Decena/Terminal"],["seq","Secuencias"],["dia","Días"],["gra","Gráfica"],["pro","Pronóstico"],["sum","Patrones"],["atr","Atrasados"],["evi","Descartar"],["sem","Semáforo"],["rac","Rachas"],["ind","Independencia"],["int","Intervalos"],["des","Lista de descartes"],["que","Los que quedan"],["mc","Monte Carlo"],["est","Estabilidad"],["pal","Palomitas"],["cal","Calidad"],["imp","Datos"],["p4","Pick 4"]];
+const TABS=[["res","Resumen"],["par","00–99"],["dig","Decena/Terminal"],["seq","Secuencias"],["dia","Días"],["gra","Gráfica"],["pro","Pronóstico"],["sum","Patrones"],["atr","Atrasados"],["evi","Descartar"],["sem","Semáforo"],["rac","Rachas"],["ind","Independencia"],["int","Intervalos"],["des","Lista de descartes"],["que","Los que quedan"],["rng","Intervalos A–D"],["tbl","10 Tablas"],["pun","Puntuación"],["pk4","Pick 4 → Pick 3"],["mc","Monte Carlo"],["est","Estabilidad"],["pal","Palomitas"],["cal","Calidad"],["imp","Datos"],["p4","Pick 4"]];
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 function load(){
  let r=[];try{r=JSON.parse(localStorage.getItem("p3rows")||"[]")}catch(e){}
@@ -852,10 +872,11 @@ function render(){
  const grid=$("#catGrid");
  if(grid)grid.innerHTML=TABS.map(([k,v])=>`<button type="button" class="catTile${k===tab?" on":""}${k==="p4"?" sec":""}" data-tab="${k}" role="tab" aria-selected="${k===tab}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||""}</svg><span>${v}</span></button>`).join("");
  const v=$("#view"),R=filtered();
+ updAcc(R);
  $("#status").textContent=tab==="p4"?(ROWS4.length?`Pick 4 · ${ROWS4.length} sorteos guardados · analizando ${filtered4().length}`:"Pick 4 · sin datos todavía"):(ROWS.length?`${ROWS.length} sorteos guardados · analizando ${R.length}`:"Sin datos todavía");
  showLatest();
  if(tab==="p4"){v.innerHTML=p4View();return}
- if(NTABS.includes(tab)){v.innerHTML=nxView(tab);return}
+ if(NTABS.includes(tab)){v.innerHTML=kid(tab)+nxView(tab);return}
  if(tab==="imp"){v.innerHTML=explain("imp",R)+impView();wireImp();return}
  if(!R.length){v.innerHTML=`<div class="card">No hay datos para analizar. Ve a la pestaña <b>Datos</b> para importar resultados.</div>`;return}
  if(tab==="evi"){v.innerHTML=eviView(R);return}
@@ -868,7 +889,7 @@ function render(){
  if(tab==="dia")v.innerHTML=diaView(R);
  if(tab==="gra")v.innerHTML=graView(R);
  if(tab==="pro")v.innerHTML=proView(R);
- v.innerHTML=explain(tab,R)+v.innerHTML;
+ v.innerHTML=kid(tab)+explain(tab,R)+v.innerHTML;
 }
 const two=x=>x.n.slice(1);
 const pcs=(v,n)=>(v/n*100).toFixed(1)+"%";
@@ -876,56 +897,106 @@ const pad=i=>String(i).padStart(2,"0");
 function cnt(R){const c=Array(100).fill(0);R.forEach(x=>c[+two(x)]++);return c}
 function two2(x){return `<span class="ball">${x.n[1]}</span><span class="ball">${x.n[2]}</span>`}
 /* ---- Pick 3: estadísticas vs. último resultado (palomita verde) ---- */
-function p3Stats(T,L){
- /* T = sorteos anteriores al último (el último resultado queda fuera de todos los cálculos) */
- const out=[],lp=+two(L),la=Math.floor(lp/10),lb=lp%10;
+function p3Crit(T,date,asOf){
+ /* Criterios de frecuencia. Cada uno: name, pred (texto), fn(v)=¿señala al par v?, act(v)=texto del resultado, pe=prob. azar, fq=¿es de frecuencia? (cuenta en la Puntuación) */
+ const out=[];
  const tally=arr=>{const m=new Map();arr.forEach(v=>m.set(v,(m.get(v)||0)+1));return[...m].sort((a,b)=>b[1]-a[1]||(a[0]<b[0]?-1:a[0]>b[0]?1:0))};
  const leaders=arr=>{const t=tally(arr);return t.length?t.filter(a=>a[1]===t[0][1]).slice(0,3).map(a=>a[0]):[]};
- const add=(name,pred,ok,act,pr,pe)=>out.push({name,pred:pred.map(v=>pr?pad(v):v).join(pr&&pred.length>3?" · ":" / "),ok:!!ok,act,pe});
- const P=T.map(x=>+two(x)),A=P.map(v=>Math.floor(v/10)),B=P.map(v=>v%10);
+ const dc=v=>Math.floor(v/10),tm=v=>v%10,sm=v=>dc(v)+tm(v);
  const typ=(a,b)=>a===b?"Repetido":Math.abs(a-b)===1?"Consecutivo":a+b===9?"Suma 9":"Otros";
  const pp=(a,b)=>`${a%2===0?"P":"I"}-${b%2===0?"P":"I"}`;
- let t=leaders(P);add("Par (00–99) más frecuente",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100);
- t=tally(P).slice(0,10).map(a=>a[0]);add("Top 10 pares más frecuentes",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100);
- t=leaders(A);add("Decena más frecuente",t,t.includes(la),`salió ${la}`,0,t.length/10);
- t=leaders(B);add("Terminal más frecuente",t,t.includes(lb),`salió ${lb}`,0,t.length/10);
- t=leaders(P.map((v,i)=>A[i]+B[i]));add("Suma más frecuente",t,t.includes(la+lb),`sumó ${la+lb}`,0,t.reduce((q,v)=>q+(v<=9?v+1:19-v),0)/100);
- t=leaders(P.map((v,i)=>pp(A[i],B[i])));add("Pares / impares más frecuente",t,t.includes(pp(la,lb)),pp(la,lb),0,t.length*0.25);
- t=leaders(P.map((v,i)=>typ(A[i],B[i])));add("Tipo de pareja más frecuente",t,t.includes(typ(la,lb)),typ(la,lb),0,t.reduce((q,v)=>q+({Repetido:.10,Consecutivo:.18,"Suma 9":.08,Otros:.64}[v]||0),0));
- const wd=T.filter(x=>dowOf(x.d)===dowOf(L.d));
- if(wd.length>=3){t=tally(wd.map(x=>+two(x))).slice(0,3).map(a=>a[0]);add(`Top 3 pares del ${DN[dowOf(L.d)]}`,t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100)}
+ const typV=v=>typ(dc(v),tm(v)),ppV=v=>pp(dc(v),tm(v));
+ const sg=v=>`salió ${pad(v)}`,sd=v=>`salió ${dc(v)}`,st=v=>`salió ${tm(v)}`;
+ const ivL=i=>IVS[i][0],tbL=i=>"T"+i;
+ /* add(nombre, valores señalados, función que lleva el par al valor, opciones) */
+ const add=(name,t,map,o)=>{t=t.slice();out.push({name,pred:t.map(v=>o.fmt?o.fmt(v):o.pr?pad(v):v).join(o.pr&&t.length>3?" · ":" / "),fn:v=>t.includes(map(v))!==!!o.neg,act:o.act,pe:o.pe,fq:!!o.fq})};
+ const id=v=>v;
+ const P=T.map(x=>+two(x)),A=P.map(dc),B=P.map(tm);
+ let t=leaders(P);add("Par (00–99) más frecuente",t,id,{pr:1,act:sg,pe:t.length/100,fq:1});
+ t=tally(P).slice(0,10).map(a=>a[0]);add("Top 10 pares más frecuentes",t,id,{pr:1,act:sg,pe:t.length/100,fq:1});
+ t=leaders(A);add("Decena más frecuente",t,dc,{act:sd,pe:t.length/10,fq:1});
+ t=leaders(B);add("Terminal más frecuente",t,tm,{act:st,pe:t.length/10,fq:1});
+ t=leaders(P.map(sm));add("Suma más frecuente",t,sm,{act:v=>`sumó ${sm(v)}`,pe:t.reduce((q,v)=>q+(v<=9?v+1:19-v),0)/100,fq:1});
+ t=leaders(P.map(ppV));add("Pares / impares más frecuente",t,ppV,{act:ppV,pe:t.length*0.25,fq:1});
+ t=leaders(P.map(typV));add("Tipo de pareja más frecuente",t,typV,{act:typV,pe:t.reduce((q,v)=>q+({Repetido:.10,Consecutivo:.18,"Suma 9":.08,Otros:.64}[v]||0),0),fq:1});
+ t=leaders(P.map(ivOf));add("Intervalo (A–D) más frecuente",t,ivOf,{fmt:ivL,act:v=>`intervalo ${ivL(ivOf(v))}`,pe:t.reduce((q,i)=>q+(IVS[i][3]-IVS[i][2]+1)/100,0),fq:1});
+ t=leaders(P.map(tbOf));add("Tabla (1–10) más frecuente",t,tbOf,{fmt:tbL,act:v=>`tabla ${tbOf(v)}`,pe:t.length/10,fq:1});
+ const wd=T.filter(x=>dowOf(x.d)===dowOf(date));
+ if(wd.length>=3){t=tally(wd.map(x=>+two(x))).slice(0,3).map(a=>a[0]);add(`Top 3 pares del ${DN[dowOf(date)]}`,t,id,{pr:1,act:sg,pe:t.length/100,fq:1})}
  if(T.length>=2){
-  const pv=P[P.length-1],pa=Math.floor(pv/10),pb=pv%10;
-  const na=[],nb=[],nd=[],nt=[];
+  const pv=P[P.length-1],pa=dc(pv),pb=tm(pv),pi=ivOf(pv),pt=tbOf(pv);
+  const na=[],nb=[],nd=[],nt=[],ni=[],ni_d=[],ni_t=[],nk=[],nk_d=[],nk_t=[];
   for(let i=0;i<T.length-1;i++){
    if(A[i]===pa)na.push(A[i+1]);if(B[i]===pb)nb.push(B[i+1]);
    if(P[i]===pv){nd.push(A[i+1]);nt.push(B[i+1])}
+   if(ivOf(P[i])===pi){ni.push(ivOf(P[i+1]));ni_d.push(A[i+1]);ni_t.push(B[i+1])}
+   if(tbOf(P[i])===pt){nk.push(tbOf(P[i+1]));nk_d.push(A[i+1]);nk_t.push(B[i+1])}
   }
-  if(nd.length){t=leaders(nd);add(`Decena más frecuente después del ${pad(pv)} (${nd.length} casos)`,t,t.includes(la),`salió ${la}`,0,t.length/10);
-   t=leaders(nt);add(`Terminal más frecuente después del ${pad(pv)} (${nt.length} casos)`,t,t.includes(lb),`salió ${lb}`,0,t.length/10)}
-  if(na.length){t=leaders(na);add(`Decena que sigue a la decena ${pa}`,t,t.includes(la),`salió ${la}`,0,t.length/10)}
-  if(nb.length){t=leaders(nb);add(`Terminal que sigue al terminal ${pb}`,t,t.includes(lb),`salió ${lb}`,0,t.length/10)}
+  if(nd.length){t=leaders(nd);add(`Decena más frecuente después del ${pad(pv)} (${nd.length} casos)`,t,dc,{act:sd,pe:t.length/10,fq:1});
+   t=leaders(nt);add(`Terminal más frecuente después del ${pad(pv)} (${nt.length} casos)`,t,tm,{act:st,pe:t.length/10,fq:1})}
+  if(na.length){t=leaders(na);add(`Decena que sigue a la decena ${pa}`,t,dc,{act:sd,pe:t.length/10,fq:1})}
+  if(nb.length){t=leaders(nb);add(`Terminal que sigue al terminal ${pb}`,t,tm,{act:st,pe:t.length/10,fq:1})}
+  if(ni.length){
+   t=leaders(ni);add(`Intervalo que sigue al último intervalo (${ni.length} casos)`,t,ivOf,{fmt:ivL,act:v=>`intervalo ${ivL(ivOf(v))}`,pe:t.reduce((q,i)=>q+(IVS[i][3]-IVS[i][2]+1)/100,0),fq:1});
+   t=leaders(ni_d);add(`Decena más frecuente después del último intervalo (${ni.length} casos)`,t,dc,{act:sd,pe:t.length/10,fq:1});
+   t=leaders(ni_t);add(`Terminal más frecuente después del último intervalo (${ni.length} casos)`,t,tm,{act:st,pe:t.length/10,fq:1});
+  }
+  if(nk.length){
+   t=leaders(nk);add(`Tabla que sigue a la última tabla (${nk.length} casos)`,t,tbOf,{fmt:tbL,act:v=>`tabla ${tbOf(v)}`,pe:t.length/10,fq:1});
+   t=leaders(nk_d);add(`Decena más frecuente después de la última tabla (${nk.length} casos)`,t,dc,{act:sd,pe:t.length/10,fq:1});
+   t=leaders(nk_t);add(`Terminal más frecuente después de la última tabla (${nk.length} casos)`,t,tm,{act:st,pe:t.length/10,fq:1});
+  }
  }
- /* Descartes: funcionan si el resultado NO estaba entre los atrasados (historial completo anterior al último) */
- const f=$("#fDraw").value,H=sorted().filter(x=>(f==="A"||x.t===f)&&ord(x)<ord(L)),N=H.length;
+ /* Pick 4 reciente: su par (primeros 2 o últimos 2) en los 3 Pick 3 siguientes (el sorteo de la misma hora no cuenta) */
+ const P4=sorted4().filter(ok4).filter(x=>asOf==null||ord(x)<asOf);
+ if(P4.length){
+  const x4=P4[P4.length-1],P3=sorted().filter(ok3);
+  const between=P3.filter(y=>ord(y)>ord(x4)&&(asOf==null||ord(y)<asOf)).length;
+  if(between<3){const s=[...new Set([+x4.n.slice(0,2),+x4.n.slice(2)])];add("Pick 4 reciente: primeros o últimos 2 dígitos",s,id,{pr:1,act:sg,pe:s.length/100,fq:1})}
+ }
+ /* Descartes y Pronóstico: no son de frecuencia, solo cuentan en "estadísticas aceptadas" */
+ const f=$("#fDraw").value,H=sorted().filter(x=>(f==="A"||x.t===f)&&(asOf==null||ord(x)<asOf)),N=H.length;
  if(N>=20){
   const lpv=Array(100).fill(-1),ldv=Array(10).fill(-1),ltv=Array(10).fill(-1);
   H.forEach((x,i)=>{lpv[+two(x)]=i;ldv[+x.n[1]]=i;ltv[+x.n[2]]=i});
   const g20=lpv.map((v,i)=>[i,v<0?N:N-1-v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]).slice(0,20).map(a=>a[0]);
-  add("Descarte · 20 números más atrasados",g20,!g20.includes(lp),g20.includes(lp)?`salió ${pad(lp)} · estaba en la lista`:`salió ${pad(lp)} · no estaba`,1,1-g20.length/100);
+  add("Descarte · 20 números más atrasados",g20,id,{neg:1,pr:1,act:v=>g20.includes(v)?`salió ${pad(v)} · estaba en la lista`:`salió ${pad(v)} · no estaba`,pe:1-g20.length/100});
   const od=ld=>{const g=ld.map((v,i)=>[i,v<0?N:N-1-v]),m=Math.max(...g.map(a=>a[1]));return g.filter(a=>a[1]===m).slice(0,3).map(a=>a[0])};
-  t=od(ldv);add("Descarte · decena más atrasada",t,!t.includes(la),`salió decena ${la}`,0,1-t.length/10);
-  t=od(ltv);add("Descarte · terminal más atrasado",t,!t.includes(lb),`salió terminal ${lb}`,0,1-t.length/10);
+  const tdD=od(ldv),tdT=od(ltv);
+  add("Descarte · decena más atrasada",tdD,dc,{neg:1,act:v=>`salió decena ${dc(v)}`,pe:1-tdD.length/10});
+  add("Descarte · terminal más atrasado",tdT,tm,{neg:1,act:v=>`salió terminal ${tm(v)}`,pe:1-tdT.length/10});
  }
- if(T.length>=30){t=top20(scores(T,L.d).s);add("Top 20 del Pronóstico",t,t.includes(lp),`salió ${pad(lp)}`,1,t.length/100)}
+ if(T.length>=30){const t20=top20(scores(T,date).s);add("Top 20 del Pronóstico",t20,id,{pr:1,act:sg,pe:t20.length/100})}
  return out;
 }
+function p3Stats(T,L){
+ /* T = sorteos anteriores al último (el último resultado queda fuera de todos los cálculos) */
+ const lp=+two(L);
+ return p3Crit(T,L.d,ord(L)).map(c=>({name:c.name,pred:c.pred,ok:!!c.fn(lp),act:c.act(lp),pe:c.pe}));
+}
+/* Puntuación 0–100 de cada número para el próximo sorteo: % de criterios de frecuencia que lo señalan */
+function p3Score(R){
+ const last=R[R.length-1],f=$("#fDraw").value,date=(f==="A"&&last.t==="M")?last.d:nextDate(R);
+ const crit=p3Crit(R,date,null).filter(c=>c.fq);
+ const sc=[...Array(100).keys()].map(v=>{const yes=crit.map(c=>c.fn(v));const n=yes.filter(Boolean).length;return{v,n,pct:crit.length?n/crit.length*100:0,yes}});
+ return{crit,sc,date};
+}
+const accCls=p=>p<40?"r":p<60?"y":"g";
+function updAcc(R){
+ const el=$("#accBar");if(!el)return;
+ let n=0,ok=0,L=null;
+ if(R.length>=8){try{L=R[R.length-1];const st=p3Stats(R.slice(0,-1),L);n=st.length;ok=st.filter(s=>s.ok).length}catch(e){n=0}}
+ if(!n){el.className="card accBar";el.innerHTML=`<div class="accTop"><b>Estadísticas aceptadas</b><span class="note">Sin datos suficientes en este rango</span></div><div class="accTrack"><div class="accFill" style="width:0"></div></div>`;return}
+ const p=ok/n*100,c=accCls(p);
+ el.className="card accBar "+c;
+ el.innerHTML=`<div class="accTop"><span class="accPct">${Math.round(p)}%</span><span><b>${ok} de ${n}</b> estadísticas aceptadas<br><span class="note">Último resultado: ${pad(+two(L))} · ${L.d} · ${L.t==="M"?"Midday":"Evening"}</span></span></div><div class="accTrack"><div class="accFill" style="width:${p.toFixed(1)}%"></div></div>`;
+}
 function p3Est(R){
- if(R.length<21)return "";
+ if(R.length<8)return "";
  const L=R[R.length-1],st=p3Stats(R.slice(0,-1),L),ok=st.filter(s=>s.ok).length;
  return `<div class="card"><h2>Estadísticas vs. último resultado</h2>
  <div style="margin:6px 0">${two2(L)} <span class="note">${L.d} · ${L.t==="M"?"Midday":"Evening"}</span></div>
- <div class="p4sum"><strong>${ok} de ${st.length}</strong><span class="note">estadísticas coincidieron</span></div>
+ <div class="p4sum"><strong class="accc ${accCls(ok/st.length*100)}">${ok} de ${st.length}</strong><span class="accc ${accCls(ok/st.length*100)}"><b>${Math.round(ok/st.length*100)}%</b></span><span class="note">estadísticas aceptadas</span></div>
  <p class="note">Cada estadística se calculó ignorando el último resultado: solo con los sorteos anteriores (${R.length-1} en este rango; los descartes usan todo el historial previo). ${CK_OK.replace('class="okc"','class="okc sm"')} = habría coincidido; el resto no. En los <b>Descarte</b> la palomita significa lo contrario: el resultado <b>no</b> estaba entre los números o dígitos atrasados.</p>
  ${st.map(s=>`<div class="stRow${s.ok?" ok":""}">${s.ok?CK_OK:CK_NO}<div class="tx"><b>${s.name}</b><span>Predicción: ${s.pred}</span></div><div class="res">${s.act}</div></div>`).join("")}
  <p class="note warn" style="margin-top:10px">La palomita describe lo que ya pasó: algunas estadísticas coinciden por casualidad (p. ej. un top 10 de 100 pares acierta 10% de las veces al azar). No significa que vayan a funcionar en el próximo sorteo.</p></div>`;
@@ -1635,7 +1706,7 @@ load4();
 
 /* =================== ANÁLISIS ESTADÍSTICO · 8 secciones nuevas =================== */
 const NX={dsD:1,dsT:1,indS:"n",estD:0,estP:"d",estW:30,palN:100,mcS:5000};
-const NTABS=["sem","rac","ind","int","des","que","mc","est","pal","cal"];
+const NTABS=["rng","tbl","pun","pk4","sem","rac","ind","int","des","que","mc","est","pal","cal"];
 const CACHE={};let mcCache=null,mcRun=null;
 /* ---- matemáticas básicas (sin librerías) ---- */
 function lgam(x){
@@ -1682,7 +1753,7 @@ const lvl=(p,bonf)=>p<bonf?"rd":p<0.05?"am":"ok";
 const scope=(n)=>`Analizando <b>${n}</b> sorteos según los filtros de arriba (sorteo y rango). Con más historial las pruebas tienen más potencia: prueba "Todo el historial".`;
 function nxView(t){
  try{
-  if(t==="sem")return semView();if(t==="rac")return racView();if(t==="ind")return indView();
+  if(t==="rng")return rngView();if(t==="tbl")return tblView();if(t==="pun")return punView();if(t==="pk4")return p43View();if(t==="sem")return semView();if(t==="rac")return racView();if(t==="ind")return indView();
   if(t==="int")return intView();if(t==="des")return desView();if(t==="que")return queView();if(t==="mc")return mcView();if(t==="est")return estView();
   if(t==="pal")return palView();if(t==="cal")return calView();
  }catch(e){console.error(e);return `<div class="card warn">No se pudo calcular esta sección: ${esc(e.message||e)}. Revisa la pestaña <b>Calidad</b>: puede haber registros mal cargados.</div>`}
@@ -2170,6 +2241,117 @@ $("#view").addEventListener("click",e=>{
  if(e.target.closest("#mcgo")){mcCache=null;mcRun=null;render();return}
 });
 /* =================== fin ANÁLISIS ESTADÍSTICO =================== */
+/* =================== NUEVAS SECCIONES: Intervalos A–D · Pick 4 → Pick 3 · 10 Tablas · Explicaciones fáciles =================== */
+const IVS=[["A","00–25",0,25],["B","26–50",26,50],["C","51–75",51,75],["D","76–99",76,99]];
+const ivOf=v=>v<=25?0:v<=50?1:v<=75?2:3;
+const tbOf=v=>{const r=(((v%10)-Math.floor(v/10))%10+10)%10;return r===0?10:r};
+const TBL=Array.from({length:11},()=>[]);
+for(let v=0;v<100;v++)TBL[tbOf(v)].push(v);
+function topIdx(a,n){return a.map((v,i)=>[i,v]).filter(z=>z[1]>0).sort((x,y)=>y[1]-x[1]||x[0]-y[0]).slice(0,n)}
+function afterStats(P,K,kf){
+ const cnt=Array(K).fill(0),nn=Array(K).fill(0),nx=Array.from({length:K},()=>Array(K).fill(0)),dec=Array.from({length:K},()=>Array(10).fill(0)),ter=Array.from({length:K},()=>Array(10).fill(0));
+ P.forEach(v=>cnt[kf(v)]++);
+ for(let i=0;i+1<P.length;i++){const a=kf(P[i]),b=P[i+1];nn[a]++;nx[a][kf(b)]++;dec[a][Math.floor(b/10)]++;ter[a][b%10]++}
+ return{cnt,nn,nx,dec,ter};
+}
+/* Bloque genérico: frecuencia de clases + qué viene después (clase, decena, terminal) */
+function clsBlock(R,names,kf,exp,what){
+ const K=names.length,P=R.map(pn),n=P.length,S=afterStats(P,K,kf),last=P[n-1],lk=kf(last),L=names.map(z=>z.s);
+ const rk=S.cnt.map((v,i)=>[i,v]).sort((a,b)=>b[1]-a[1]||a[0]-b[0]),mx=Math.max(1,...S.cnt);
+ const x2=S.cnt.reduce((s,c,i)=>s+(c-exp[i]*n)**2/(exp[i]*n),0),pv=chiP(x2,K-1);
+ const frow=S.cnt.map((c,i)=>`<div class="bar"><b style="width:auto;min-width:34px">${L[i]}</b><i style="width:${Math.round(c/mx*60)}%"></i><span>${c} (${pcs(c,n)}) · esperado ${(exp[i]*n).toFixed(1)}</span></div>`).join("");
+ const top=(a,m,tot,lab)=>{const t=topIdx(a,m);return t.length?t.map(([i,v])=>`<b>${lab(i)}</b> <span class="note">${v} · ${(v/tot*100).toFixed(0)}%</span>`).join("<br>"):"—"};
+ const cl=i=>L[i],dg=i=>i,nl=S.nn[lk];
+ const rows=names.map((z,i)=>`<tr${i===lk?' style="outline:1px solid var(--ac2)"':""}><th>${L[i]}${i===lk?" ◀":""}</th><td>${S.nn[i]}</td><td>${top(S.nx[i],2,S.nn[i],cl)}</td><td>${top(S.dec[i],3,S.nn[i],dg)}</td><td>${top(S.ter[i],3,S.nn[i],dg)}</td></tr>`).join("");
+ const pf=(v)=>`${v} (${nl?(v/nl*100).toFixed(0):0}%)`;
+ return `<div class="card"><h2>¿Cuáles salen más?</h2>
+ <div class="kpi"><div><b>${L[rk[0][0]]}</b>más frecuente (${rk[0][1]})</div><div><b>${L[rk[K-1][0]]}</b>menos frecuente (${rk[K-1][1]})</div><div><b>${n}</b>sorteos</div></div>
+ ${frow}
+ <div class="verd">${LT(pv<0.05?"am":"ok")}<span>Chi-cuadrado ${x2.toFixed(1)} · ${K-1} g.l. · p = ${fp(pv)}. ${pv<0.05?"Se aleja del reparto esperado; con tantas pruebas en la app puede ser casualidad (mira el Semáforo).":"Los "+what+" salen casi como se espera por azar."}</span></div></div>
+ <div class="card"><h2>Lo que viene después del último sorteo (${pad(last)} → ${L[lk]})</h2>
+ <p class="note">${names[lk].d} Esto es lo que salió en el sorteo siguiente las ${nl} veces anteriores que hubo algo de ${L[lk]}.${nl<30?" Son pocos casos: casi todo es casualidad.":""}</p>
+ ${nl?`<p class="note">Cuál viene después</p>${bars(S.nx[lk],L,pf)}<p class="note">Decena que viene después</p>${bars(S.dec[lk],D10,pf)}<p class="note">Terminal que viene después</p>${bars(S.ter[lk],D10,pf)}`:`<p class="note">Todavía no hay casos anteriores.</p>`}</div>
+ <div class="card"><h2>Decenas y terminales después de cada uno</h2>
+ <p class="note">Para cada ${what==="intervalos"?"intervalo":"tabla"}: cuántas veces salió y qué vino en el sorteo siguiente (arriba el ${what==="intervalos"?"intervalo":"grupo"}, la decena y el terminal más repetidos). ◀ = el del último sorteo.</p>
+ <div class="sc"><table style="font-size:12px"><tr><th></th><th>Casos</th><th>Cuál viene</th><th>Decena</th><th>Terminal</th></tr>${rows}</table></div></div>
+ <p class="note warn">Esto cuenta lo que ya pasó. Cada número sigue teniendo 1% de salir en el próximo sorteo, sin importar de qué grupo sea ni lo que haya salido antes.</p>`;
+}
+function rngView(){
+ const head=nxHead("rng","Intervalos A–D","Los 100 números en 4 grupos: A 00–25 · B 26–50 · C 51–75 · D 76–99");
+ const R=F3();
+ if(R.length<20)return head+`<div class="card">Se necesitan al menos 20 sorteos en este rango (hay ${R.length}).</div>`;
+ const names=IVS.map(z=>({s:z[0],d:`Intervalo ${z[0]} = números del ${z[1]}.`})),exp=IVS.map(z=>(z[3]-z[2]+1)/100);
+ return head+`<div class="card note">${scope(R.length)} Tamaños: A 26 números, B 25, C 25, D 24, así que el reparto esperado no es exactamente 25% cada uno.</div>`+clsBlock(R,names,ivOf,exp,"intervalos");
+}
+function tblView(){
+ const head=nxHead("tbl","10 Tablas","Números clasificados en 10 tablas (por la diferencia entre terminal y decena)");
+ const R=F3();
+ if(R.length<20)return head+`<div class="card">Se necesitan al menos 20 sorteos en este rango (hay ${R.length}).</div>`;
+ const c=cnt(R),nm=k=>k===1?"BASE":k===10?"NÚMEROS DOBLES":"";
+ const names=[...Array(10).keys()].map(i=>{const k=i+1;return{s:"T"+k,d:`Tabla ${k}${nm(k)?" ("+nm(k)+")":""}: ${TBL[k].map(pad).join(" - ")}.`}});
+ const exp=Array(10).fill(.1);
+ const list=`<div class="card"><h2>Las 10 tablas y cuántas veces salió cada número</h2><div class="sc"><table style="font-size:12px"><tr><th>Tabla</th><th style="text-align:left">Números (×veces)</th><th>Total</th></tr>${[...Array(10).keys()].map(i=>{const k=i+1,t=TBL[k];return `<tr><th>T${k}${nm(k)?`<br><span class="note">${nm(k)}</span>`:""}</th><td style="text-align:left">${t.map(v=>`<b>${pad(v)}</b><span class="note">×${c[v]}</span>`).join(" · ")}</td><td>${t.reduce((s,v)=>s+c[v],0)}</td></tr>`}).join("")}</table></div></div>`;
+ return head+`<div class="card note">${scope(R.length)} Cada tabla tiene 10 números, así que lo esperado es 10% cada una.</div>`+list+clsBlock(R,names,v=>tbOf(v)-1,exp,"tablas");
+}
+function p43View(){
+ const head=nxHead("pk4","Pick 4 → Pick 3","Qué salió en los 3 sorteos de Pick 3 que vinieron después de cada Pick 4");
+ const f=$("#fDraw").value,n0=+$("#fRange").value;
+ let P4=sorted4().filter(ok4);if(f!=="A")P4=P4.filter(x=>x.t===f);if(n0)P4=P4.slice(-n0*(f==="A"?2:1));
+ const P3=sorted().filter(ok3);
+ if(!P4.length)return head+`<div class="card">No hay resultados de Pick 4 en este rango. Ve a la sección <b>Pick 4</b> y toca <b>↻ Actualizar</b>.</div>`;
+ if(!P3.length)return head+`<div class="card">No hay datos de Pick 3 para comparar.</div>`;
+ const rows=P4.map(x=>{const nx=P3.filter(y=>ord(y)>ord(x)).slice(0,3),a=x.n.slice(0,2),b=x.n.slice(2);
+  return{x,nx,a,b,done:nx.length===3,hl:nx.some(y=>two(y)===b),hf:nx.some(y=>two(y)===a)}});
+ const D=rows.filter(r=>r.done),m=D.length,hl=D.filter(r=>r.hl).length,hf=D.filter(r=>r.hf).length,pe=1-Math.pow(.99,3);
+ const dec=Array(10).fill(0),ter=Array(10).fill(0);
+ D.forEach(r=>r.nx.forEach(y=>{dec[dd(y)]++;ter[tt(y)]++}));
+ const tot=m*3,pf=v=>`${v} (${tot?(v/tot*100).toFixed(1):0}%)`;
+ const show=rows.slice(-30).reverse().map(r=>{
+  const hit=r.hl||r.hf,tx=!r.done?`pendiente (${r.nx.length} de 3)`:hit?(r.hl&&r.hf?"últimos y primeros 2":r.hl?"últimos 2 coinciden":"primeros 2 coinciden"):"sin coincidencia";
+  const pr=r.nx.map(y=>{const h=two(y)===r.b||two(y)===r.a;return `<span style="display:inline-block;margin:2px 6px 2px 0;${h?"outline:2px solid #4ade80;border-radius:20px;padding:1px 3px":""}">${two2(y)}<span class="note"> ${y.d.slice(5)} ${y.t}</span></span>`}).join("");
+  return `<div class="stRow${hit?" ok":""}">${hit?CK_OK:CK_NO}<div class="tx"><b>${balls({n:r.x.n,f:""})}</b><span>Pick 4 · ${r.x.d} · ${r.x.t==="M"?"Midday":"Evening"} · primeros 2: ${r.a} · últimos 2: ${r.b}</span><div style="margin-top:4px">${pr||'<span class="note">Todavía no hay sorteos de Pick 3 después de este.</span>'}</div></div><div class="res">${tx}</div></div>`}).join("");
+ return head+`<div class="card"><h2>Resumen</h2><div class="kpi4"><div><b>${P4.length}</b>Pick 4 analizados</div><div><b>${m}</b>con sus 3 sorteos ya jugados</div><div><b>${hl} (${m?(hl/m*100).toFixed(1):0}%)</b>últimos 2 repetidos</div><div><b>${hf} (${m?(hf/m*100).toFixed(1):0}%)</b>primeros 2 repetidos</div></div>
+ <p class="note">Para cada Pick 4 se miran los 3 Pick 3 siguientes (el sorteo del mismo momento no cuenta) y se revisa si los <b>últimos 2</b> o los <b>primeros 2</b> dígitos del Pick 4 salieron como par (00–99) en alguno. Por azar puro se espera ≈ ${(pe*100).toFixed(1)}% (3 sorteos × 1%) en cada columna: esperado ≈ ${(m*pe).toFixed(1)} de ${m}.</p>
+ <div class="verd">${LT(m&&(hl>m*pe*2.5+3||hf>m*pe*2.5+3)?"am":"ok")}<span>${m?(hl>m*pe*2.5+3||hf>m*pe*2.5+3?"Hay más repeticiones de lo esperado, pero con tan pocos casos puede ser casualidad.":"Las repeticiones están en lo normal para el azar."):"Aún no hay Pick 4 con sus 3 sorteos completos."}</span></div></div>
+ <div class="card"><h2>Decenas que salieron en esos 3 sorteos</h2>${bars(dec,D10,pf)}<h2 style="margin-top:12px">Terminales que salieron en esos 3 sorteos</h2>${bars(ter,D10,pf)}</div>
+ <div class="card"><h2>Últimos ${Math.min(30,rows.length)} Pick 4 y sus 3 Pick 3 siguientes</h2><p class="note">Verde = el par del Pick 3 coincide con los primeros o últimos 2 del Pick 4.</p>${show}</div>
+ <p class="note warn">Es un registro de lo ocurrido. Pick 3 y Pick 4 son sorteos independientes: lo que sale en uno no influye en el otro.</p>`;
+}
+const KIDS={
+ rac:["🧒 Explicado fácil: Rachas",["🪙 Imagina que lanzas una moneda. A veces sale cara 3 veces seguidas. ¡No es magia! Eso se llama <b>racha</b>: cuando lo mismo se repite varias veces seguidas.","📏 Aquí contamos cuántas veces seguidas salió par, impar, alto, bajo o número gemelo (como 44).","🔔 La app compara con lo que pasaría si todo fuera pura suerte. Si lo que viste es parecido, el semáforo sale <b>verde</b>: todo normal.","🟠 Si sale naranja, es como ver 5 caras seguidas: raro, pero pasa. No quiere decir que el próximo vaya a ser igual."]],
+ est:["🧒 Explicado fácil: Estabilidad",["🍬 Imagina una bolsa con 10 colores de caramelos mezclados. Cada color debería salir más o menos <b>1 de cada 10 veces</b>.","📈 La gráfica mira si un dígito empezó a salir mucho más o mucho menos que antes. Cada puntito es un grupo de sorteos.","🧱 Las franjas son como las paredes de un corredor: si el puntito se queda dentro, todo está normal. Si se sale un poquito, es suerte.","🔍 La raya roja marca dónde la línea cambió más. Casi siempre es solo casualidad, no que alguien cambió la bolsa."]],
+ int:["🧒 Explicado fácil: Intervalos",["🛝 Hay 100 niños (los números 00 al 99) haciendo fila para el tobogán. Cada sorteo elige a uno.","⏳ El <b>intervalo</b> es cuánto tiempo esperó un niño hasta que lo volvieron a elegir. Algunos esperan poco y otros mucho.","🎲 Con 100 niños es normal que alguno espere más de 100 turnos. Que tarde mucho no significa que ya le toque.","✅ La app revisa si los que más esperan lo hacen más de lo normal. Casi siempre la respuesta es: no, es normal."]],
+ sum:["🧒 Explicado fácil: Patrones",["🎲 Cuando lanzas dos dados, sumar 7 es más fácil que sumar 2, porque hay más formas de hacerlo. Aquí pasa igual con los dos dígitos.","➕ <b>Suma</b>: sumamos la decena y el terminal. Las sumas del medio (como 9) salen más porque hay más formas de formarlas.","👯 <b>Par / impar</b>: ¿los dos dígitos son pares, impares o uno de cada? Debería repartirse casi igual (25% cada combinación).","🧩 <b>Tipos de pareja</b>: gemelos (11), vecinos (12) o los que suman 9 (36). Es solo clasificar, no adivinar."]]
+};
+function kid(t){const k=KIDS[t];return k?`<div class="card"><h2>${k[0]}</h2>${UL(k[1])}</div>`:""}
+/* =================== fin NUEVAS SECCIONES =================== */
+/* ---- Puntuación de números ---- */
+let punSort="num",punSel=null;
+function punView(){
+ const head=nxHead("pun","Puntuación de números","Cuántas estadísticas de frecuencia señalan a cada número (00–99)");
+ const R=F3();
+ if(R.length<8)return head+`<div class="card">Se necesitan al menos 8 sorteos en este rango (hay ${R.length}).</div>`;
+ const S=p3Score(R),K=S.crit.length;
+ if(!K)return head+`<div class="card">No hay estadísticas suficientes para puntuar con este rango.</div>`;
+ const cls=S.sc.map(o=>accCls(o.pct)),nr=cls.filter(c=>c==="r").length,ny=cls.filter(c=>c==="y").length,ng=cls.filter(c=>c==="g").length;
+ const mean=S.sc.reduce((a,o)=>a+o.pct,0)/100;
+ let list=S.sc.slice();if(punSort==="pts")list.sort((a,b)=>b.pct-a.pct||a.v-b.v);
+ if(punSel===null||!S.sc[punSel])punSel=S.sc.slice().sort((a,b)=>b.pct-a.pct||a.v-b.v)[0].v;
+ const sel=S.sc[punSel],c=accCls(sel.pct);
+ const btn=(k,t)=>`<button type="button" class="chip${punSort===k?" on":""}" data-punsort="${k}" aria-pressed="${punSort===k}">${t}</button>`;
+ const grid=list.map(o=>`<button type="button" class="punCell ${accCls(o.pct)}${o.v===punSel?" sel":""}" data-pun="${o.v}" aria-label="Número ${pad(o.v)}: ${Math.round(o.pct)}%"><b>${pad(o.v)}</b><small>${Math.round(o.pct)}%</small></button>`).join("");
+ const rows=S.crit.map((cr,i)=>`<div class="stRow${sel.yes[i]?" ok":""}">${sel.yes[i]?CK_OK:CK_NO}<div class="tx"><b>${cr.name}</b><span>Señala: ${cr.pred}</span></div></div>`).join("");
+ return head+`<div class="card"><p class="note">${scope(R.length)} Se evalúan <b>${K}</b> estadísticas de frecuencia para el próximo sorteo (${S.date}). La puntuación de cada número es el <b>porcentaje de esas estadísticas que lo señalan</b>: 8 de 16 = 50%.</p>
+ <div class="punLeg"><span class="punDot r"></span>Rojo menos de 40% <span class="punDot y"></span>Amarillo 40–59% <span class="punDot g"></span>Verde 60% o más</div>
+ <div class="kpi"><div><b>${ng}</b>en verde</div><div><b>${ny}</b>en amarillo</div><div><b>${nr}</b>en rojo</div></div>
+ <p class="note">Promedio de los 100 números: ${mean.toFixed(1)}%. Los descartes y el Pronóstico no cuentan aquí porque no miden frecuencia.</p></div>
+ <div class="card"><h2>Los 100 números</h2><div class="chips">${btn("num","Por número")}${btn("pts","Por puntuación")}</div>
+ <div class="punGrid">${grid}</div><p class="note">Toca un número para ver qué estadísticas lo señalan.</p></div>
+ <div class="card"><h2>Número ${pad(punSel)} · ${Math.round(sel.pct)}% <span class="accc ${c}">(${sel.n} de ${K})</span></h2>${rows}</div>
+ <p class="note warn">Es un conteo de lo que ya salió. Un número con más puntos no tiene más probabilidad: cada uno sigue teniendo 1% en el próximo sorteo.</p>`;
+}
+$("#view").addEventListener("click",e=>{const b=e.target.closest("[data-pun],[data-punsort]");if(!b)return;if(b.dataset.pun!==undefined)punSel=+b.dataset.pun;if(b.dataset.punsort!==undefined)punSort=b.dataset.punsort;render()});
+$("#accBar").addEventListener("click",()=>{tab="res";render();window.scrollTo({top:0,behavior:"smooth"})});
 $("#view").addEventListener("click",e=>{const b=e.target.closest("[data-seqx],[data-seqlag]");if(!b)return;if(b.dataset.seqx!==undefined)seqX=+b.dataset.seqx;if(b.dataset.seqlag!==undefined)seqLag=+b.dataset.seqlag;render()});
 $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");if(!b)return;tab=b.dataset.tab;render()});
 // El botón superior debe funcionar desde cualquier pestaña (no solo desde Datos).
