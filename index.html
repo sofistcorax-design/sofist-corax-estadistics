@@ -2410,18 +2410,18 @@ if("serviceWorker" in navigator){
  window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
 }
 </script>
-<script type="module">
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+<script type="module" onerror="(function(){var g=document.getElementById('scAuthGate'),a=document.getElementById('scGateAuth'),m=document.getElementById('scGateMessage');document.body.classList.remove('sc-boot');if(g)g.hidden=false;document.body.classList.add('sc-locked');if(a)a.hidden=false;if(m){m.textContent='No se pudo cargar Firebase. Comprueba tu conexión o recarga la página.';m.classList.add('error')}})()">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 import {
  getAuth, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword,
  sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged,
- reload, GoogleAuthProvider, signInWithPopup
-} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+ reload, GoogleAuthProvider, signInWithPopup, updateProfile
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {
  getFirestore, doc, setDoc, serverTimestamp, getDoc,
  collection, addDoc, deleteDoc, query, orderBy, limit, onSnapshot
-} from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-functions.js";
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-functions.js";
 
 /* Configuración existente del proyecto: se conserva sin sustituir sus valores. */
 const firebaseConfig = {
@@ -2446,6 +2446,8 @@ let currentUser = null;
 let currentRole = "user";
 let gateMode = "login";
 let authReady = false;
+let registering = false;
+let gateNotice = "";
 
 const $id = id => document.getElementById(id);
 const gate = $id("scAuthGate");
@@ -2476,7 +2478,10 @@ function friendlyAuthError(error) {
   "auth/wrong-password":"La contraseña es incorrecta.",
   "auth/too-many-requests":"Hubo demasiados intentos. Espera un momento.",
   "auth/network-request-failed":"No se pudo conectar. Comprueba tu conexión.",
-  "auth/operation-not-allowed":"El registro por correo no está habilitado en Firebase.",
+  "auth/operation-not-allowed":"Este método de acceso (correo o Google) no está habilitado en Firebase → Authentication → Sign-in method.",
+  "auth/popup-closed-by-user":"Se cerró la ventana de Google antes de terminar.",
+  "auth/cancelled-popup-request":"Ya hay una ventana de Google abierta.",
+  "auth/account-exists-with-different-credential":"Ya existe una cuenta con ese correo usando otro método. Inicia sesión con correo y contraseña.",
   "auth/unauthorized-domain":"Este dominio no está autorizado en Firebase Authentication.",
   "permission-denied":"Firebase rechazó el acceso. Comprueba las reglas de Firestore y que tu correo esté verificado.",
   "functions/permission-denied":"No tienes autorización para esta operación.",
@@ -2581,6 +2586,7 @@ async function establishVerifiedSession(user) {
 }
 
 onAuthStateChanged(auth, async user => {
+ if (registering && user) return; // usuario temporal sin verificar durante el registro
  currentUser = user;
  authReady = true;
  syncLegacyAccount();
@@ -2590,8 +2596,10 @@ onAuthStateChanged(auth, async user => {
   $id("scGateAuth").hidden = false;
   $id("scGateVerify").hidden = true;
   try{localStorage.removeItem("sc-ok")}catch(e){}
+  registering = false;
   setGateMode("login");
-  gateMessage("Inicia sesión o regístrate para continuar.");
+  gateMessage(gateNotice || "Inicia sesión o regístrate para continuar.");
+  gateNotice = "";
   showGate(true);
   return;
  }
@@ -2649,9 +2657,11 @@ $id("scGateForm")?.addEventListener("submit", async event => {
  gateMessage(gateMode === "register" ? "Creando tu cuenta…" : "Iniciando sesión…");
  try {
   if (gateMode === "register") {
+   registering = true;
    const credential = await createUserWithEmailAndPassword(auth, email, password);
-   if (name) await (await import("https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js")).updateProfile(credential.user, {displayName:name});
+   if (name) await updateProfile(credential.user, {displayName:name});
    await sendEmailVerification(credential.user);
+   gateNotice = "Cuenta creada. Te enviamos un enlace de verificación. Confirma tu correo y después inicia sesión.";
    await signOut(auth);
    setGateMode("login");
    gateMessage("Cuenta creada. Te enviamos un enlace de verificación. Confirma tu correo y después inicia sesión.");
@@ -2660,6 +2670,7 @@ $id("scGateForm")?.addEventListener("submit", async event => {
    gateMessage("Credenciales correctas. Comprobando verificación…");
   }
  } catch (error) {
+  registering = false; gateNotice = "";
   gateMessage(friendlyAuthError(error), true);
  } finally {
   submit.disabled = false;
@@ -2719,11 +2730,12 @@ if (authBody) {
    const password = $id("authPassword")?.value || "";
    if (!email || !password) { authMessage("Escribe tu correo y una contraseña de al menos 6 caracteres.", true); return; }
    try {
+    registering = true;
     const credential = await createUserWithEmailAndPassword(auth, email, password);
     await sendEmailVerification(credential.user);
     await signOut(auth);
     authMessage("Cuenta creada. Te enviamos un correo para verificarla antes de iniciar sesión.");
-   } catch (error) { authMessage(friendlyAuthError(error), true); }
+   } catch (error) { registering = false; authMessage(friendlyAuthError(error), true); }
   }
   if (reset) {
    const email = $id("authEmail")?.value.trim();
