@@ -1,7 +1,7 @@
 // Service worker Sofist Corax: la página (HTML) siempre se pide primero a la red,
 // así una versión nueva nunca queda tapada por una copia vieja en caché.
-const CACHE = "sofist-corax-v3";
-const SHELL = ["manifest.json", "icon-192.png"];
+const CACHE = "sofist-corax-v7";
+const SHELL = ["manifest.json", "icon-192.png", "icon-512.png", "icon-maskable-512.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})));
   self.skipWaiting();

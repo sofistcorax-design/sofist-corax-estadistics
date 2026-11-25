@@ -811,7 +811,7 @@ const SEED=`2025-11-18 E 2 6 8
 2026-11-15 E 2 9 8
 2026-11-16 E 1 9 9
 2026-11-17 E 3 5 5`;
-let ROWS=[],db=null,unsub=null,tab="res",seqX=null,seqLag=1;
+let ROWS=[],tab="res",seqX=null,seqLag=1;
 const ICONS={
  res:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
  par:'<rect x="3" y="3" width="5" height="5"/><rect x="9.5" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="9.5" width="5" height="5"/><rect x="9.5" y="9.5" width="5" height="5"/><rect x="16" y="9.5" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="9.5" y="16" width="5" height="5"/><rect x="16" y="16" width="5" height="5"/>',
@@ -858,7 +858,7 @@ function parseLines(t){
   const rest=l.replace(/\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\d{1,2}[-\/]\d{1,2}[-\/]\d{4}/,"");
   const dr=/(^|[^a-z])(e|eve|evening|noche|n)([^a-z]|$)/i.test(rest)?"E":/(^|[^a-z])(m|mid|midday|dia|día)([^a-z]|$)/i.test(rest)?"M":null;
   const digs=rest.replace(/[a-zA-Zí]+/g," ").match(/\d/g)||[];
-  if(!date||!dr||digs.length<3||digs.length>4){bad.push(l);return}
+  if(!date||!validHistoricalDate(date)||!dr||digs.length<3||digs.length>4){bad.push(l);return}
   out.push({k:date+dr,d:date,t:dr,n:digs.slice(0,3).join(""),f:digs[3]??""});
  });
  return{out,bad};
@@ -1287,8 +1287,10 @@ function impView(){
  <p class="note">También puedes pegar el texto completo de lotteryusa.com/florida/pick-3/year (Evening) o /florida/midday-pick-3/year (Midday); una página cada vez.</p>
  <textarea id="txt" placeholder="2026-08-04 M 5 8 2 1"></textarea>
  <div class="row" style="margin-top:8px"><button class="p" id="go" type="button">Guardar</button><button id="exp" type="button">Exportar al cuadro</button></div></div>
- <div class="card"><h2>💾 Respaldo</h2><p class="note">Guarda tu base de datos en un archivo para cargarla después.</p>
- <div class="row"><button id="downloadCsv" type="button">⬇ Descargar CSV</button><button id="downloadJson" type="button">⬇ Descargar JSON</button></div></div>
+ <div class="card"><h2>💾 Respaldo</h2><p class="note">Crea una copia completa de Pick 3 y Pick 4 en un solo archivo. La restauración combina los datos y no borra el historial que ya tienes.</p>
+ <div class="row"><button class="p" id="downloadFullBackup" type="button">⬇ Respaldo completo Pick 3 + Pick 4</button><button id="restoreFullBackup" type="button">↥ Restaurar respaldo</button></div>
+ <input type="file" id="fullBackupFile" accept=".json,application/json" class="hide">
+ <div class="row"><button id="downloadCsv" type="button">⬇ CSV Pick 3</button><button id="downloadJson" type="button">⬇ JSON Pick 3</button></div></div>
  <div class="card"><h2>⚙️ Avanzado</h2><div class="row"><button id="seed" type="button">Cargar historial incluido</button><button id="clr" type="button">Borrar todo</button></div>
  <p class="note">Los datos oficiales están en floridalottery.com/pick3 (Past Results). Comprueba los resultados en la fuente oficial si detectas alguna discrepancia.</p></div>`;
 }
@@ -1311,7 +1313,7 @@ function parseLotteryUSA(text,type){
  const out=[],seen=new Set();
  const add=(y,mo,da,n3,fb)=>{
   const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`,k=d+type;
-  if(+mo<1||+mo>12||+da<1||+da>31||seen.has(k))return;seen.add(k);
+  if(!validDate(d)||!/^\d{3}$/.test(n3)||seen.has(k))return;seen.add(k);
   out.push({k,d,t:type,n:n3,f:fb||""});
  };
  const dig="(\\d)[\\s,\\-–|]+(\\d)[\\s,\\-–|]+(\\d)(?:[\\s,|]*(?:FB|Fireball)[^:\\d]*:?\\s*(\\d))?";
@@ -1346,6 +1348,7 @@ function parseArchive(text){
   const n=String(num).replace(/[^0-9]/g,"").slice(0,3);
   if(n.length!==3)return;
   const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`;
+  if(!validHistoricalDate(d))return;
   const t=/midday|mid-day|^M$/i.test(draw)?"M":"E",k=d+t;
   const f=String(fb||"").replace(/\D/g,"").slice(0,1);
   const old=out.find(x=>x.k===k);
@@ -1398,13 +1401,18 @@ function exportCsv(){
  downloadFile("sofist-corax-pick3-resultados.csv","\uFEFF"+csv,"text/csv;charset=utf-8");
 }
 function exportJson(){downloadFile("sofist-corax-pick3-resultados.json",JSON.stringify({app:"Sofist Corax Estadistics",exportedAt:new Date().toISOString(),count:ROWS.length,results:sorted()},null,2),"application/json");}
+function exportFullBackup(){
+ const backup={app:"Sofist Corax",formatVersion:1,exportedAt:new Date().toISOString(),
+  pick3:{count:ROWS.length,results:sorted()},pick4:{count:ROWS4.length,results:sorted4()}};
+ downloadFile("sofist-corax-respaldo-completo.json",JSON.stringify(backup,null,2),"application/json");
+}
 
 async function persistAll(){
+ // El historial local es la copia inmediata del usuario. La publicación oficial
+ // se delega al puente Firebase, que exige un custom claim admin verificado.
  saveLocal();
- if(db){
-  const years={};ROWS.forEach(x=>{const y=x.d.slice(0,4);(years[y]=years[y]||[]).push(`${x.d}|${x.t}|${x.n}|${x.f}`)});
-  for(const y of Object.keys(years))await db.collection("draws").doc("y"+y).set({rows:years[y]});
- }
+ try { if(window.CoraxPublishDraws) await window.CoraxPublishDraws("p3"); }
+ catch(error) { console.warn("Pick 3 quedó guardado localmente, pero no se publicó en la nube:",error); }
 }
 async function updateResults(){
  const btns=[$("#syncTop"),$("#syncData")].filter(Boolean);
@@ -1459,11 +1467,11 @@ async function updateResults(){
 
 function normDraw(o){
  let d=String(o.d??o.date??o.fecha??"").trim(),t=String(o.t??o.draw??o.sorteo??"").trim(),n=String(o.n??o.number??o.numero??o.num??"").replace(/\D/g,""),f=String(o.f??o.fireball??o.fb??"").replace(/\D/g,"").slice(0,1);
- let m=d.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+ let m=d.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
  if(m)d=`${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
- else{m=d.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);if(!m)return null;d=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+ else{m=d.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);if(!m)return null;d=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
  t=/^(m|mid|dia|día)/i.test(t)?"M":/^(e|eve|n|noche)/i.test(t)?"E":null;
- if(!t||n.length<3)return null;n=n.slice(0,3);
+ if(!validHistoricalDate(d)||!t||n.length!==3)return null;
  return{k:d+t,d,t,n,f};
 }
 function parseDbFile(text){
@@ -1492,6 +1500,47 @@ function parseDbFile(text){
  let t=/midday/i.test(text)?"M":"E";
  return{rows:parseLotteryUSA(text,t),bad:0};
 }
+function normDraw4(o){
+ let d=String(o.d??o.date??o.fecha??"").trim(),t=String(o.t??o.draw??o.sorteo??"").trim();
+ const n=String(o.n??o.number??o.numero??o.num??"").replace(/\D/g,"");
+ const f=String(o.f??o.fireball??o.fb??"").replace(/\D/g,"").slice(0,1);
+ let m=d.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+ if(m)d=`${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+ else{m=d.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);if(!m)return null;d=`${m[3]}-${m[1].padStart(2,"0")}-${m[2].padStart(2,"0")}`}
+ t=/^(m|mid|dia|día)/i.test(t)?"M":/^(e|eve|n|noche)/i.test(t)?"E":null;
+ if(!validHistoricalDate(d)||!t||n.length!==4)return null;
+ return{k:d+t,d,t,n,f};
+}
+async function restoreFullBackup(file){
+ const msg=$("#msg");
+ try{
+  const backup=JSON.parse((await file.text()).replace(/^\uFEFF/,""));
+  if(!backup||backup.app!=="Sofist Corax"||backup.formatVersion!==1)throw new Error("El archivo no es un respaldo completo compatible de Sofist Corax.");
+  const p3src=Array.isArray(backup.pick3?.results)?backup.pick3.results:[];
+  const p4src=Array.isArray(backup.pick4?.results)?backup.pick4.results:[];
+  const p3=[],p4=[];let bad=0;
+  p3src.forEach(row=>{const x=normDraw(row);if(x)p3.push(x);else bad++});
+  p4src.forEach(row=>{const x=normDraw4(row);if(x)p4.push(x);else bad++});
+  if(!p3.length&&!p4.length)throw new Error("El respaldo no contiene resultados válidos.");
+  const m3=new Map(ROWS.map(x=>[x.k,x]));
+  p3.forEach(x=>{const old=m3.get(x.k);m3.set(x.k,{...old,...x,f:x.f||old?.f||""})});
+  const m4=new Map(ROWS4.map(x=>[x.k,x]));
+  p4.forEach(x=>{const old=m4.get(x.k);m4.set(x.k,{...old,...x,f:x.f||old?.f||""})});
+  ROWS=[...m3.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+  ROWS4=[...m4.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+  saveLocal();save4();
+  let cloudNote="";
+  if(window.CoraxPublishDraws){
+   const failures=[];
+   for(const kind of ["p3","p4"])try{await window.CoraxPublishDraws(kind)}catch(error){failures.push(kind.toUpperCase()+": "+(error.message||"sin publicar"))}
+   if(failures.length)cloudNote=" La copia local está guardada; la publicación en la nube requiere una cuenta administradora: "+failures.join("; ");
+  }
+  render2();showLatest();
+  msg.textContent=`Respaldo restaurado y combinado: ${p3.length} Pick 3 y ${p4.length} Pick 4 válidos${bad?`; ${bad} registros ignorados`:""}. Totales: ${ROWS.length} Pick 3 y ${ROWS4.length} Pick 4.${cloudNote}`;
+  msg.scrollIntoView({block:"nearest",behavior:"smooth"});
+ }catch(error){msg.textContent="No se pudo restaurar el respaldo: "+(error.message||error)}
+}
+
 async function loadDbFile(file){
  const msg=$("#msg");
  try{
@@ -1513,23 +1562,23 @@ function wireImp(){
  $("#syncData")?.addEventListener("click",updateResults);
  $("#downloadCsv")?.addEventListener("click",exportCsv);
  $("#downloadJson")?.addEventListener("click",exportJson);
+ $("#downloadFullBackup")?.addEventListener("click",exportFullBackup);
+ $("#restoreFullBackup")?.addEventListener("click",()=>$("#fullBackupFile")?.click());
+ $("#fullBackupFile")?.addEventListener("change",e=>{const file=e.target.files[0];if(file)restoreFullBackup(file);e.target.value=""});
  $("#go").onclick=async()=>{
   const {out,bad}=parseLines($("#txt").value);
   if(!out.length){
    const txt=$("#txt").value,t=/midday/i.test(txt)?"M":"E",pg=parseLotteryUSA(txt,t);
    if(pg.length){
     const m2=new Map(ROWS.map(x=>[x.k,x]));pg.forEach(x=>m2.set(x.k,{...m2.get(x.k),...x}));
-    ROWS=[...m2.values()];saveLocal();$("#msg").textContent=`${pg.length} sorteos ${t==="M"?"Midday":"Evening"} importados desde el texto de la página.`;$("#txt").value="";render2();showLatest();return;
+    ROWS=[...m2.values()];saveLocal();try{if(window.CoraxPublishDraws)await window.CoraxPublishDraws("p3")}catch(e){console.warn("Importación local; no se publicó en nube",e)}$("#msg").textContent=`${pg.length} sorteos ${t==="M"?"Midday":"Evening"} importados desde el texto de la página.`;$("#txt").value="";render2();showLatest();return;
    }
    $("#msg").textContent="No se reconoció ninguna línea.";return}
   const m=new Map(ROWS.map(x=>[x.k,x]));out.forEach(x=>m.set(x.k,x));
-  ROWS=[...m.values()];saveLocal();
-  let ok=true;
-  if(db){try{
-   const years={};ROWS.forEach(x=>{const y=x.d.slice(0,4);(years[y]=years[y]||[]).push(`${x.d}|${x.t}|${x.n}|${x.f}`)});
-   for(const y of Object.keys(years))await db.collection("draws").doc("y"+y).set({rows:years[y]});
-  }catch(e){ok=false}}
-  $("#msg").textContent=`${out.length} sorteos guardados${bad.length?`, ${bad.length} líneas ignoradas`:""}${db&&!ok?" (solo en este navegador: no se pudo guardar en la base)":""}.`;
+  ROWS=[...m.values()];
+  // Usa el mismo guardado local + publicación protegida que el resto de Pick 3.
+  await persistAll();
+  $("#msg").textContent=`${out.length} sorteos guardados en este dispositivo${bad.length?`, ${bad.length} líneas ignoradas`:""}. Si has iniciado sesión como administrador, se intentará publicar también en la nube.`;
   $("#txt").value="";render2();
  };
  $("#exp").onclick=()=>{$("#txt").value=sorted().map(x=>`${x.d} ${x.t} ${[...x.n].join(" ")}${x.f!==""?" "+x.f:""}`).join("\n")};
@@ -1538,16 +1587,12 @@ function wireImp(){
   if(!confirm("¿Borrar todos los datos?"))return;
   const ys=[...new Set(ROWS.map(x=>x.d.slice(0,4)))];
   ROWS=[];saveLocal();
-  if(db){try{for(const y of ys)await db.collection("draws").doc("y"+y).set({rows:[]})}catch(e){}}
+  try { if(window.CoraxPublishDraws) await window.CoraxPublishDraws("p3"); }
+  catch(e) { alert("Los datos se borraron de este dispositivo, pero no se pudieron borrar de la nube. Solo el administrador puede hacerlo."); }
   render();
  };
 }
 function render2(){const m=$("#msg")?.textContent;render();if(tab==="imp"&&m)$("#msg").textContent=m}
-function fromSnap(s){
- const m=new Map();
- s.docs.forEach(d=>{(d.data()?.rows||[]).forEach(r=>{const [dt,t,n,f]=r.split("|");m.set(dt+t,{k:dt+t,d:dt,t,n,f})})});
- if(m.size){ROWS=[...m.values()];saveLocal();render()}
-}
 /* ===================== PICK 4 (sección aparte) ===================== */
 let ROWS4=[],p4sub="res",p4msg="";
 const SOURCES4=[
@@ -1577,7 +1622,7 @@ function parseLines4(t){
   const rest=l.replace(/\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\d{1,2}[-\/]\d{1,2}[-\/]\d{4}/,"");
   const dr=/(^|[^a-z])(e|eve|evening|noche|n)([^a-z]|$)/i.test(rest)?"E":/(^|[^a-z])(m|mid|midday|dia|día)([^a-z]|$)/i.test(rest)?"M":null;
   const digs=rest.replace(/[a-zA-Zí]+/g," ").match(/\d/g)||[];
-  if(!date||!dr||digs.length<4||digs.length>5){bad.push(l);return}
+  if(!date||!validHistoricalDate(date)||!dr||digs.length<4||digs.length>5){bad.push(l);return}
   out.push({k:date+dr,d:date,t:dr,n:digs.slice(0,4).join(""),f:digs[4]??""});
  });
  return{out,bad};
@@ -1588,7 +1633,7 @@ function parseLotteryUSA4(text,type){
  const out=[],seen=new Set();
  const add=(y,mo,da,n4,fb)=>{
   const d=`${y}-${String(mo).padStart(2,"0")}-${String(da).padStart(2,"0")}`,k=d+type;
-  if(+mo<1||+mo>12||+da<1||+da>31||seen.has(k))return;seen.add(k);
+  if(!validHistoricalDate(d)||!/^\d{4}$/.test(n4)||seen.has(k))return;seen.add(k);
   out.push({k,d,t:type,n:n4,f:fb||""});
  };
  const sep="[\\s,\\-–|]+";
@@ -1622,6 +1667,8 @@ async function updateResults4(){
   if(!incoming.length)throw new Error(`No se obtuvieron resultados. ${[...new Set(errors)].slice(0,3).join(" | ")}. Puedes pegar el texto de la página en la pestaña Datos.`);
   const missing=results.map((r,i)=>r.status==="rejected"?["Evening","Midday"][i]:null).filter(Boolean);
   const {added,updated}=mergeRows4(incoming);
+  try { if(window.CoraxPublishDraws) await window.CoraxPublishDraws("p4"); }
+  catch(error) { console.warn("Pick 4 quedó guardado localmente, pero no se publicó en la nube:",error); }
   const newest=incoming.reduce((a,b)=>a.k>b.k?a:b,incoming[0]);
   p4msg=`✓ Pick 4 actualizado: ${added} sorteos nuevos, ${updated} corregidos${missing.length?` (sin datos de ${missing.join(", ")})`:""}. Último registro ${newest.d} (${newest.t==="M"?"Midday":"Evening"}) · ${new Date().toLocaleString("es-ES")}`;
  }catch(err){
@@ -1631,7 +1678,7 @@ async function updateResults4(){
   if(tab==="p4")render();
  }
 }
-function p4Save(){
+async function p4Save(){
  const ta=$("#p4txt");if(!ta)return;
  const {out,bad}=parseLines4(ta.value);
  if(out.length){const r=mergeRows4(out);p4msg=`${out.length} sorteos guardados (${r.added} nuevos)${bad.length?`, ${bad.length} líneas ignoradas`:""}.`}
@@ -1640,11 +1687,16 @@ function p4Save(){
   if(pg.length){const r=mergeRows4(pg);p4msg=`${pg.length} sorteos ${t==="M"?"Midday":"Evening"} importados desde el texto de la página (${r.added} nuevos).`}
   else p4msg="No se reconoció ninguna línea. Formato: 2026-08-04 M 5 8 2 1 (Fireball opcional al final).";
  }
+ try { if(window.CoraxPublishDraws) await window.CoraxPublishDraws("p4"); }
+ catch(error) { console.warn("Pick 4 guardado localmente; no se pudo publicar en nube:",error); }
  render();
 }
-function p4Clear(){
+async function p4Clear(){
  if(!confirm("¿Borrar todos los datos de Pick 4?"))return;
- ROWS4=[];save4();p4msg="Datos de Pick 4 borrados.";render();
+ ROWS4=[];save4();
+ try { if(window.CoraxPublishDraws) await window.CoraxPublishDraws("p4"); }
+ catch(e) { console.warn("Pick 4 se borró localmente, pero no de la nube:",e); }
+ p4msg="Datos de Pick 4 borrados.";render();
 }
 function p4Csv(){
  const rows=sorted4(),csv=["fecha,sorteo,numero,fireball",...rows.map(x=>[x.d,x.t==="M"?"Midday":"Evening",x.n,x.f].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(","))].join("\r\n");
@@ -2182,6 +2234,7 @@ function palView(){
 }
 /* ======================= 8 · CALIDAD DE DATOS ======================= */
 function validDate(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s));if(!m)return false;const d=new Date(+m[1],+m[2]-1,+m[3]);return d.getFullYear()===+m[1]&&d.getMonth()===+m[2]-1&&d.getDate()===+m[3]}
+function validHistoricalDate(s){return validDate(s)&&s<=todayStr()}
 function addDays(s,k){const [y,m,d]=s.split("-").map(Number),t=new Date(y,m-1,d+k);return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
 function todayStr(){const t=new Date();return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
 function dateRanges(list){const out=[];let a=null,b=null,c=0;list.forEach(d=>{if(a&&addDays(b,1)===d){b=d;c++}else{if(a)out.push([a,b,c]);a=b=d;c=1}});if(a)out.push([a,b,c]);return out}
@@ -2200,7 +2253,7 @@ function qualFor(rows,len,name){
   const key=(x.d||"")+(x.t||"");
   if(seen.has(key))dups.push([seen.get(key),x]);else seen.set(key,x);
  });
- const good=rows.filter(x=>x&&validDate(x.d)&&(x.t==="M"||x.t==="E")).sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
+ const good=rows.filter(x=>x&&validHistoricalDate(x.d)&&(x.t==="M"||x.t==="E")&&new RegExp(`^\\d{${len}}$`).test(String(x.n))).sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);
  const conf=dups.filter(([a,b])=>a.n!==b.n);
  checks.push({ok:!dups.length,t:"Sorteos duplicados",d:dups.length?`${dups.length} fecha/sorteo repetido${dups.length>1?"s":""}${conf.length?`, ${conf.length} con números distintos`:""}.`:"Cada fecha y sorteo aparece una sola vez.",items:dups.map(([a,b])=>`${a.d} ${a.t}: ${a.n} / ${b.n}`)});
  checks.push({ok:!bad.length,t:"Formato de los registros",d:bad.length?`${bad.length} registro${bad.length>1?"s":""} con formato raro.`:`Todos tienen fecha válida, sorteo M/E y ${len} dígitos.`,items:bad});
@@ -2214,10 +2267,20 @@ function qualFor(rows,len,name){
   miss[t]=m;cov[t]={a,b,have:set.size,span:set.size+m.length};
   checks.push({ok:!m.length,t:`Fechas faltantes · ${nm}`,d:m.length?`${m.length} día${m.length>1?"s":""} sin dato entre ${a} y ${b} (cobertura ${(set.size/(set.size+m.length)*100).toFixed(1)}%).`:`Sin huecos entre ${a} y ${b}.`,items:dateRanges(m).map(([x,y,c])=>c>1?`${x} → ${y} (${c} días)`:x)});
  });
- /* mismo resultado repetido 3+ veces seguidas */
- const rep=[];let i=0;
- while(i<good.length){let j=i;while(j+1<good.length&&good[j+1].n===good[i].n&&good[j+1].t===good[i].t)j++;if(j-i>=2)rep.push(`${good[i].d} → ${good[j].d}: ${good[i].n} ×${j-i+1}`);i=j+1}
- checks.push({ok:!rep.length,t:"Mismo resultado 3+ veces seguidas",d:rep.length?`${rep.length} racha${rep.length>1?"s":""} sospechosa${rep.length>1?"s":""} (posible copia por error).`:"Ninguna repetición sospechosa (probabilidad de azar ≈ 1 en un millón).",items:rep});
+ /* mismo resultado repetido 3+ veces seguidas: evaluar Midday y Evening por separado */
+ const rep=[];
+ ["M","E"].forEach(type=>{
+  const seq=good.filter(x=>x.t===type);
+  let i=0;
+  while(i<seq.length){
+   let j=i;
+   while(j+1<seq.length&&seq[j+1].n===seq[i].n)j++;
+   if(j-i>=2)rep.push(`${type==="M"?"Midday":"Evening"} · ${seq[i].d} → ${seq[j].d}: ${seq[i].n} ×${j-i+1}`);
+   i=j+1;
+  }
+ });
+ const chance=`1 entre ${"1"+"0".repeat(len*2)}`;
+ checks.push({ok:!rep.length,t:"Mismo resultado 3+ veces seguidas",d:rep.length?`${rep.length} racha${rep.length>1?"s":""} sospechosa${rep.length>1?"s":""} (revisar posible error de copia).`:`Ninguna repetición exacta de 3 o más sorteos consecutivos. La probabilidad teórica de tres iguales seguidos es ${chance}.`,items:rep});
  /* cobertura por mes */
  const mon={};
  good.forEach(x=>{const m=x.d.slice(0,7);(mon[m]=mon[m]||{M:new Set(),E:new Set()})[x.t].add(x.d)});
@@ -2230,7 +2293,8 @@ function calView(){
  const probs=sets.reduce((a,s)=>a+s.checks.filter(c=>!c.ok).length,0);
  const hard=sets.some(s=>s.checks.some(c=>!c.ok&&/duplicados|Formato|3\+/.test(c.t)));
  const l=!probs?"ok":hard?"rd":"am";
- const msg=!probs?"No se detectaron problemas: los análisis se apoyan en datos limpios.":hard?"Hay duplicados, formato raro o repeticiones sospechosas: corrígelos antes de interpretar las pruebas estadísticas.":"Solo hay fechas faltantes. No distorsionan las frecuencias, pero sí rachas, intervalos y atrasados.";
+ const hasData=sets.some(s=>s.total>0);
+ const msg=!hasData?"Todavía no hay datos suficientes para evaluar la calidad de los historiales.":!probs?"No se detectaron problemas en los registros disponibles: los análisis se apoyan en datos revisados.":hard?"Hay duplicados, formato raro o repeticiones sospechosas: corrígelos antes de interpretar las pruebas estadísticas.":"Solo hay fechas faltantes. No distorsionan las frecuencias, pero sí rachas, intervalos y atrasados.";
  const cards=sets.map(s=>{
   if(!s.total)return `<div class="card"><h2>${s.name}</h2><p class="note">Todavía no hay datos de ${s.name}.</p></div>`;
   const cc=v=>v===null?"<td>—</td>":`<td style="background:rgba(${v>=.95?"34,197,94":v>=.6?"245,158,11":"239,68,68"},.22)">${Math.round(v*100)}%</td>`;
@@ -2329,7 +2393,9 @@ function p43View(){
 const KIDS={
  rac:["🧒 Explicado fácil: Rachas",["🪙 Imagina que lanzas una moneda. A veces sale cara 3 veces seguidas. ¡No es magia! Eso se llama <b>racha</b>: cuando lo mismo se repite varias veces seguidas.","📏 Aquí contamos cuántas veces seguidas salió par, impar, alto, bajo o número gemelo (como 44).","🔔 La app compara con lo que pasaría si todo fuera pura suerte. Si lo que viste es parecido, el semáforo sale <b>verde</b>: todo normal.","🟠 Si sale naranja, es como ver 5 caras seguidas: raro, pero pasa. No quiere decir que el próximo vaya a ser igual."]],
  est:["🧒 Explicado fácil: Estabilidad",["🍬 Imagina una bolsa con 10 colores de caramelos mezclados. Cada color debería salir más o menos <b>1 de cada 10 veces</b>.","📈 La gráfica mira si un dígito empezó a salir mucho más o mucho menos que antes. Cada puntito es un grupo de sorteos.","🧱 Las franjas son como las paredes de un corredor: si el puntito se queda dentro, todo está normal. Si se sale un poquito, es suerte.","🔍 La raya roja marca dónde la línea cambió más. Casi siempre es solo casualidad, no que alguien cambió la bolsa."]],
- int:["🧒 Explicado fácil: Intervalos",["🛝 Hay 100 niños (los números 00 al 99) haciendo fila para el tobogán. Cada sorteo elige a uno.","⏳ El <b>intervalo</b> es cuánto tiempo esperó un niño hasta que lo volvieron a elegir. Algunos esperan poco y otros mucho.","🎲 Con 100 niños es normal que alguno espere más de 100 turnos. Que tarde mucho no significa que ya le toque.","✅ La app revisa si los que más esperan lo hacen más de lo normal. Casi siempre la respuesta es: no, es normal."]],
+ int:["🧒 Explicado fácil: Intervalos entre apariciones",["🛝 Imagina que cada número del 00 al 99 tiene su propio turno. Cada vez que sale, vuelve a empezar a contar.","⏳ El intervalo es cuántos sorteos pasan entre una aparición y la siguiente. Algunos números esperan poco y otros mucho.","🎲 Es normal que algunos esperen muchísimo: con 100 números, una espera larga puede pasar por pura suerte.","✅ La app compara las esperas reales con miles de historiales inventados al azar. Que un número esté atrasado no significa que ya le toque."]],
+ rng:["🧒 Explicado fácil: Los intervalos A, B, C y D",["🧺 Imagina que ponemos los números del 00 al 99 en cuatro cajas.","🅰️ Caja A: del 00 al 25. 🅱️ Caja B: del 26 al 50. 🅲 Caja C: del 51 al 75. 🅳 Caja D: del 76 al 99.","🔢 Cada sorteo mete el número que salió en una de esas cajas. La app cuenta qué caja apareció más veces y compara con lo esperado.","👀 También mira qué caja, decena y terminal salieron después de cada caja en el historial. Eso describe el pasado; no adivina el próximo sorteo."]],
+ tbl:["🧒 Explicado fácil: Las 10 tablas",["🗂️ La app reparte los números del 00 al 99 en 10 grupos llamados tablas.","🔎 Cada grupo tiene 10 números. Cuando sale un resultado, sumamos una marca a la tabla donde está ese número.","📊 Después contamos qué tablas tuvieron más marcas y qué números de cada tabla se repitieron más.","🎲 Que una tabla haya salido mucho antes no hace que tenga más oportunidad en el próximo sorteo. Cada número conserva su probabilidad de 1%."]],
  sum:["🧒 Explicado fácil: Patrones",["🎲 Cuando lanzas dos dados, sumar 7 es más fácil que sumar 2, porque hay más formas de hacerlo. Aquí pasa igual con los dos dígitos.","➕ <b>Suma</b>: sumamos la decena y el terminal. Las sumas del medio (como 9) salen más porque hay más formas de formarlas.","👯 <b>Par / impar</b>: ¿los dos dígitos son pares, impares o uno de cada? Debería repartirse casi igual (25% cada combinación).","🧩 <b>Tipos de pareja</b>: gemelos (11), vecinos (12) o los que suman 9 (36). Es solo clasificar, no adivinar."]]
 };
 function kid(t){const k=KIDS[t];return k?`<div class="card"><h2>${k[0]}</h2>${UL(k[1])}</div>`:""}
@@ -2366,11 +2432,31 @@ $("#catGrid").addEventListener("click",e=>{const b=e.target.closest(".catTile");
 // El botón superior debe funcionar desde cualquier pestaña (no solo desde Datos).
 $("#syncTop").addEventListener("click",updateResults);
 // Al recargar (con sesión ya validada) se ejecuta solo ↻ ACTUALIZAR RESULTADOS, una vez por carga.
-window.addEventListener("sc-session-ready",()=>{if(window.__scAutoSync)return;window.__scAutoSync=true;setTimeout(()=>$("#syncTop")?.click(),300)});
+window.addEventListener("sc-cloud-ready",()=>{if(window.__scAutoSync)return;window.__scAutoSync=true;setTimeout(()=>$("#syncTop")?.click(),300)});
 function applyTheme(){const g=$("#fDraw").value==="M";document.body.classList.toggle("gold",g);document.documentElement.classList.toggle("gold",g);const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=g?"#08090c":"#020512"}
 $("#fDraw").onchange=$("#fRange").onchange=()=>{applyTheme();render()};
 applyTheme();
 load();render();showLatest();
+
+// Puente seguro entre la interfaz clásica y el módulo Firebase.
+// Los datos locales se conservan y se combinan con los de la nube; nunca se borran al iniciar sesión.
+window.CoraxCloudBridge = {
+ exportRows() {
+  return {
+   p3: sorted().map(x => `${x.d}|${x.t}|${x.n}|${x.f||""}`),
+   p4: sorted4().map(x => `${x.d}|${x.t}|${x.n}|${x.f||""}`)
+  };
+ },
+ importRows(p3Rows=[], p4Rows=[]) {
+  const m3=new Map(ROWS.map(x=>[x.k,x]));
+  p3Rows.forEach(raw=>{const [d,t,n,f=""]=String(raw).split("|");const x=normDraw({d,t,n,f});if(x){const old=m3.get(x.k);m3.set(x.k,{...old,...x,f:x.f||old?.f||""})}});
+  ROWS=[...m3.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);saveLocal();
+  const m4=new Map(ROWS4.map(x=>[x.k,x]));
+  p4Rows.forEach(raw=>{const [d,t,n,f=""]=String(raw).split("|");if(validHistoricalDate(d)&&["M","E"].includes(t)&&/^\d{4}$/.test(n||"")){const k=d+t,old=m4.get(k);m4.set(k,{...old,k,d,t,n,f:f||old?.f||""})}});
+  ROWS4=[...m4.values()].sort((a,b)=>ord(a)<ord(b)?-1:ord(a)>ord(b)?1:0);save4();
+  render2();showLatest();
+ }
+};
 // Menú principal y acciones
 const menuPanel=$("#sideMenu"),menuShade=$("#menuShade"),menuModal=$("#menuModal");
 function closeMenu(){menuPanel.classList.remove("open");menuPanel.setAttribute("aria-hidden","true");$("#menuOpen").setAttribute("aria-expanded","false");menuShade.hidden=true}
@@ -2379,7 +2465,7 @@ function closeModal(){menuModal.hidden=true}
 function showMenuModal(type){const title=$("#menuModalTitle"),body=$("#menuModalBody");menuModal.firstElementChild.classList.toggle("wide",type==="vip");menuModal.firstElementChild.classList.toggle("full",type==="community");
  if(type==="register"){title.textContent="Cuenta Sofist Corax";body.innerHTML='<p>Crea tu cuenta o inicia sesión con tu correo electrónico.</p><div id="authMessage" class="note" role="status" aria-live="polite"></div><form id="authForm" onsubmit="return false"><label for="authEmail">Correo electrónico</label><input id="authEmail" type="email" autocomplete="email" placeholder="tu@correo.com" required><label for="authPassword">Contraseña</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo 6 caracteres" required><button class="p" type="submit" data-auth-action="login">Iniciar sesión</button><button type="button" id="authCreate" style="width:100%;margin-top:8px">Crear cuenta nueva</button><button type="button" id="authReset" style="width:100%;margin-top:8px">Olvidé mi contraseña</button></form><div id="authSignedIn" hidden><p id="authUserEmail"></p><button class="p" type="button" id="authSignOut">Cerrar sesión</button></div><p class="note">Al crear una cuenta enviaremos un mensaje de verificación a tu correo. Revisa también la carpeta de spam.</p>';}
  else if(type==="language"){title.textContent="Language / Idioma";body.innerHTML='<p id="languageIntro">Choose the application language / Selecciona el idioma de la aplicación.</p><label for="appLanguage">Language / Idioma</label><select id="appLanguage"><option value="es">Español</option><option value="en">English</option></select><button class="p" id="saveLanguage" type="button">Apply language / Aplicar idioma</button><p class="note">The preference is saved on this device / La preferencia se guarda en este dispositivo.</p>'; }
- else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>SOFIST CORAX ESTADISTICS</b></p><p>Aplicación de análisis estadístico de resultados de lotería: historiales, frecuencias, patrones y métricas.</p><p><b>Contacto:</b> <a href="mailto:sofistcorax@gmail.com">sofistcorax@gmail.com</a></p><p><b>Software y recursos utilizados</b></p><ul><li>HTML5, CSS3 y JavaScript (módulos ES)</li><li>Firebase Authentication para cuentas y acceso</li><li>Cloud Firestore para perfiles y datos en la nube</li><li>Cloud Functions para operaciones protegidas del servidor</li><li>Google Sign-In como proveedor de acceso</li><li>GitHub Pages para publicar la aplicación</li><li>Service Worker y Web App Manifest para funciones PWA</li><li>LocalStorage para preferencias y datos locales</li></ul><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>'; }
+ else if(type==="about"){title.textContent="Acerca de Sofist Corax";body.innerHTML='<p><b>SOFIST CORAX ESTADISTICS</b></p><p>Aplicación de análisis estadístico de resultados de lotería: historiales, frecuencias, patrones y métricas.</p><p><b>Contacto:</b> <a href="mailto:sofistcorax@gmail.com">sofistcorax@gmail.com</a></p><p><b>Software y recursos utilizados</b></p><ul><li>HTML5, CSS3 y JavaScript (módulos ES)</li><li>Firebase Authentication para cuentas y acceso</li><li>Cloud Firestore para perfiles y datos en la nube</li><li>Cloud Functions para operaciones protegidas del servidor</li><li>Google Sign-In como proveedor de acceso</li><li>Firebase Hosting para publicar la aplicación</li><li>Service Worker y Web App Manifest para funciones PWA</li><li>LocalStorage para preferencias y datos locales</li></ul><p class="note">Las estadísticas describen resultados anteriores y no predicen ni garantizan sorteos futuros.</p>'; }
  else if(type==="community"){title.textContent="Comunidad Sofist Corax";body.innerHTML='<div class="scChatTop"><p>Chatea y debate con otros usuarios en tiempo real. Respeta a los demás.</p><label class="scPhotoBtn" for="scPhotoInput2"><span id="scChatMyAv"></span>Cambiar foto</label><input id="scPhotoInput2" type="file" accept="image/*" hidden></div><div id="scChatList" class="scChatList" role="log" aria-live="polite"><p class="note">Cargando mensajes…</p></div><div id="scChatReply" class="scChatReply" hidden><span id="scChatReplyText"></span><button type="button" id="scChatReplyX" aria-label="Cancelar respuesta">×</button></div><form id="scChatForm" class="scChatForm" onsubmit="return false"><input id="scChatInput" type="text" maxlength="500" autocomplete="off" placeholder="Escribe un mensaje…" required><button class="p" type="submit">Enviar</button></form><div id="scChatMsg" class="note" role="status"></div>';}
  else if(type==="vip"){title.textContent="Plan VIP Premium";body.innerHTML='<div id="scVip"></div>';}
  else{return} menuModal.hidden=false;document.dispatchEvent(new CustomEvent("sc:modal",{detail:type}));
@@ -2419,7 +2505,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {
  getFirestore, doc, setDoc, serverTimestamp, getDoc,
- collection, addDoc, deleteDoc, query, orderBy, limit, onSnapshot
+ collection, addDoc, deleteDoc, query, orderBy, limit, onSnapshot, getDocs
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-functions.js";
 
@@ -2440,7 +2526,79 @@ try { await setPersistence(auth, browserLocalPersistence); } catch (error) { con
 const dbProfile = getFirestore(firebaseApp);
 const functions = getFunctions(firebaseApp);
 const ensureAdminClaim = httpsCallable(functions, "ensureAdminClaim");
+const adminPublishDraws = httpsCallable(functions, "adminPublishDraws");
+const sendCommunityMessage = httpsCallable(functions, "sendCommunityMessage");
 const ADMIN_EMAIL = "sofistcorax@gmail.com";
+
+function rowsFromSnapshot(snapshot) {
+ const rows=[];
+ snapshot.forEach(yearDoc=>{
+  const data=yearDoc.data() || {};
+  if(Array.isArray(data.rows)) data.rows.forEach(row=>{ if(typeof row === "string") rows.push(row); });
+ });
+ return rows;
+}
+async function readDrawCollection(name) {
+ const snap=await getDocs(collection(dbProfile,name));
+ return rowsFromSnapshot(snap);
+}
+function mergeDrawRows(existingRows, incomingRows, digits) {
+ const numberPattern=new RegExp(`^\\d{${digits}}$`);
+ const merged=new Map();
+ for(const raw of (Array.isArray(existingRows)?existingRows:[])){
+  if(typeof raw!=="string")continue;
+  const [date,type,number,fireball=""]=raw.split("|");
+  if(/^\d{4}-\d{2}-\d{2}$/.test(date||"") && ["M","E"].includes(type)
+    && numberPattern.test(number||"") && (fireball==="" || /^\d$/.test(fireball))) merged.set(date+type,raw);
+ }
+ for(const raw of (Array.isArray(incomingRows)?incomingRows:[])){
+  const [date,type,number,fireball=""]=raw.split("|"),old=merged.get(date+type),oldFireball=old?.split("|")[3]||"";
+  merged.set(date+type,fireball?raw:`${date}|${type}|${number}|${oldFireball}`);
+ }
+ return [...merged.values()].sort((a,b)=>a.localeCompare(b));
+}
+
+async function publishDrawCollection(name, rows) {
+ // El servidor vuelve a validar cada fila y realiza la transacción con Admin SDK.
+ if(!auth.currentUser) throw new Error("Inicia sesión para publicar resultados.");
+ const token=await auth.currentUser.getIdTokenResult(true);
+ if(token.claims.admin !== true) throw new Error("Solo el administrador puede publicar resultados oficiales.");
+ const kind=name === "draws4" ? "p4" : "p3";
+ const result=await adminPublishDraws({kind, rows:Array.isArray(rows)?rows:[]});
+ if(!result.data?.success) throw new Error("El servidor no confirmó la publicación de resultados.");
+ return result.data;
+}
+
+let cloudSyncBusy=false;
+async function syncDrawsFromCloud() {
+ if(cloudSyncBusy || !auth.currentUser?.emailVerified || !window.CoraxCloudBridge) return;
+ cloudSyncBusy=true;
+ try {
+  const [p3,p4]=await Promise.all([readDrawCollection("draws"),readDrawCollection("draws4")]);
+  window.CoraxCloudBridge.importRows(p3,p4);
+  // Si el administrador tiene historial local adicional, lo publica combinado sin borrar años.
+  const token=await auth.currentUser.getIdTokenResult();
+  if(token.claims.admin === true) {
+   const merged=window.CoraxCloudBridge.exportRows();
+   await Promise.all([publishDrawCollection("draws",merged.p3),publishDrawCollection("draws4",merged.p4)]);
+  }
+  console.info(`Sofist Corax: nube sincronizada (${p3.length} Pick 3, ${p4.length} Pick 4).`);
+ } catch(error) {
+  console.error("No se pudieron sincronizar los sorteos con Firestore:",error);
+  const status=document.getElementById("syncStatus");
+  if(status) status.textContent="No se pudieron cargar los datos compartidos. Se mantienen los datos guardados en este dispositivo.";
+ } finally {
+  cloudSyncBusy=false;
+  window.dispatchEvent(new Event("sc-cloud-ready"));
+ }
+}
+window.addEventListener("sc-session-ready",syncDrawsFromCloud);
+window.CoraxPublishDraws = async kind => {
+ if(!auth.currentUser?.emailVerified) throw new Error("Inicia sesión con un correo verificado.");
+ const rows=window.CoraxCloudBridge?.exportRows();
+ if(!rows) throw new Error("La aplicación todavía está preparando los datos.");
+ await publishDrawCollection(kind === "p4" ? "draws4" : "draws", kind === "p4" ? rows.p4 : rows.p3);
+};
 
 let currentUser = null;
 let currentRole = "user";
@@ -2533,7 +2691,7 @@ async function saveUserProfile(user, role) {
   email: user.email || "",
   displayName: user.displayName || "",
   emailVerified: !!user.emailVerified,
-  role: role === "admin" ? "admin" : "user"
+  role: "user"
  };
  if (!snap.exists()) {
   await setDoc(profileRef, {...profile, createdAt: serverTimestamp(), updatedAt: serverTimestamp()});
@@ -2570,7 +2728,7 @@ async function establishVerifiedSession(user) {
    // No conceder privilegios por correo en el cliente. La función debe confirmar el claim.
   }
  }
- currentRole = token.claims.role === "admin" ? "admin" : "user";
+ currentRole = token.claims.admin === true ? "admin" : "user";
  try { await saveUserProfile(user, currentRole); } catch (error) { console.warn("No se pudo guardar el perfil (no bloquea el acceso):", error); }
  currentUser = user;
  syncLegacyAccount();
@@ -2823,7 +2981,7 @@ function chatError(err) {
  if (code === "permission-denied") return "Firestore rechazó la operación (permission-denied). Las reglas de seguridad publicadas no permiten esta acción para tu cuenta: publica el archivo firestore.rules incluido y comprueba que tu correo está verificado.";
  if (code === "unauthenticated") return "Tu sesión expiró. Cierra sesión y vuelve a entrar.";
  if (code === "failed-precondition") return "Falta un índice o configuración en Firestore. Revisa la consola de Firebase.";
- if (code === "resource-exhausted") return "Se alcanzó la cuota de Firestore. Inténtalo más tarde.";
+ if (code.endsWith("resource-exhausted")) return String(err.message || "").includes("Espera") ? "Espera un momento antes de enviar otro mensaje." : "Se alcanzó la cuota del servidor. Inténtalo más tarde.";
  return "No se pudo completar la operación (" + (code || (err && err.message) || "error") + ").";
 }
 
@@ -2883,16 +3041,10 @@ function startCommunity() {
   if (Date.now() - lastSent < 1500) { status("Espera un momento antes de enviar otro mensaje.", true); return; }
   lastSent = Date.now(); status(""); sendBtn.disabled = true;
   const rt = replyTo;
-  const payload = {uid:user.uid, name:myName, role:currentRole === "admin" ? "admin" : "user", text:text.slice(0, 500), createdAt:serverTimestamp()};
-  if (myPhoto) payload.photo = myPhoto;
-  if (rt) payload.replyTo = rt;
   try {
-   await Promise.race([
-    addDoc(collection(dbProfile, "community_messages"), payload),
-    new Promise((_, rej) => setTimeout(() => rej({code:"deadline-exceeded"}), 15000))
-   ]);
+   await sendCommunityMessage({text:text.slice(0, 500), replyToId:rt?.id || null});
    input.value = ""; clearReply(); input.focus();
-  } catch (err) { console.error("Chat addDoc:", err); status(chatError(err), true); }
+  } catch (err) { console.error("Chat sendCommunityMessage:", err); status(chatError(err), true); }
   finally { sendBtn.disabled = false; }
  };
 }

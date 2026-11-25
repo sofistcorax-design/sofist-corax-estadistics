@@ -1,0 +1,119 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function verified() {
+      return signedIn() && request.auth.token.email_verified == true;
+    }
+
+    // The admin privilege is granted only by the trusted Admin SDK function.
+    function isAdmin() {
+      return verified() && request.auth.token.admin == true;
+    }
+
+    function validOptionalString(data, field, maxLength) {
+      return !(field in data)
+        || (data[field] is string && data[field].size() <= maxLength);
+    }
+
+    match /users/{uid} {
+      allow read: if verified() && (request.auth.uid == uid || isAdmin());
+
+      allow create: if verified()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'uid', 'email', 'displayName', 'emailVerified', 'role',
+          'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.emailVerified == true
+        && request.resource.data.role == 'user'
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && validOptionalString(request.resource.data, 'displayName', 100);
+
+      allow update: if verified()
+        && request.auth.uid == uid
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.emailVerified == request.auth.token.email_verified
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'photoURL', 'phone', 'email', 'emailVerified', 'updatedAt'
+        ])
+        && request.resource.data.updatedAt == request.time
+        && validOptionalString(request.resource.data, 'displayName', 100)
+        && validOptionalString(request.resource.data, 'phone', 30)
+        && validOptionalString(request.resource.data, 'photoURL', 30000);
+
+      allow delete: if isAdmin();
+    }
+
+    match /community_messages/{msgId} {
+      allow read: if verified();
+
+      // New messages are created only by sendCommunityMessage (server-side rate limit).
+      allow create: if false;
+
+      allow update: if false;
+      allow delete: if verified()
+        && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    match /vip_requests/{requestId} {
+      allow create: if verified()
+        && request.resource.data.keys().hasAll([
+          'uid', 'plan', 'amount', 'currency', 'method', 'transactionId', 'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'uid', 'email', 'plan', 'amount', 'currency', 'method',
+          'transactionId', 'status', 'createdAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && (!('email' in request.resource.data)
+            || request.resource.data.email == request.auth.token.email)
+        && request.resource.data.plan in ['semanal', 'mensual', 'trimestral']
+        && request.resource.data.amount is number
+        && (
+          (request.resource.data.plan == 'semanal' && request.resource.data.amount == 1500)
+          || (request.resource.data.plan == 'mensual' && request.resource.data.amount == 2000)
+          || (request.resource.data.plan == 'trimestral' && request.resource.data.amount == 3000)
+        )
+        && request.resource.data.currency == 'CUP'
+        && request.resource.data.method == 'transfermovil'
+        && request.resource.data.transactionId is string
+        && request.resource.data.transactionId.size() >= 4
+        && request.resource.data.transactionId.size() <= 40
+        && request.resource.data.status == 'pendiente'
+        && request.resource.data.createdAt == request.time;
+
+      allow read: if verified()
+        && (resource.data.uid == request.auth.uid || isAdmin());
+
+      // Approval/rejection is performed only by the trusted callable function.
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    match /draws/{drawId} {
+      allow read: if verified();
+      // All writes go through adminPublishDraws (Cloud Functions/Admin SDK).
+      allow create, update, delete: if false;
+    }
+
+    match /draws4/{drawId} {
+      allow read: if verified();
+      // Pick 4 also publishes only through adminPublishDraws (Cloud Functions/Admin SDK).
+      allow create, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
